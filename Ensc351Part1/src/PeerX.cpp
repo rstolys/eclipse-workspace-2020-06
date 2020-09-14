@@ -11,7 +11,7 @@
 //% Below, edit to list any people who helped you with the code in this file,
 //%      or put 'None' if nobody helped (the two of) you.
 //
-// Helpers: None
+// Helpers: None at all
 //
 // Also, list any resources beyond the course textbooks and the course pages on Piazza
 // that you used in making your submission.
@@ -148,4 +148,3 @@ sendByte(uint8_t byte)
 			exit(EXIT_FAILURE);
 	}
 }
-
