@@ -43,52 +43,78 @@
 
 using namespace std;
 
-SenderX::SenderX(const char *fname, int d):PeerX(d, fname), 
- bytesRd(-1), blkNum(0)   //Variable initialization 	// *** but first block sent will be block #1, not #0
-{
-    // ********* initialize blkNum as you like ***********
-}
-
-//-----------------------------------------------------------------------------
-
-/* 
-tries to generate a block.  Updates the
-variable bytesRd with the number of bytes that were read
-from the input file in order to create the block. Sets
-bytesRd to 0 and does not actually generate a block if the end
-of the input file had been reached when the previously generated block 
-was prepared or if the input file is empty (i.e. has 0 length).
-*/
 
 ////////////////////////////////////////////////////////////////
-//TO BE EDITTED
+//
+// SenderX class constructor. Uses PeerX construtor through inheritance
+//
+// TO BE EDITTED
+//
+////////////////////////////////////////////////////////////////
+SenderX::SenderX(const char *fname, int d):PeerX(d, fname), bytesRd(-1), blkNum(0)  
+  {
+  // ********* initialize blkNum as you like ***********
+  // *** but first block sent will be block #1, not #0
+  }
+
+
+////////////////////////////////////////////////////////////////
+//
+// Will generate a block to be sent. Updates class variables to reflect actions
+//
+// TO BE EDITTED
+//
+// CRAIG COMMENTS:
+// tries to generate a block.  Updates the
+// variable bytesRd with the number of bytes that were read
+// from the input file in order to create the block. Sets
+// bytesRd to 0 and does not actually generate a block if the end
+// of the input file had been reached when the previously generated block 
+// was prepared or if the input file is empty (i.e. has 0 length).
+//
 ////////////////////////////////////////////////////////////////
 void SenderX::genBlk(blkT blkBuf)
-{
+  {
 	// ********* The next line needs to be changed ***********
 	if (-1 == (bytesRd = myRead(transferringFileD, &blkBuf[0], CHUNK_SZ )))
-		ErrorPrinter("myRead(transferringFileD, &blkBuf[0], CHUNK_SZ )", __FILE__, __LINE__, errno);
-	// ********* and additional code must be written ***********
+    {
+    ErrorPrinter("myRead(transferringFileD, &blkBuf[0], CHUNK_SZ )", __FILE__, __LINE__, errno);
+    }
+	else 
+    {
+    // ********* and additional code must be written ***********
 
     // ********* The next couple lines need to be changed ***********
     uint16_t myCrc16ns;
     crc16ns(&myCrc16ns, &blkBuf[0]);
-}
+    }
+	
+  return;
+  }
 
 
 ////////////////////////////////////////////////////////////////
-//TO BE EDITTED
+//
+// Routine to send the files contents to the desired location 
+//    will be to output file for PART 1
+// Will generate blocks and write them to the output file
+//
+// TO BE EDITTED
+//
 ////////////////////////////////////////////////////////////////
 void SenderX::sendFile()
-{
+  {
 	transferringFileD = myOpen(fileName, O_RDWR, 0);
-	if(transferringFileD == -1) {
+
+	if(transferringFileD == -1) 
+    {
 		// ********* fill in some code here to write 8 CAN characters ***********
 		// can8();
 		cout /* cerr */ << "Error opening input file named: " << fileName << endl;
 		result = "OpenError";
-	}
-	else {
+	  }
+	else 
+    {
 		cout << "Sender will send " << fileName << endl;
 
 		// do the protocol, and simulate a receiver that positively acknowledges every
@@ -97,7 +123,7 @@ void SenderX::sendFile()
 		// assume 'C' or NAK received from receiver to enable sending with CRC or checksum, respectively
 		genBlk(blkBuf); // prepare 1st block
 		while (bytesRd)
-		{
+		  {
 			blkNum++; // 1st block about to be sent or previous block was ACK'd
 
 			// ********* fill in some code here to write a block ***********
@@ -105,14 +131,17 @@ void SenderX::sendFile()
 			// assume sent block will be ACK'd
 			genBlk(blkBuf); // prepare next block
 			// assume sent block was ACK'd
-		};
+		  };
 		// finish up the protocol, assuming the receiver behaves normally
 		// ********* fill in some code here ***********
 
 		//(myClose(transferringFileD));
 		if (-1 == myClose(transferringFileD))
-			ErrorPrinter("myClose(transferringFileD)", __FILE__, __LINE__, errno);
+      {
+      ErrorPrinter("myClose(transferringFileD)", __FILE__, __LINE__, errno);  
+      }
+			
 		result = "Done";
-	}
-}
+	  }
+  }
 
