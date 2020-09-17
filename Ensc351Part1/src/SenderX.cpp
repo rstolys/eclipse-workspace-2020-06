@@ -43,24 +43,26 @@
 
 using namespace std;
 
-SenderX::
-SenderX(const char *fname, int d)
-:PeerX(d, fname), 
- bytesRd(-1), 
- blkNum(0)  	// but first block sent will be block #1, not #0
- // ********* initialize blkNum as you like ***********
+SenderX::SenderX(const char *fname, int d):PeerX(d, fname), 
+ bytesRd(-1), blkNum(0)   //Variable initialization 	// *** but first block sent will be block #1, not #0
 {
+    // ********* initialize blkNum as you like ***********
 }
 
 //-----------------------------------------------------------------------------
 
-/* tries to generate a block.  Updates the
+/* 
+tries to generate a block.  Updates the
 variable bytesRd with the number of bytes that were read
 from the input file in order to create the block. Sets
 bytesRd to 0 and does not actually generate a block if the end
 of the input file had been reached when the previously generated block 
 was prepared or if the input file is empty (i.e. has 0 length).
 */
+
+////////////////////////////////////////////////////////////////
+//TO BE EDITTED
+////////////////////////////////////////////////////////////////
 void SenderX::genBlk(blkT blkBuf)
 {
 	// ********* The next line needs to be changed ***********
@@ -73,6 +75,10 @@ void SenderX::genBlk(blkT blkBuf)
     crc16ns(&myCrc16ns, &blkBuf[0]);
 }
 
+
+////////////////////////////////////////////////////////////////
+//TO BE EDITTED
+////////////////////////////////////////////////////////////////
 void SenderX::sendFile()
 {
 	transferringFileD = myOpen(fileName, O_RDWR, 0);
@@ -92,7 +98,7 @@ void SenderX::sendFile()
 		genBlk(blkBuf); // prepare 1st block
 		while (bytesRd)
 		{
-			blkNum ++; // 1st block about to be sent or previous block was ACK'd
+			blkNum++; // 1st block about to be sent or previous block was ACK'd
 
 			// ********* fill in some code here to write a block ***********
 

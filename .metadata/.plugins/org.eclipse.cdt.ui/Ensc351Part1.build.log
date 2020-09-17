@@ -1,7 +1,6 @@
-18:13:50 **** Clean-only build of configuration Debug for project Ensc351Part1 ****
-make clean 
-rm -rf  ./src/Ensc351Part1.o ./src/PeerX.o ./src/SenderX.o ./src/myIO.o  ./src/Ensc351Part1.d ./src/PeerX.d ./src/SenderX.d ./src/myIO.d  Ensc351Part1
- 
+20:12:21 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
+make all 
+make: Nothing to be done for 'all'.
 
-18:13:51 Build Finished. 0 errors, 0 warnings. (took 615ms)
+20:12:22 Build Finished. 0 errors, 0 warnings. (took 1s.123ms)
 

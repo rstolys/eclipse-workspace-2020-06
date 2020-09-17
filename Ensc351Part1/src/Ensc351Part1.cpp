@@ -16,45 +16,75 @@
 
 using namespace std;
 
+
+////////////////////////////////////////////////////////////////
+// 
+// Testing function to call specific member functions to send file using xmodem protocol
+//
+////////////////////////////////////////////////////////////////
 void testSenderX(const char* iFileName, int mediumD)
 {
-	SenderX xSender(iFileName, mediumD);
-	xSender.Crcflg = false; // test sending with checksum
-	cout << "test sending with checksum" << endl;
-	xSender.sendFile();
-	cout << "Sender finished with result: " << xSender.result << endl << endl;
+    //Testing using checksum
+    SenderX xSender(iFileName, mediumD);
+    xSender.Crcflg = false;                   // test sending with checksum
 
-	SenderX xSender2(iFileName, mediumD);
-	xSender2.Crcflg = true; // test sending with CRC16
-	cout << "test sending with CRC" << endl;
-	xSender2.sendFile();
-	cout << "Sender finished with result: " << xSender2.result << endl << endl;
+    cout << "test sending with checksum" << endl;
+    xSender.sendFile();
+    cout << "Sender finished with result: " << xSender.result << endl << endl;
+
+
+    //Testing using CRC
+    SenderX xSender2(iFileName, mediumD);
+    xSender2.Crcflg = true;                   // test sending with CRC16
+
+    cout << "test sending with CRC" << endl;
+    xSender2.sendFile();
+    cout << "Sender finished with result: " << xSender2.result << endl << endl;
 }
 
-int main() {
+
+
+////////////////////////////////////////////////////////////////
+// 
+// Starting point for project
+//    Will setup multiple tests of file transfer protocol
+//
+////////////////////////////////////////////////////////////////
+int main() 
+{
 #ifdef __MINGW32__
     _fmode = _O_BINARY;  // needed for MinGW compiler which runs on MS Windows
 #endif
+    int rc = -1; 
 
     // for x86_64, output file will be in the Eclipse project.
     // for ppc, output file will be in the home directory:  /home/osboxes
     const char* oFileName = "xmodemSenderData.dat";
-    mode_t mode = S_IRUSR | S_IWUSR; // | S_IRGRP | S_IROTH;
+    mode_t mode = S_IRUSR | S_IWUSR;                                      // | S_IRGRP | S_IROTH;
+
     int mediumD = myCreat(oFileName, mode);
-    if(mediumD == -1) {
+    if(mediumD == -1) 
+    {
         cout /* cerr */ << "Error opening medium file named: " << oFileName << endl;
         ErrorPrinter("creat(oFileName, mode)", __FILE__, __LINE__, errno);
-        return -1;
+        rc = -1;
+    }
+    else 
+    {
+        testSenderX("/doesNotExist.txt", mediumD);                        // file does not exist
+        testSenderX("/home/osboxes/.sudo_as_admin_successful", mediumD);  // empty file
+        testSenderX("/home/osboxes/hs_err_pid11506.log", mediumD);        // normal text file
+
+        if (-1 == myClose(mediumD)) 
+        {
+            ErrorPrinter("close(mediumD)", __FILE__, __LINE__, errno);
+            rc = -1;
+        }
+        else
+        {
+            rc = 0;
+        }
     }
 
-    testSenderX("/doesNotExist.txt", mediumD);                        // file does not exist
-    testSenderX("/home/osboxes/.sudo_as_admin_successful", mediumD);  // empty file
-    testSenderX("/home/osboxes/hs_err_pid11506.log", mediumD);        // normal text file
-
-    if (-1 == myClose(mediumD)) {
-        ErrorPrinter("close(mediumD)", __FILE__, __LINE__, errno);
-        return -1;
-    }
-    else
-        return 0;
+    return rc;
 }

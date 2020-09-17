@@ -68,8 +68,7 @@ As found in Chapter 8 of the document "ymodem.txt".
  * Omen Technology.
  */
 
-unsigned short
-updcrc(register int c, register unsigned crc)
+unsigned short updcrc(register int c, register unsigned crc)
 {
 	register int count;
 
@@ -90,8 +89,10 @@ updcrc(register int c, register unsigned crc)
 // Should return via crc16nsP a crc16 in 'network byte order'.
 // Derived from code in "rbsb.c" (see above).
 // Line comments in function below show lines removed from original code.
-void
-crc16ns (uint16_t* crc16nsP, uint8_t* buf)
+////////////////////////////////////////////////////////////////
+//TO BE EDITTED
+////////////////////////////////////////////////////////////////
+void crc16ns(uint16_t* crc16nsP, uint8_t* buf)
 {
 	 register int wcj;
 	 register uint8_t *cp;
@@ -126,16 +127,13 @@ crc16ns (uint16_t* crc16nsP, uint8_t* buf)
 		 //sendline(checksum);
 }
 
-PeerX::
-PeerX(int d, const char *fname, bool useCrc)
+PeerX::PeerX(int d, const char *fname, bool useCrc)
 :result("ResultNotSet"), mediumD(d), fileName(fname), transferringFileD(-1), Crcflg(useCrc)
 {
 }
 
 //Send a byte to the remote peer across the medium
-void
-PeerX::
-sendByte(uint8_t byte)
+void PeerX::sendByte(uint8_t byte)
 {
 	switch (int retVal = myWrite(mediumD, &byte, sizeof(byte))) {
 		case 1:
