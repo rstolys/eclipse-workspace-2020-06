@@ -104,7 +104,7 @@ unsigned short updcrc(register int c, register unsigned crc)
 // 
 // Will create the CRC checksum to append to the block of data
 //
-// TO BE EDITTED
+// TODO
 //
 // CRAIG COMMENTS: 
 // Should return via crc16nsP a crc16 in 'network byte order'.
@@ -152,10 +152,17 @@ void crc16ns(uint16_t* crc16nsP, uint8_t* buf)
 
 ////////////////////////////////////////////////////////////////
 // 
-// Will create the 1 byte checksum to append to the block of data
+// Will create an 8 bit checksum to append to the block of data
+//
+// TODO
 //
 ////////////////////////////////////////////////////////////////
-//void <chooseName> (uint8_t* crc16nsP, uint8_t* buf);
+void checksum8bit(uint8_t* myChkSum, uint8_t* buf)
+  {
+  //Set as default value for now
+  *myChkSum = 0x00;
+  return;
+  }
 
 
 ////////////////////////////////////////////////////////////////

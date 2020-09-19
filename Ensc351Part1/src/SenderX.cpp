@@ -48,23 +48,17 @@ using namespace std;
 //
 // SenderX class constructor. Uses PeerX construtor through inheritance
 //
-// TODO
-//
 ////////////////////////////////////////////////////////////////
 SenderX::SenderX(const char *fname, int d):PeerX(d, fname), bytesRd(-1), blkNum(1)  
   {
-  // ********* initialize blkNum as you like ***********
-  //TODO: Determine the size of the block based on crcFlag 
-  //try this: -- blkBuf = new uint8_t[((Crcflg) ? BLK_SZ_CRC : BLK_SZ_CS)];
-  // *** but first block sent will be block #1, not #0
+  //Set the size of the block buffer based on the value of the Crcflg
+  blkBuf = new uint8_t[((Crcflg) ? BLK_SZ_CRC : BLK_SZ_CS)]; //a = new int[n]
   }
 
 
 ////////////////////////////////////////////////////////////////
 //
 // Will generate a block to be sent. Updates class variables to reflect actions
-//
-// TODO -- add checksum and header bytes to blockBuffer to be sent
 //
 // CRAIG COMMENTS:
 // tries to generate a block.  Updates the
@@ -75,29 +69,51 @@ SenderX::SenderX(const char *fname, int d):PeerX(d, fname), bytesRd(-1), blkNum(
 // was prepared or if the input file is empty (i.e. has 0 length).
 //
 ////////////////////////////////////////////////////////////////
-void SenderX::genBlk(blkT blkBuf)
+void SenderX::genBlk(uint8_t* dataBytes)
   {
-	// ********* The next line needs to be changed ***********
-	if (-1 == (bytesRd = myRead(transferringFileD, &blkBuf[0], CHUNK_SZ )))
+	//Get the data from the input file and store it in the dataBuf array
+	if(-1 == (bytesRd = myRead(transferringFileD, &dataBuf[0], CHUNK_SZ)))
     {
     ErrorPrinter("myRead(transferringFileD, &blkBuf[0], CHUNK_SZ )", __FILE__, __LINE__, errno);
     }
 	else 
     {
-    // ********* and additional code must be written ***********
-    //If the bytesRd is less than 128 and greater than 0 then we want to pad the data until it is 128 bytes 
-      // pad with 0s
+    //Add SOH btye 
+    blkBuf[SOH_BYTE] = SOH; 
 
-    // ********* The next couple lines need to be changed ***********
+    //Cast block number to uint8_t and add it to block buffer
+    blkBuf[BLK_NUM_BYTE] = (uint8_t) blkNum;
+
+    //Compute the complment of the blkNum and add that to the blkBuf
+    blkBuf[BLK_NUM_COMP_BYTE] = ~(blkBuf[BLK_NUM_BYTE]);        // '~' is bit flip operator
+
+  
+    //If we did not read a full 128 bytes, append with zeros 
+    for(int i = bytesRd; i < CHUNK_SZ; i++)
+      {
+      dataBuf[i] = 0x00;                                        //Hex for 00000000 in binary
+      } 
+
+    //Add all 128 bytes of data to the blkBuf array 
+    blkBuf[BLK_DATA_START] = *dataBuf;
+
+
+    //Calculate checksum depending on if we are using crc or normal checksum
     if(Crcflg)
       {
       uint16_t myCrc16ns;
-      crc16ns(&myCrc16ns, &blkBuf[0]);
+      crc16ns(&myCrc16ns, &dataBuf[0]);
+
+      //Append the checksum to the blkBuf
+      blkBuf[CHK_SUM_START] = myCrc16ns;
       }
     else 
       {
-      uint8_t myCS;
-      //createMyChecksum(&myCS, &blkBuf[0]);
+      uint8_t myChkSum;
+      checksum8bit(&myChkSum, &dataBuf[0]);
+
+      //Append the checksum to the blkBuf
+      blkBuf[CHK_SUM_START] = myChkSum;
       }
     }
 	
@@ -111,8 +127,6 @@ void SenderX::genBlk(blkT blkBuf)
 //    will be to output file for PART 1
 // Will generate blocks and write them to the output file
 //
-// TODO
-//
 ////////////////////////////////////////////////////////////////
 void SenderX::sendFile()
   {
@@ -120,8 +134,10 @@ void SenderX::sendFile()
 
 	if(transferringFileD == -1) 
     {
-		// ********* fill in some code here to write 8 CAN characters ***********
-		// can8();
+    //Show that we have experienced an error and are aborting the current transmission
+    sendByte(CAN);
+
+    //Log the error
 		cout /* cerr */ << "Error opening input file named: " << fileName << endl;
 		result = "OpenError";
 	  }
@@ -129,46 +145,40 @@ void SenderX::sendFile()
     {
 		cout << "Sender will send " << fileName << endl;
 
-		// do the protocol, and simulate a receiver that positively acknowledges every
-		//	block that it receives.
+    //***
+    //Assuming startup protocol has already begun and we have determined which checksum type we are using CRC 16 bit vs normal 8 bit
+    //***
 
+    //Generate the first block of to be transmitted -- this is done so that the while loop will terminate as soon as the byteRd is 0
+    genBlk(blkBuf);
 
-      // assume 'C' or NAK received from receiver to enable sending with CRC or checksum, respectively
-
-		//TODO: look at best algortihm for sending data to reciever 
-    do
+    //Send blocks of data and generate new blocks until we have read entire file
+    while(bytesRd)
       {
-      //Generate block of data to be sent
-		  genBlk(blkBuf); // prepare 1st block
-
-      //if there is data to send
-      if(bytesRd > 0)   
+      //Send each byte of the block
+      for(int byteNum = 0; byteNum < sizeof(blkBuf); byteNum++)
         {
-        //Send  the block of data to the reciever  
-        myWrite(mediumD, blkBuf, bytesRd);
-
-
-        //Increment the block number
-        blkNum++;
+        //Send byte to reciever
+        sendByte(blkBuf[byteNum]);
         }
-      }
-		while(bytesRd);
-		/*{   *****Probably don't need this, commented out for now*********
 
-			// ********* fill in some code here to write a block ***********
+      //***
+      //We are assuming this messaged was properly acknowledged 
+      //***
+
+      //Increment block number 
+      blkNum++;
+
+      //Generate the next block to transmitted
+      genBlk(blkBuf);
+      };
     
-		  //blkNum++; // 1st block about to be sent or previous block was ACK'd
-                // This should only increment after the block has been sent
-			// assume sent block will be ACK'd
-			//genBlk(blkBuf); // prepare next block
-			// assume sent block was ACK'd
-		  };
-    */
-		// finish up the protocol, assuming the receiver behaves normally
-		// ********* fill in some code here ***********
+		
+    //Now that all of the data blocks have been sent, send a end of transmission byte
+    sendByte(EOT);
 
-		//(myClose(transferringFileD));
-		if (-1 == myClose(transferringFileD))
+    //Close file now that we are finished with transmission
+		if(-1 == myClose(transferringFileD))
       {
       ErrorPrinter("myClose(transferringFileD)", __FILE__, __LINE__, errno);  
       }

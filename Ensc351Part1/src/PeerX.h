@@ -7,23 +7,30 @@
 #ifndef PEERX_H_
 #define PEERX_H_
 
-#include <stdint.h>                                     // for uint8_t
+#include <stdint.h>                                               // for uint8_t
 
-#define CHUNK_SZ	 128
-#define SOH_OH  	 1			                              //SOH Byte Overhead
-#define BLK_NUM_AND_COMP_OH  2	                        //Overhead for blkNum and its complement
-#define DATA_POS  	 (SOH_OH + BLK_NUM_AND_COMP_OH)	    //Position of data in buffer
-#define PAST_CHUNK 	 (DATA_POS + CHUNK_SZ)		          //Position of checksum in buffer
+#define CHUNK_SZ	            128
+#define SOH_OH  	            1			                              //SOH Byte Overhead
+#define BLK_NUM_AND_COMP_OH   2 	                                //Overhead for blkNum and its complement
+#define DATA_POS  	          (SOH_OH + BLK_NUM_AND_COMP_OH)	    //Position of data in buffer
+#define PAST_CHUNK 	          (DATA_POS + CHUNK_SZ)		            //Position of checksum in buffer
 
-#define CS_OH  1			                                  //Overhead for CheckSum
-#define REST_BLK_OH_CS  (BLK_NUM_AND_COMP_OH + CS_OH)	  //Overhead in rest of block
-#define REST_BLK_SZ_CS  (CHUNK_SZ + REST_BLK_OH_CS)
-#define BLK_SZ_CS  	 	(SOH_OH + REST_BLK_SZ_CS)
+#define CS_OH                 1			                              //Overhead for CheckSum
+#define REST_BLK_OH_CS        (BLK_NUM_AND_COMP_OH + CS_OH)	      //Overhead in rest of block
+#define REST_BLK_SZ_CS        (CHUNK_SZ + REST_BLK_OH_CS)
+#define BLK_SZ_CS  	 	        (SOH_OH + REST_BLK_SZ_CS)
 
-#define CRC_OH  2			                                  //Overhead for CRC16
-#define REST_BLK_OH_CRC  (BLK_NUM_AND_COMP_OH + CRC_OH)	//Overhead in rest of block
-#define REST_BLK_SZ_CRC  (CHUNK_SZ + REST_BLK_OH_CRC)
-#define BLK_SZ_CRC  	 (SOH_OH + REST_BLK_SZ_CRC)
+#define CRC_OH                2			                              //Overhead for CRC16
+#define REST_BLK_OH_CRC       (BLK_NUM_AND_COMP_OH + CRC_OH)	    //Overhead in rest of block
+#define REST_BLK_SZ_CRC       (CHUNK_SZ + REST_BLK_OH_CRC)
+#define BLK_SZ_CRC  	        (SOH_OH + REST_BLK_SZ_CRC)
+
+//Define btye locations for the header and data blocks
+#define SOH_BYTE              0                                   //SOH byte
+#define BLK_NUM_BYTE          1                                   //Block number byte
+#define BLK_NUM_COMP_BYTE     2                                   //Complement of block number byte
+#define BLK_DATA_START        3                                   //Data starting byte
+#define CHK_SUM_START         131                                 //Checksum starting byte (for both normal and crc)
 
 #define SOH 0x01
 #define EOT 0x04
@@ -52,10 +59,11 @@ void crc16ns (uint16_t* crc16nsP, uint8_t* buf);
 
 ////////////////////////////////////////////////////////////////
 // 
-// Will create the 1 byte checksum to append to the block of data
+// Will create an 8 bit checksum to append to the block of data
 //
 ////////////////////////////////////////////////////////////////
-//void <chooseName> (uint8_t* crc16nsP, uint8_t* buf);
+void checksum8bit(uint8_t* myChkSum, uint8_t* buf);
+
 
 class PeerX 
 {
