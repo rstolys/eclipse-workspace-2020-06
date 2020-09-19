@@ -104,7 +104,7 @@ unsigned short updcrc(register int c, register unsigned crc)
 // 
 // Will create the CRC checksum to append to the block of data
 //
-// TODO:
+// TODO
 //
 // CRAIG COMMENTS: 
 // Should return via crc16nsP a crc16 in 'network byte order'.
@@ -147,7 +147,6 @@ void crc16ns(uint16_t* crc16nsP, uint8_t* buf)
   //}
   //else
   //sendline(checksum);
-  return;
   }
 
 
@@ -155,7 +154,7 @@ void crc16ns(uint16_t* crc16nsP, uint8_t* buf)
 // 
 // Will create an 8 bit checksum to append to the block of data
 //
-//  TODO: how to add?
+//
 //
 ////////////////////////////////////////////////////////////////
 void checksum8bit(uint8_t* myChkSum, uint8_t* buf, ssize_t bytesRd)
@@ -167,11 +166,10 @@ void checksum8bit(uint8_t* myChkSum, uint8_t* buf, ssize_t bytesRd)
     for (int ii = BLK_DATA_START; ii < bytesRd + BLK_DATA_START; ii++)
     {
         *myChkSum = *myChkSum + buf[ii];
-        //std :: cout << buf[ii] << std :: endl;
+        fprintf('% \n' , *myChkSum );
         //std :: cout << *myChkSum;
     }
-    //std :: cout << *myChkSum << std :: endl;
-    std :: cout << buf << std :: endl;
+
     return;
   }
 

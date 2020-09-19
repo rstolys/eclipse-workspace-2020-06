@@ -14,7 +14,7 @@
 //
 //  Complete sendFile Function -- done
 //
-//  Create function to calculate checksum of block
+//  Create function to calculate checksum of block -- done
 //  Fix/ Complete the CRC checksum function
 //
 //============================================================================

@@ -1,6 +1,15 @@
-01:18:08 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
+14:14:04 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
 make all 
-make: Nothing to be done for 'all'.
+Building file: ../src/PeerX.cpp
+Invoking: GCC C++ Compiler
+g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/PeerX.d" -MT"src/PeerX.o" -o "src/PeerX.o" "../src/PeerX.cpp"
+Finished building: ../src/PeerX.cpp
+ 
+Building target: Ensc351Part1
+Invoking: GCC C++ Linker
+g++  -o "Ensc351Part1"  ./src/Ensc351Part1.o ./src/PeerX.o ./src/SenderX.o ./src/myIO.o   
+Finished building target: Ensc351Part1
+ 
 
-01:18:09 Build Finished. 0 errors, 0 warnings. (took 635ms)
+14:14:05 Build Finished. 0 errors, 0 warnings. (took 1s.6ms)
 

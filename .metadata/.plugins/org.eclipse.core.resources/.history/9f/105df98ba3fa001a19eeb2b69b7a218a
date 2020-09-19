@@ -14,7 +14,7 @@
 //
 //  Complete sendFile Function -- done
 //
-//  Create function to calculate checksum of block
+//  Create function to calculate checksum of block -- done
 //  Fix/ Complete the CRC checksum function
 //
 //============================================================================
@@ -54,7 +54,6 @@ void testSenderX(const char* iFileName, int mediumD)
   //cout << "test sending with CRC" << endl;
   //xSender2.sendFile();
   //cout << "Sender finished with result: " << xSender2.result << endl << endl;
-
   }
 
 
