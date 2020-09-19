@@ -123,12 +123,12 @@ void crc16ns(uint16_t* crc16nsP, uint8_t* buf)
     //sendline(*cp);
 
     /* note the octal number in the line below */
-    oldcrc = updcrc((0377& *cp++), oldcrc);
+    oldcrc=updcrc((0377& *cp++), oldcrc);
 
     //checksum += *cp++;
 	  }
   //if (Crcflg) {
-  oldcrc = updcrc(0,updcrc(0,oldcrc));
+  oldcrc=updcrc(0,updcrc(0,oldcrc));
   /* at this point, the CRC16 is in oldcrc */
 
   /* This is where rbsb.c "wrote" the CRC16.  Note how the MSB
@@ -143,7 +143,7 @@ void crc16ns(uint16_t* crc16nsP, uint8_t* buf)
     */
 
   // ********* The next line needs to be changed ***********
-  *crc16nsP = oldcrc; // Changed from 0, to the value of CRC16
+  *crc16nsP = 0;
   //}
   //else
   //sendline(checksum);
@@ -154,15 +154,13 @@ void crc16ns(uint16_t* crc16nsP, uint8_t* buf)
 // 
 // Will create an 8 bit checksum to append to the block of data
 //
-//
+// TODO
 //
 ////////////////////////////////////////////////////////////////
 void checksum8bit(uint8_t* myChkSum, uint8_t* buf, ssize_t bytesRd)
   {
-    //Set as default value for now
+  //Set as default value for now
     *myChkSum = 0x00;
-
-    // If the last block chksum is calculated we only want to add to the end of the blk
     for (int ii = BLK_DATA_START; ii < bytesRd + BLK_DATA_START; ii++)
     {
         *myChkSum = *myChkSum + buf[ii];

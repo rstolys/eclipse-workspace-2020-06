@@ -110,7 +110,7 @@ void SenderX::genBlk(uint8_t* dataBytes)
     else 
       {
       uint8_t myChkSum;
-      checksum8bit(&myChkSum, &dataBuf[0], bytesRd);
+      checksum8bit(&myChkSum, &dataBuf[0]);
 
       //Append the checksum to the blkBuf
       blkBuf[CHK_SUM_START] = myChkSum;
