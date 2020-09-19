@@ -49,6 +49,14 @@ void ErrorPrinter (const char* functionCall, const char* file, int line, int err
 ////////////////////////////////////////////////////////////////
 void crc16ns (uint16_t* crc16nsP, uint8_t* buf);
 
+
+////////////////////////////////////////////////////////////////
+// 
+// Will create the 1 byte checksum to append to the block of data
+//
+////////////////////////////////////////////////////////////////
+//void <chooseName> (uint8_t* crc16nsP, uint8_t* buf);
+
 class PeerX 
 {
 public:
@@ -63,7 +71,7 @@ public:
 protected:
 	int mediumD;                // descriptor for serial port or delegate
 	const char* fileName;
-	int transferringFileD;	    // descriptor for file being read from or written to.
+	int transferringFileD;	    // descriptor for file being read from or written to. -- ??? can't be both
 	bool Crcflg;                // use CRC if true (or else checksum if false)
 
 	//Send a byte to the remote peer across the medium

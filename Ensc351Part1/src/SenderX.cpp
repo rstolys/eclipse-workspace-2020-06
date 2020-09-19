@@ -48,12 +48,14 @@ using namespace std;
 //
 // SenderX class constructor. Uses PeerX construtor through inheritance
 //
-// TO BE EDITTED
+// TODO
 //
 ////////////////////////////////////////////////////////////////
-SenderX::SenderX(const char *fname, int d):PeerX(d, fname), bytesRd(-1), blkNum(0)  
+SenderX::SenderX(const char *fname, int d):PeerX(d, fname), bytesRd(-1), blkNum(1)  
   {
   // ********* initialize blkNum as you like ***********
+  //TODO: Determine the size of the block based on crcFlag 
+  //try this: -- blkBuf = new uint8_t[((Crcflg) ? BLK_SZ_CRC : BLK_SZ_CS)];
   // *** but first block sent will be block #1, not #0
   }
 
@@ -62,7 +64,7 @@ SenderX::SenderX(const char *fname, int d):PeerX(d, fname), bytesRd(-1), blkNum(
 //
 // Will generate a block to be sent. Updates class variables to reflect actions
 //
-// TO BE EDITTED
+// TODO -- add checksum and header bytes to blockBuffer to be sent
 //
 // CRAIG COMMENTS:
 // tries to generate a block.  Updates the
@@ -83,10 +85,20 @@ void SenderX::genBlk(blkT blkBuf)
 	else 
     {
     // ********* and additional code must be written ***********
+    //If the bytesRd is less than 128 and greater than 0 then we want to pad the data until it is 128 bytes 
+      // pad with 0s
 
     // ********* The next couple lines need to be changed ***********
-    uint16_t myCrc16ns;
-    crc16ns(&myCrc16ns, &blkBuf[0]);
+    if(Crcflg)
+      {
+      uint16_t myCrc16ns;
+      crc16ns(&myCrc16ns, &blkBuf[0]);
+      }
+    else 
+      {
+      uint8_t myCS;
+      //createMyChecksum(&myCS, &blkBuf[0]);
+      }
     }
 	
   return;
@@ -99,7 +111,7 @@ void SenderX::genBlk(blkT blkBuf)
 //    will be to output file for PART 1
 // Will generate blocks and write them to the output file
 //
-// TO BE EDITTED
+// TODO
 //
 ////////////////////////////////////////////////////////////////
 void SenderX::sendFile()
@@ -120,18 +132,38 @@ void SenderX::sendFile()
 		// do the protocol, and simulate a receiver that positively acknowledges every
 		//	block that it receives.
 
-		// assume 'C' or NAK received from receiver to enable sending with CRC or checksum, respectively
-		genBlk(blkBuf); // prepare 1st block
-		while (bytesRd)
-		  {
-			blkNum++; // 1st block about to be sent or previous block was ACK'd
+
+      // assume 'C' or NAK received from receiver to enable sending with CRC or checksum, respectively
+
+		//TODO: look at best algortihm for sending data to reciever 
+    do
+      {
+      //Generate block of data to be sent
+		  genBlk(blkBuf); // prepare 1st block
+
+      //if there is data to send
+      if(bytesRd > 0)   
+        {
+        //Send  the block of data to the reciever  
+        myWrite(mediumD, blkBuf, bytesRd);
+
+
+        //Increment the block number
+        blkNum++;
+        }
+      }
+		while(bytesRd);
+		/*{   *****Probably don't need this, commented out for now*********
 
 			// ********* fill in some code here to write a block ***********
-
+    
+		  //blkNum++; // 1st block about to be sent or previous block was ACK'd
+                // This should only increment after the block has been sent
 			// assume sent block will be ACK'd
-			genBlk(blkBuf); // prepare next block
+			//genBlk(blkBuf); // prepare next block
 			// assume sent block was ACK'd
 		  };
+    */
 		// finish up the protocol, assuming the receiver behaves normally
 		// ********* fill in some code here ***********
 

@@ -31,6 +31,8 @@ public:
   
 
 private:
+  //TODO: Intialize as pointer to be defined later
+  //try this: -- uint8_t* blkBuf = NULL; 
 	uint8_t blkBuf[BLK_SZ_CRC];         // a  block
 	// blkT blkBuf;                     // A block // causes inability to debug this array.
 	uint8_t blkNum;	                    // number of the current block to be acknowledged

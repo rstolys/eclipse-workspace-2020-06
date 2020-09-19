@@ -5,6 +5,18 @@
 // Description : Starting point for Part 1 of Multipart Project
 //============================================================================
 
+//============================================================================
+//
+//  Add needed variables to senderX class
+//  Intialize SenderX Class
+//
+//  Create function to calculate checksum of block
+//  Complete genBlk function
+//
+//  Complete sendFile Function
+//
+//============================================================================
+
 #include <sys/stat.h>
 #include <errno.h>
 #include <stdlib.h>
