@@ -31,6 +31,7 @@
 #define BLK_NUM_COMP_BYTE     2                                   //Complement of block number byte
 #define BLK_DATA_START        3                                   //Data starting byte
 #define CHK_SUM_START         131                                 //Checksum starting byte (for both normal and crc)
+#define CRC_CHK_SUM_SIZE      2                                   //Number of bytes of CRC checksum
 
 #define SOH 0x01
 #define EOT 0x04

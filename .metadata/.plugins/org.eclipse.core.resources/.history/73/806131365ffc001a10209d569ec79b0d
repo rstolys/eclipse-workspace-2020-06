@@ -49,10 +49,10 @@ using namespace std;
 // SenderX class constructor. Uses PeerX construtor through inheritance
 //
 ////////////////////////////////////////////////////////////////
-SenderX::SenderX(const char *fname, int d, bool crcFlag):PeerX(d, fname), bytesRd(-1), blkNum(1)  
+SenderX::SenderX(const char *fname, int d):PeerX(d, fname), bytesRd(-1), blkNum(1)  
   {
-  //Set the maximum number of bytes in the block
-  numBytesInBlock = (crcFlag) ? BLK_SZ_CRC : BLK_SZ_CS; 
+  //Set the size of the block buffer based on the value of the Crcflg
+  blkBuf = new uint8_t[((Crcflg) ? BLK_SZ_CRC : BLK_SZ_CS)]; //a = new int[n]
   }
 
 
@@ -100,6 +100,7 @@ void SenderX::genBlk(uint8_t* dataBytes)
 
     
 
+
     //Calculate checksum depending on if we are using crc or normal checksum
     if(Crcflg)
       {
@@ -107,7 +108,7 @@ void SenderX::genBlk(uint8_t* dataBytes)
       crc16ns(&myCrc16ns, &dataBuf[0]);
 
       //Append the checksum to the blkBuf
-      memcpy(&blkBuf[CHK_SUM_START], &myCrc16ns, CRC_CHK_SUM_SIZE);
+      blkBuf[CHK_SUM_START] = myCrc16ns;
       }
     else 
       {
@@ -158,7 +159,7 @@ void SenderX::sendFile()
     while(bytesRd)
       {
       //Send each byte of the block
-      for(int byteNum = 0; byteNum < numBytesInBlock; byteNum++)
+      for(int byteNum = 0; byteNum < sizeof(blkBuf); byteNum++)
         {
         //Send byte to reciever
         sendByte(blkBuf[byteNum]);

@@ -1,10 +1,19 @@
-01:17:48 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
+19:20:25 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
+make all 
+Building file: ../src/PeerX.cpp
+Invoking: GCC C++ Compiler
+g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/PeerX.d" -MT"src/PeerX.o" -o "src/PeerX.o" "../src/PeerX.cpp"
+Finished building: ../src/PeerX.cpp
+ 
+Building target: Ensc351Part1
+Invoking: GCC C++ Linker
+g++  -o "Ensc351Part1"  ./src/Ensc351Part1.o ./src/PeerX.o ./src/SenderX.o ./src/myIO.o   
+Finished building target: Ensc351Part1
+ 
+19:20:58 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
 make all 
 make: Nothing to be done for 'all'.
-01:18:08 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
-make all 
-make: Nothing to be done for 'all'.
-13:48:29 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
+19:23:23 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
 make all 
 Building file: ../src/Ensc351Part1.cpp
 Invoking: GCC C++ Compiler
@@ -16,160 +25,82 @@ Invoking: GCC C++ Compiler
 g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/PeerX.d" -MT"src/PeerX.o" -o "src/PeerX.o" "../src/PeerX.cpp"
 Finished building: ../src/PeerX.cpp
  
-Building file: ../src/SenderX.cpp
-Invoking: GCC C++ Compiler
-g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/SenderX.d" -MT"src/SenderX.o" -o "src/SenderX.o" "../src/SenderX.cpp"
-../src/SenderX.cpp: In member function ‘void SenderX::genBlk(uint8_t*)’:
-../src/SenderX.cpp:113:51: error: too many arguments to function ‘void checksum8bit(uint8_t*, uint8_t*)’
-  113 |       checksum8bit(&myChkSum, &dataBuf[0], bytesRd);
-      |                                                   ^
-In file included from ../src/SenderX.h:6,
-                 from ../src/SenderX.cpp:42:
-../src/PeerX.h:65:6: note: declared here
-   65 | void checksum8bit(uint8_t* myChkSum, uint8_t* buf);
-      |      ^~~~~~~~~~~~
-../src/SenderX.cpp: In member function ‘void SenderX::sendFile()’:
-../src/SenderX.cpp:159:36: warning: comparison of integer expressions of different signedness: ‘int’ and ‘long unsigned int’ [-Wsign-compare]
-  159 |       for(int byteNum = 0; byteNum < sizeof(blkBuf); byteNum++)
-      |                            ~~~~~~~~^~~~~~~~~~~~~~~~
-make: *** [src/subdir.mk:29: src/SenderX.o] Error 1
-"make all" terminated with exit code 2. Build might be incomplete.
-13:50:40 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
+Building target: Ensc351Part1
+Invoking: GCC C++ Linker
+g++  -o "Ensc351Part1"  ./src/Ensc351Part1.o ./src/PeerX.o ./src/SenderX.o ./src/myIO.o   
+Finished building target: Ensc351Part1
+ 
+19:25:47 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
 make all 
 Building file: ../src/Ensc351Part1.cpp
 Invoking: GCC C++ Compiler
 g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/Ensc351Part1.d" -MT"src/Ensc351Part1.o" -o "src/Ensc351Part1.o" "../src/Ensc351Part1.cpp"
 Finished building: ../src/Ensc351Part1.cpp
  
-Building file: ../src/PeerX.cpp
-Invoking: GCC C++ Compiler
-g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/PeerX.d" -MT"src/PeerX.o" -o "src/PeerX.o" "../src/PeerX.cpp"
-Finished building: ../src/PeerX.cpp
- 
 Building file: ../src/SenderX.cpp
 Invoking: GCC C++ Compiler
 g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/SenderX.d" -MT"src/SenderX.o" -o "src/SenderX.o" "../src/SenderX.cpp"
 ../src/SenderX.cpp: In member function ‘void SenderX::sendFile()’:
-../src/SenderX.cpp:159:36: warning: comparison of integer expressions of different signedness: ‘int’ and ‘long unsigned int’ [-Wsign-compare]
-  159 |       for(int byteNum = 0; byteNum < sizeof(blkBuf); byteNum++)
+../src/SenderX.cpp:161:36: warning: comparison of integer expressions of different signedness: ‘int’ and ‘long unsigned int’ [-Wsign-compare]
+  161 |       for(int byteNum = 0; byteNum < sizeof(blkBuf); byteNum++)
       |                            ~~~~~~~~^~~~~~~~~~~~~~~~
 Finished building: ../src/SenderX.cpp
  
-Building file: ../src/myIO.cpp
+Building target: Ensc351Part1
+Invoking: GCC C++ Linker
+g++  -o "Ensc351Part1"  ./src/Ensc351Part1.o ./src/PeerX.o ./src/SenderX.o ./src/myIO.o   
+Finished building target: Ensc351Part1
+ 
+19:37:55 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
+make all 
+Building file: ../src/Ensc351Part1.cpp
 Invoking: GCC C++ Compiler
-g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/myIO.d" -MT"src/myIO.o" -o "src/myIO.o" "../src/myIO.cpp"
-Finished building: ../src/myIO.cpp
+g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/Ensc351Part1.d" -MT"src/Ensc351Part1.o" -o "src/Ensc351Part1.o" "../src/Ensc351Part1.cpp"
+Finished building: ../src/Ensc351Part1.cpp
+ 
+Building file: ../src/SenderX.cpp
+Invoking: GCC C++ Compiler
+g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/SenderX.d" -MT"src/SenderX.o" -o "src/SenderX.o" "../src/SenderX.cpp"
+Finished building: ../src/SenderX.cpp
  
 Building target: Ensc351Part1
 Invoking: GCC C++ Linker
 g++  -o "Ensc351Part1"  ./src/Ensc351Part1.o ./src/PeerX.o ./src/SenderX.o ./src/myIO.o   
 Finished building target: Ensc351Part1
  
-13:56:24 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
+19:39:19 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
 make all 
-Building file: ../src/PeerX.cpp
+make: Nothing to be done for 'all'.
+19:41:03 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
+make all 
+Building file: ../src/Ensc351Part1.cpp
 Invoking: GCC C++ Compiler
-g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/PeerX.d" -MT"src/PeerX.o" -o "src/PeerX.o" "../src/PeerX.cpp"
-Finished building: ../src/PeerX.cpp
+g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/Ensc351Part1.d" -MT"src/Ensc351Part1.o" -o "src/Ensc351Part1.o" "../src/Ensc351Part1.cpp"
+Finished building: ../src/Ensc351Part1.cpp
+ 
+Building file: ../src/SenderX.cpp
+Invoking: GCC C++ Compiler
+g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/SenderX.d" -MT"src/SenderX.o" -o "src/SenderX.o" "../src/SenderX.cpp"
+Finished building: ../src/SenderX.cpp
  
 Building target: Ensc351Part1
 Invoking: GCC C++ Linker
 g++  -o "Ensc351Part1"  ./src/Ensc351Part1.o ./src/PeerX.o ./src/SenderX.o ./src/myIO.o   
 Finished building target: Ensc351Part1
  
-13:58:49 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
+19:42:46 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
 make all 
-Building file: ../src/PeerX.cpp
+Building file: ../src/Ensc351Part1.cpp
 Invoking: GCC C++ Compiler
-g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/PeerX.d" -MT"src/PeerX.o" -o "src/PeerX.o" "../src/PeerX.cpp"
-../src/PeerX.cpp:169:17: warning: multi-character character constant [-Wmultichar]
-  169 |         fprintf('% \n' , *myChkSum );
-      |                 ^~~~~~
-../src/PeerX.cpp: In function ‘void checksum8bit(uint8_t*, uint8_t*, ssize_t)’:
-../src/PeerX.cpp:169:17: error: invalid conversion from ‘int’ to ‘FILE*’ {aka ‘_IO_FILE*’} [-fpermissive]
-In file included from ../src/PeerX.cpp:36:
-/usr/include/stdio.h:326:38: note:   initializing argument 1 of ‘int fprintf(FILE*, const char*, ...)’
-  326 | extern int fprintf (FILE *__restrict __stream,
-      |                     ~~~~~~~~~~~~~~~~~^~~~~~~~
-../src/PeerX.cpp:169:26: error: invalid conversion from ‘uint8_t’ {aka ‘unsigned char’} to ‘const char*’ [-fpermissive]
-  169 |         fprintf('% \n' , *myChkSum );
-      |                          ^~~~~~~~~
-      |                          |
-      |                          uint8_t {aka unsigned char}
-In file included from ../src/PeerX.cpp:36:
-/usr/include/stdio.h:327:30: note:   initializing argument 2 of ‘int fprintf(FILE*, const char*, ...)’
-  327 |       const char *__restrict __format, ...);
-      |       ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
-../src/PeerX.cpp:169:36: warning: format not a string literal and no format arguments [-Wformat-security]
-  169 |         fprintf('% \n' , *myChkSum );
-      |                                    ^
-make: *** [src/subdir.mk:29: src/PeerX.o] Error 1
-"make all" terminated with exit code 2. Build might be incomplete.
-13:59:08 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
-make all 
-Building file: ../src/PeerX.cpp
-Invoking: GCC C++ Compiler
-g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/PeerX.d" -MT"src/PeerX.o" -o "src/PeerX.o" "../src/PeerX.cpp"
-../src/PeerX.cpp:169:17: warning: multi-character character constant [-Wmultichar]
-  169 |         fprintf('%d \n' , *myChkSum );
-      |                 ^~~~~~~
-../src/PeerX.cpp: In function ‘void checksum8bit(uint8_t*, uint8_t*, ssize_t)’:
-../src/PeerX.cpp:169:17: error: invalid conversion from ‘int’ to ‘FILE*’ {aka ‘_IO_FILE*’} [-fpermissive]
-In file included from ../src/PeerX.cpp:36:
-/usr/include/stdio.h:326:38: note:   initializing argument 1 of ‘int fprintf(FILE*, const char*, ...)’
-  326 | extern int fprintf (FILE *__restrict __stream,
-      |                     ~~~~~~~~~~~~~~~~~^~~~~~~~
-../src/PeerX.cpp:169:27: error: invalid conversion from ‘uint8_t’ {aka ‘unsigned char’} to ‘const char*’ [-fpermissive]
-  169 |         fprintf('%d \n' , *myChkSum );
-      |                           ^~~~~~~~~
-      |                           |
-      |                           uint8_t {aka unsigned char}
-In file included from ../src/PeerX.cpp:36:
-/usr/include/stdio.h:327:30: note:   initializing argument 2 of ‘int fprintf(FILE*, const char*, ...)’
-  327 |       const char *__restrict __format, ...);
-      |       ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
-../src/PeerX.cpp:169:37: warning: format not a string literal and no format arguments [-Wformat-security]
-  169 |         fprintf('%d \n' , *myChkSum );
-      |                                     ^
-make: *** [src/subdir.mk:29: src/PeerX.o] Error 1
-"make all" terminated with exit code 2. Build might be incomplete.
-14:00:01 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
-make all 
-Building file: ../src/PeerX.cpp
-Invoking: GCC C++ Compiler
-g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/PeerX.d" -MT"src/PeerX.o" -o "src/PeerX.o" "../src/PeerX.cpp"
-Finished building: ../src/PeerX.cpp
+g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/Ensc351Part1.d" -MT"src/Ensc351Part1.o" -o "src/Ensc351Part1.o" "../src/Ensc351Part1.cpp"
+Finished building: ../src/Ensc351Part1.cpp
  
 Building target: Ensc351Part1
 Invoking: GCC C++ Linker
 g++  -o "Ensc351Part1"  ./src/Ensc351Part1.o ./src/PeerX.o ./src/SenderX.o ./src/myIO.o   
 Finished building target: Ensc351Part1
  
-14:00:44 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
-make all 
-Building file: ../src/PeerX.cpp
-Invoking: GCC C++ Compiler
-g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/PeerX.d" -MT"src/PeerX.o" -o "src/PeerX.o" "../src/PeerX.cpp"
-Finished building: ../src/PeerX.cpp
- 
-Building target: Ensc351Part1
-Invoking: GCC C++ Linker
-g++  -o "Ensc351Part1"  ./src/Ensc351Part1.o ./src/PeerX.o ./src/SenderX.o ./src/myIO.o   
-Finished building target: Ensc351Part1
- 
-14:05:51 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
-make all 
-Building file: ../src/PeerX.cpp
-Invoking: GCC C++ Compiler
-g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/PeerX.d" -MT"src/PeerX.o" -o "src/PeerX.o" "../src/PeerX.cpp"
-Finished building: ../src/PeerX.cpp
- 
-Building target: Ensc351Part1
-Invoking: GCC C++ Linker
-g++  -o "Ensc351Part1"  ./src/Ensc351Part1.o ./src/PeerX.o ./src/SenderX.o ./src/myIO.o   
-Finished building target: Ensc351Part1
- 
-14:11:32 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
+19:46:03 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
 make all 
 Building file: ../src/Ensc351Part1.cpp
 Invoking: GCC C++ Compiler
@@ -181,17 +112,10 @@ Invoking: GCC C++ Compiler
 g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/PeerX.d" -MT"src/PeerX.o" -o "src/PeerX.o" "../src/PeerX.cpp"
 Finished building: ../src/PeerX.cpp
  
-Building target: Ensc351Part1
-Invoking: GCC C++ Linker
-g++  -o "Ensc351Part1"  ./src/Ensc351Part1.o ./src/PeerX.o ./src/SenderX.o ./src/myIO.o   
-Finished building target: Ensc351Part1
- 
-14:14:04 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
-make all 
-Building file: ../src/PeerX.cpp
+Building file: ../src/SenderX.cpp
 Invoking: GCC C++ Compiler
-g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/PeerX.d" -MT"src/PeerX.o" -o "src/PeerX.o" "../src/PeerX.cpp"
-Finished building: ../src/PeerX.cpp
+g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/SenderX.d" -MT"src/SenderX.o" -o "src/SenderX.o" "../src/SenderX.cpp"
+Finished building: ../src/SenderX.cpp
  
 Building target: Ensc351Part1
 Invoking: GCC C++ Linker

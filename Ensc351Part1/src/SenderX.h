@@ -15,7 +15,7 @@ class SenderX : public PeerX
     // SenderX class constructor. Uses PeerX construtor through inheritance
     //
     ////////////////////////////////////////////////////////////////
-    SenderX(const char *fname, int d);
+    SenderX(const char *fname, int d, bool crcFlag);
 
 
     ////////////////////////////////////////////////////////////////
@@ -31,9 +31,10 @@ class SenderX : public PeerX
   
 
   private:
-    uint8_t* blkBuf = NULL;               //Block of data to be defined in size in class constructor
-    uint8_t  dataBuf[CHUNK_SZ];           //A data block
-    uint8_t  blkNum;	                    //Number of the current blocks to be acknowledged
+    uint8_t blkBuf[BLK_SZ_CRC];          //Block of data defined to be largest size required
+    int     numBytesInBlock; 
+    uint8_t dataBuf[CHUNK_SZ];           //A data block
+    uint8_t blkNum;	                     //Number of the current blocks to be acknowledged
 
     ////////////////////////////////////////////////////////////////
     //

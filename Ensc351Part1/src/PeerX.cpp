@@ -171,7 +171,7 @@ void checksum8bit(uint8_t* myChkSum, uint8_t* buf, ssize_t bytesRd)
         //std :: cout << *myChkSum;
     }
     //std :: cout << *myChkSum << std :: endl;
-    std :: cout << buf << std :: endl;
+    //std :: cout << buf << std :: endl;
     return;
   }
 

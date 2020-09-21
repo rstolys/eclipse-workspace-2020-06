@@ -1,9 +1,19 @@
-14:14:04 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
+19:46:03 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
 make all 
+Building file: ../src/Ensc351Part1.cpp
+Invoking: GCC C++ Compiler
+g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/Ensc351Part1.d" -MT"src/Ensc351Part1.o" -o "src/Ensc351Part1.o" "../src/Ensc351Part1.cpp"
+Finished building: ../src/Ensc351Part1.cpp
+ 
 Building file: ../src/PeerX.cpp
 Invoking: GCC C++ Compiler
 g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/PeerX.d" -MT"src/PeerX.o" -o "src/PeerX.o" "../src/PeerX.cpp"
 Finished building: ../src/PeerX.cpp
+ 
+Building file: ../src/SenderX.cpp
+Invoking: GCC C++ Compiler
+g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/SenderX.d" -MT"src/SenderX.o" -o "src/SenderX.o" "../src/SenderX.cpp"
+Finished building: ../src/SenderX.cpp
  
 Building target: Ensc351Part1
 Invoking: GCC C++ Linker
@@ -11,5 +21,5 @@ g++  -o "Ensc351Part1"  ./src/Ensc351Part1.o ./src/PeerX.o ./src/SenderX.o ./src
 Finished building target: Ensc351Part1
  
 
-14:14:05 Build Finished. 0 errors, 0 warnings. (took 1s.6ms)
+19:46:05 Build Finished. 0 errors, 0 warnings. (took 2s.163ms)
 

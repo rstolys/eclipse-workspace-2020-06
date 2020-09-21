@@ -39,21 +39,21 @@ using namespace std;
 void testSenderX(const char* iFileName, int mediumD)
   {
   //Testing using checksum
-  //SenderX xSender(iFileName, mediumD, false);
-  //xSender.Crcflg = false;                   // test sending with checksum
+  SenderX xSender(iFileName, mediumD, false);
+  xSender.Crcflg = false;                   // test sending with checksum
 
-  //cout << "test sending with checksum" << endl;
-  //xSender.sendFile();
-  //cout << "Sender finished with result: " << xSender.result << endl << endl;
+  cout << "test sending with checksum" << endl;
+  xSender.sendFile();
+  cout << "Sender finished with result: " << xSender.result << endl << endl;
 
 
   //Testing using CRC
-  SenderX xSender2(iFileName, mediumD, true);
-  xSender2.Crcflg = true;                   // test sending with CRC16
+  //SenderX xSender2(iFileName, mediumD);
+  //xSender2.Crcflg = true;                   // test sending with CRC16
 
-  cout << "test sending with CRC" << endl;
-  xSender2.sendFile();
-  cout << "Sender finished with result: " << xSender2.result << endl << endl;
+  //cout << "test sending with CRC" << endl;
+  //xSender2.sendFile();
+  //cout << "Sender finished with result: " << xSender2.result << endl << endl;
 
   }
 
