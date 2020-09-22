@@ -104,8 +104,6 @@ unsigned short updcrc(register int c, register unsigned crc)
 // 
 // Will create the CRC checksum to append to the block of data
 //
-// TODO:
-//
 // CRAIG COMMENTS: 
 // Should return via crc16nsP a crc16 in 'network byte order'.
 // Derived from code in "rbsb.c" (see above).
@@ -114,39 +112,23 @@ unsigned short updcrc(register int c, register unsigned crc)
 ////////////////////////////////////////////////////////////////
 void crc16ns(uint16_t* crc16nsP, uint8_t* buf)
   {
-	 register int wcj;
-	 register uint8_t *cp;
-	 unsigned oldcrc=0;
+  register int wcj;
+  register uint8_t *cp;
+  unsigned oldcrc = 0;
 
-	for (wcj=CHUNK_SZ,cp=buf; --wcj>=0; ) 
+	for(wcj = CHUNK_SZ, cp = buf; --wcj >= 0; ) 
     {
-    //sendline(*cp);
-
-    /* note the octal number in the line below */
-    oldcrc = updcrc((0377& *cp++), oldcrc);
-
-    //checksum += *cp++;
+    oldcrc = updcrc((0377& *cp++), oldcrc);       //For each byte, update the crc
 	  }
-  //if (Crcflg) {
+
+  //Set oldcrc to the correct value of the crc for the block of data
   oldcrc = updcrc(0,updcrc(0,oldcrc));
-  /* at this point, the CRC16 is in oldcrc */
+  
+  //
+  // TODO: put bytes in network byte order -- MSB byte first -- need to know endianness of processor
+  //
+  *crc16nsP = oldcrc;             // Changed from 0, to the value of CRC16
 
-  /* This is where rbsb.c "wrote" the CRC16.  Note how the MSB
-    * is sent before the LSB
-    * sendline is a function to "send a byte over a telephone line"
-    */
-  //sendline((int)oldcrc>>8);
-  //sendline((int)oldcrc);
-
-  /* in our case, we want the bytes to be in the memory pointed to by crc16nsP
-    * in the correct 'network byte order'
-    */
-
-  // ********* The next line needs to be changed ***********
-  *crc16nsP = oldcrc; // Changed from 0, to the value of CRC16
-  //}
-  //else
-  //sendline(checksum);
   return;
   }
 
@@ -154,8 +136,6 @@ void crc16ns(uint16_t* crc16nsP, uint8_t* buf)
 ////////////////////////////////////////////////////////////////
 // 
 // Will create an 8 bit checksum to append to the block of data
-//
-//  TODO: how to add?
 //
 ////////////////////////////////////////////////////////////////
 void checksum8bit(uint8_t* myChkSum, uint8_t* buf, ssize_t bytesRd)
@@ -165,13 +145,11 @@ void checksum8bit(uint8_t* myChkSum, uint8_t* buf, ssize_t bytesRd)
 
     // If the last block chksum is calculated we only want to add to the end of the blk
     for (int ii = BLK_DATA_START; ii < bytesRd + BLK_DATA_START; ii++)
-    {
-        *myChkSum = *myChkSum + buf[ii];
-        //std :: cout << buf[ii] << std :: endl;
-        //std :: cout << *myChkSum;
-    }
-    //std :: cout << *myChkSum << std :: endl;
-    //std :: cout << buf << std :: endl;
+      {
+      //By using binary and operation we force a binary operation and discard the carry
+      *myChkSum = (*myChkSum & 0xFF) + (buf[ii] & 0xFF) & 0xFF;      
+      }
+
     return;
   }
 
