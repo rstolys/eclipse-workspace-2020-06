@@ -134,11 +134,17 @@ void crc16ns(uint16_t* crc16nsP, uint8_t* buf, bool bigEndian)
   else
     {
     //oldcrc has crc value in the variable as <LSB><MSB>
+      /*
     uint8_t MSB = (uint8_t) oldcrc;
     uint8_t LSB = (uint8_t) oldcrc >> 8;
 
     crc16nsP[0] = MSB;
     crc16nsP[1] = LSB;
+    std:: cout << '\n' << crc16nsP[0] << '\n' << crc16nsP[1];
+    */
+
+     *crc16nsP = (((oldcrc & 0x00FF) << 8) | ((oldcrc & 0xFF00) >> 8 ));
+
     }
   
   return;
