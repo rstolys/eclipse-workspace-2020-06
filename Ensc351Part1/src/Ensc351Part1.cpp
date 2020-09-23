@@ -39,16 +39,16 @@ using namespace std;
 void testSenderX(const char* iFileName, int mediumD)
   {
   //Testing using checksum
-  SenderX xSender(iFileName, mediumD, false);
-  xSender.Crcflg = false;                   // test sending with checksum
+  //SenderX xSender(iFileName, mediumD);
+  //xSender.Crcflg = false;                   // test sending with checksum
 
-  cout << "test sending with checksum" << endl;
-  xSender.sendFile();
-  cout << "Sender finished with result: " << xSender.result << endl << endl;
+  //cout << "test sending with checksum" << endl;
+  //xSender.sendFile();
+  //cout << "Sender finished with result: " << xSender.result << endl << endl;
 
 
   //Testing using CRC
-  SenderX xSender2(iFileName, mediumD, true);
+  SenderX xSender2(iFileName, mediumD);
   xSender2.Crcflg = true;                   // test sending with CRC16
 
   cout << "test sending with CRC" << endl;
@@ -89,7 +89,7 @@ int main()
     {
     //testSenderX("/doesNotExist.txt", mediumD);                        // file does not exist
     //testSenderX("/home/osboxes/.sudo_as_admin_successful", mediumD);  // empty file
-    testSenderX("/home/osboxes/hs_err_pid11506.log", mediumD);                 // normal text file
+    testSenderX("/home/osboxes/hs_err_pid11506.log", mediumD);          // normal text file
 
     if (-1 == myClose(mediumD)) 
       {

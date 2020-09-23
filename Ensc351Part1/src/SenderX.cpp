@@ -49,10 +49,9 @@ using namespace std;
 // SenderX class constructor. Uses PeerX construtor through inheritance
 //
 ////////////////////////////////////////////////////////////////
-SenderX::SenderX(const char *fname, int d, bool crcFlag):PeerX(d, fname), bytesRd(-1), blkNum(1)  
+SenderX::SenderX(const char *fname, int d):PeerX(d, fname), bytesRd(-1), blkNum(1), oneByte(0) 
   {
-  //Set the maximum number of bytes in the block
-  numBytesInBlock = (crcFlag) ? BLK_SZ_CRC : BLK_SZ_CS; 
+  //No intialization needed
   }
 
 
@@ -112,7 +111,7 @@ void SenderX::genBlk(uint8_t* dataBytes)
     else 
       {
       uint8_t myChkSum;
-      checksum8bit(&myChkSum, &dataBuf[0], bytesRd);
+      checksum8bit(&myChkSum, &dataBuf[0]);
 
       //Append the checksum to the blkBuf
       blkBuf[CHK_SUM_START] = myChkSum;
@@ -137,7 +136,8 @@ void SenderX::sendFile()
 	if(transferringFileD == -1) 
     {
     //Show that we have experienced an error and are aborting the current transmission
-    sendByte(CAN);
+    oneByte = CAN;
+    sendByte(oneByte);
 
     //Log the error
 		cout /* cerr */ << "Error opening input file named: " << fileName << endl;
@@ -146,6 +146,9 @@ void SenderX::sendFile()
 	else 
     {
 		cout << "Sender will send " << fileName << endl;
+
+    //Determine if we are using 8 or 16 bit checksum
+    int numBytesInBlock = (Crcflg) ? BLK_SZ_CRC : BLK_SZ_CS;
 
     //***
     //Assuming startup protocol has already begun and we have determined which checksum type we are using CRC 16 bit vs normal 8 bit
@@ -177,7 +180,8 @@ void SenderX::sendFile()
     
 		
     //Now that all of the data blocks have been sent, send a end of transmission byte
-    sendByte(EOT);
+    oneByte = EOT;
+    sendByte(oneByte);
 
     //Close file now that we are finished with transmission
 		if(-1 == myClose(transferringFileD))
