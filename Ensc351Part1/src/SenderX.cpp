@@ -104,7 +104,7 @@ void SenderX::genBlk(uint8_t* dataBytes)
     if(Crcflg)
       {
       uint16_t myCrc16ns;
-      crc16ns(&myCrc16ns, &dataBuf[0]);
+      crc16ns(&myCrc16ns, &dataBuf[0], bigEndian);
 
       //Append the checksum to the blkBuf
       memcpy(&blkBuf[CHK_SUM_START], &myCrc16ns, CRC_CHK_SUM_SIZE);

@@ -110,7 +110,7 @@ unsigned short updcrc(register int c, register unsigned crc)
 // Line comments in function below show lines removed from original code.
 //
 ////////////////////////////////////////////////////////////////
-void crc16ns(uint16_t* crc16nsP, uint8_t* buf)
+void crc16ns(uint16_t* crc16nsP, uint8_t* buf, bool bigEndian)
   {
   register int wcj;
   register uint8_t *cp;
@@ -118,17 +118,29 @@ void crc16ns(uint16_t* crc16nsP, uint8_t* buf)
 
 	for(wcj = CHUNK_SZ, cp = buf; --wcj >= 0; ) 
     {
-    oldcrc = updcrc((0377& *cp++), oldcrc);       //For each byte, update the crc
+    oldcrc = updcrc((0377 & *cp++), oldcrc);       //For each byte, update the crc
 	  }
 
   //Set oldcrc to the correct value of the crc for the block of data
-  oldcrc = updcrc(0,updcrc(0,oldcrc));
+  oldcrc = updcrc(0, updcrc(0, oldcrc));
   
   //
   // TODO: put bytes in network byte order -- MSB byte first -- need to know endianness of processor
   //
-  *crc16nsP = oldcrc;             // Changed from 0, to the value of CRC16
+  if(bigEndian)
+    {
+    *crc16nsP = oldcrc;                             //We are already in network byte order
+    }
+  else
+    {
+    //oldcrc has crc value in the variable as <LSB><MSB>
+    uint8_t MSB = (uint8_t) oldcrc;
+    uint8_t LSB = (uint8_t) oldcrc >> 8;
 
+    crc16nsP[0] = MSB;
+    crc16nsP[1] = LSB;
+    }
+  
   return;
   }
 
@@ -147,7 +159,7 @@ void checksum8bit(uint8_t* myChkSum, uint8_t* buf, ssize_t bytesRd)
     for (int ii = BLK_DATA_START; ii < bytesRd + BLK_DATA_START; ii++)
       {
       //By using binary and operation we force a binary operation and discard the carry
-      *myChkSum = (*myChkSum & 0xFF) + (buf[ii] & 0xFF) & 0xFF;      
+      *myChkSum = ((*myChkSum & 0xFF) + (buf[ii] & 0xFF)) & 0xFF;      
       }
 
     return;
@@ -162,7 +174,22 @@ void checksum8bit(uint8_t* myChkSum, uint8_t* buf, ssize_t bytesRd)
 PeerX::PeerX(int d, const char *fname, bool useCrc)
 :result("ResultNotSet"), mediumD(d), fileName(fname), transferringFileD(-1), Crcflg(useCrc)   //Set default values
   {
-  //No Initalization code needed -- all variables initalized above
+  //
+  //Check endianness of processor
+  //
+  int n = 1;
+
+  //This code was found using reference [1] and [2]
+  //*(char*) will produce value of 0xFF to be compared to int n.
+  if(*(char *) & n == 1)  
+    { 
+    bigEndian = false;          //Set flag to show we have a little endian processor
+    }
+  else 
+    {
+    bigEndian = true;           //Set flag to show we have a big endian processor
+    }
+  
   }
 
 
