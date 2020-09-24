@@ -1,55 +1,11 @@
-19:20:21 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
-make all 
-make: Nothing to be done for 'all'.
-19:21:30 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
-make all 
-make: Nothing to be done for 'all'.
-19:21:35 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
-make all 
-make: Nothing to be done for 'all'.
-19:24:03 **** Clean-only build of configuration DebugMips for project Ensc351Part1 ****
-make clean 
-rm -rf  ./src/Ensc351Part1.o ./src/PeerX.o ./src/SenderX.o ./src/myIO.o  ./src/Ensc351Part1.d ./src/PeerX.d ./src/SenderX.d ./src/myIO.d  Ensc351Part1
- 
-19:24:05 **** Incremental Build of configuration DebugMips for project Ensc351Part1 ****
+14:26:48 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
 make all 
 Building file: ../src/Ensc351Part1.cpp
-Invoking: Cross G++ Compiler
-mips-linux-gnu-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/Ensc351Part1.d" -MT"src/Ensc351Part1.o" -o "src/Ensc351Part1.o" "../src/Ensc351Part1.cpp"
+Invoking: GCC C++ Compiler
+g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/Ensc351Part1.d" -MT"src/Ensc351Part1.o" -o "src/Ensc351Part1.o" "../src/Ensc351Part1.cpp"
 Finished building: ../src/Ensc351Part1.cpp
  
 Building file: ../src/PeerX.cpp
-Invoking: Cross G++ Compiler
-mips-linux-gnu-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/PeerX.d" -MT"src/PeerX.o" -o "src/PeerX.o" "../src/PeerX.cpp"
-Finished building: ../src/PeerX.cpp
- 
-Building file: ../src/SenderX.cpp
-Invoking: Cross G++ Compiler
-mips-linux-gnu-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/SenderX.d" -MT"src/SenderX.o" -o "src/SenderX.o" "../src/SenderX.cpp"
-Finished building: ../src/SenderX.cpp
- 
-Building file: ../src/myIO.cpp
-Invoking: Cross G++ Compiler
-mips-linux-gnu-g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/myIO.d" -MT"src/myIO.o" -o "src/myIO.o" "../src/myIO.cpp"
-Finished building: ../src/myIO.cpp
- 
-Building target: Ensc351Part1
-Invoking: Cross G++ Linker
-mips-linux-gnu-g++ -static -o "Ensc351Part1"  ./src/Ensc351Part1.o ./src/PeerX.o ./src/SenderX.o ./src/myIO.o   
-Finished building target: Ensc351Part1
- 
-19:24:20 **** Incremental Build of configuration DebugMips for project Ensc351Part1 ****
-make all 
-make: Nothing to be done for 'all'.
-19:26:10 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
-make all 
-make: Nothing to be done for 'all'.
-19:26:12 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
-make all 
-make: Nothing to be done for 'all'.
-19:27:51 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
-make all 
-Building file: ../src/PeerX.cpp
 Invoking: GCC C++ Compiler
 g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/PeerX.d" -MT"src/PeerX.o" -o "src/PeerX.o" "../src/PeerX.cpp"
 Finished building: ../src/PeerX.cpp
@@ -59,72 +15,6 @@ Invoking: GCC C++ Linker
 g++  -o "Ensc351Part1"  ./src/Ensc351Part1.o ./src/PeerX.o ./src/SenderX.o ./src/myIO.o   
 Finished building target: Ensc351Part1
  
-19:27:57 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
+14:26:57 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
 make all 
 make: Nothing to be done for 'all'.
-19:28:37 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
-make all 
-make: Nothing to be done for 'all'.
-19:28:38 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
-make all 
-make: Nothing to be done for 'all'.
-19:29:56 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
-make all 
-Building file: ../src/PeerX.cpp
-Invoking: GCC C++ Compiler
-g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/PeerX.d" -MT"src/PeerX.o" -o "src/PeerX.o" "../src/PeerX.cpp"
-Finished building: ../src/PeerX.cpp
- 
-Building target: Ensc351Part1
-Invoking: GCC C++ Linker
-g++  -o "Ensc351Part1"  ./src/Ensc351Part1.o ./src/PeerX.o ./src/SenderX.o ./src/myIO.o   
-Finished building target: Ensc351Part1
- 
-19:30:32 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
-make all 
-Building file: ../src/PeerX.cpp
-Invoking: GCC C++ Compiler
-g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/PeerX.d" -MT"src/PeerX.o" -o "src/PeerX.o" "../src/PeerX.cpp"
-Finished building: ../src/PeerX.cpp
- 
-Building target: Ensc351Part1
-Invoking: GCC C++ Linker
-g++  -o "Ensc351Part1"  ./src/Ensc351Part1.o ./src/PeerX.o ./src/SenderX.o ./src/myIO.o   
-Finished building target: Ensc351Part1
- 
-19:33:54 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
-make all 
-Building file: ../src/PeerX.cpp
-Invoking: GCC C++ Compiler
-g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/PeerX.d" -MT"src/PeerX.o" -o "src/PeerX.o" "../src/PeerX.cpp"
-Finished building: ../src/PeerX.cpp
- 
-Building target: Ensc351Part1
-Invoking: GCC C++ Linker
-g++  -o "Ensc351Part1"  ./src/Ensc351Part1.o ./src/PeerX.o ./src/SenderX.o ./src/myIO.o   
-Finished building target: Ensc351Part1
- 
-19:35:49 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
-make all 
-Building file: ../src/PeerX.cpp
-Invoking: GCC C++ Compiler
-g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/PeerX.d" -MT"src/PeerX.o" -o "src/PeerX.o" "../src/PeerX.cpp"
-Finished building: ../src/PeerX.cpp
- 
-Building target: Ensc351Part1
-Invoking: GCC C++ Linker
-g++  -o "Ensc351Part1"  ./src/Ensc351Part1.o ./src/PeerX.o ./src/SenderX.o ./src/myIO.o   
-Finished building target: Ensc351Part1
- 
-19:37:05 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
-make all 
-Building file: ../src/PeerX.cpp
-Invoking: GCC C++ Compiler
-g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/PeerX.d" -MT"src/PeerX.o" -o "src/PeerX.o" "../src/PeerX.cpp"
-Finished building: ../src/PeerX.cpp
- 
-Building target: Ensc351Part1
-Invoking: GCC C++ Linker
-g++  -o "Ensc351Part1"  ./src/Ensc351Part1.o ./src/PeerX.o ./src/SenderX.o ./src/myIO.o   
-Finished building target: Ensc351Part1
- 

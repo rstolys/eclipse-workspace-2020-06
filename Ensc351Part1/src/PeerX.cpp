@@ -158,7 +158,7 @@ void checksum8bit(uint8_t* myChkSum, uint8_t* buf)
     for (int ii = 0; ii < CHUNK_SZ; ii++)
         {
         //Will add the buffer value to the chkSum value for each byte of the data
-        chkSum += (buf[ii] & 0xFF);
+        chkSum += (uint8_t) buf[ii];
         }
 
     //Set the checksum value 

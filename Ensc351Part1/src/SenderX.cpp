@@ -1,17 +1,17 @@
 //============================================================================
 //
-//% Student Name 1: student1
-//% Student 1 #: 123456781
-//% Student 1 userid (email): stu1 (stu1@sfu.ca)
+//% Student Name 1: Ryan Stolys
+//% Student 1 #: 301303127
+//% Student 1 userid (email): rstolys (rstolys@sfu.ca)
 //
-//% Student Name 2: student2
-//% Student 2 #: 123456782
-//% Student 2 userid (email): stu2 (stu2@sfu.ca)
+//% Student Name 2: Matthew Nesdoly
+//% Student 2 #: 301328738
+//% Student 2 userid (email): mnesdoly (mnesdoly@sfu.ca)
 //
 //% Below, edit to list any people who helped you with the code in this file,
 //%      or put 'None' if nobody helped (the two of) you.
 //
-// Helpers: _everybody helped us/me with the assignment (list names or put 'None')__
+// Helpers: We recieved assistance from Jayden Cole
 //
 // Also, list any resources beyond the course textbooks and the course pages on Piazza
 // that you used in making your submission.
@@ -51,7 +51,7 @@ using namespace std;
 ////////////////////////////////////////////////////////////////
 SenderX::SenderX(const char *fname, int d):PeerX(d, fname), bytesRd(-1), blkNum(1), oneByte(0) 
   {
-  //No intialization needed
+  //No additional intialization needed
   }
 
 
