@@ -1,5 +1,9 @@
 LaunchTargetManager/configs/Ensc351Part1=org.eclipse.launchbar.core.launchTargetType.local\:Local
+<<<<<<< HEAD
 LaunchTargetManager/configs/Ensc351Part1-DebugMips=null\:---
+=======
+LaunchTargetManager/configs/Ensc351Part1-DebugMips=org.eclipse.launchbar.core.launchTargetType.local\:Local
+>>>>>>> f1dabc916c30cf5b3c89b14e0cdcc928d611fb7a
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/name=Local
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=linux

@@ -16,7 +16,9 @@
 // Also, list any resources beyond the course textbooks and the course pages on Piazza
 // that you used in making your submission.
 //
-// Resources:  ___________
+// Resources:  
+// [1] http://vijayinterviewquestions.blogspot.com/2007/07/what-little-endian-and-big-endian-how.html 
+// [2] https://stackoverflow.com/questions/32707070/use-of-char-in-c -- from cpu_meltdown
 //
 //%% Instructions:
 //% * Put your name(s), student number(s), userid(s) in the above section.
@@ -133,6 +135,7 @@ void crc16ns(uint16_t* crc16nsP, uint8_t* buf, bool bigEndian)
     }
   else
     {
+<<<<<<< HEAD
     //oldcrc has crc value in the variable as <LSB><MSB>
       /*
     uint8_t MSB = (uint8_t) oldcrc;
@@ -145,6 +148,9 @@ void crc16ns(uint16_t* crc16nsP, uint8_t* buf, bool bigEndian)
 
      *crc16nsP = (((oldcrc & 0x00FF) << 8) | ((oldcrc & 0xFF00) >> 8 ));
 
+=======
+    *crc16nsP = (((uint8_t) oldcrc) << 8) | ((oldcrc & 0xFF00) >> 8);
+>>>>>>> f1dabc916c30cf5b3c89b14e0cdcc928d611fb7a
     }
   
   return;
@@ -155,21 +161,25 @@ void crc16ns(uint16_t* crc16nsP, uint8_t* buf, bool bigEndian)
 // 
 // Will create an 8 bit checksum to append to the block of data
 //
+// Buf will contain the data and not the entire message
+//
 ////////////////////////////////////////////////////////////////
-void checksum8bit(uint8_t* myChkSum, uint8_t* buf, ssize_t bytesRd)
-  {
+void checksum8bit(uint8_t* myChkSum, uint8_t* buf)
+    {
     //Set as default value for now
-    *myChkSum = 0x00;
+    uint8_t chkSum = 0;
 
     // If the last block chksum is calculated we only want to add to the end of the blk
-    for (int ii = BLK_DATA_START; ii < bytesRd + BLK_DATA_START; ii++)
-      {
-      //By using binary and operation we force a binary operation and discard the carry
-      *myChkSum = ((*myChkSum & 0xFF) + (buf[ii] & 0xFF)) & 0xFF;      
-      }
+    for (int ii = 0; ii < CHUNK_SZ; ii++)
+        {
+        //Will add the buffer value to the chkSum value for each byte of the data
+        chkSum += (uint8_t) buf[ii];
+        }
 
+    //Set the checksum value 
+    *myChkSum = chkSum & 0xFF;
     return;
-  }
+    }
 
 
 ////////////////////////////////////////////////////////////////

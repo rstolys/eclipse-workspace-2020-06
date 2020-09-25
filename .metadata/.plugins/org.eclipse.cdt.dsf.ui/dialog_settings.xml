@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.cdt.dsf.debug.internal.ui.ExpressionInformationControlCreator$ExpressionInformationControl">
+<<<<<<< HEAD
 		<item key="WIDTH" value="686"/>
 		<item key="HEIGHT" value="582"/>
+=======
+		<item key="WIDTH" value="743"/>
+		<item key="HEIGHT" value="509"/>
+>>>>>>> f1dabc916c30cf5b3c89b14e0cdcc928d611fb7a
 		<item key="SashWeightTree" value="500"/>
 		<item key="SashWeightDetails" value="500"/>
 	</section>
