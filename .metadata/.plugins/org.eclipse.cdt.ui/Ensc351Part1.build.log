@@ -1,14 +1,6 @@
-<<<<<<< HEAD
 14:18:39 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
 make all 
 make: Nothing to be done for 'all'.
 
 14:18:39 Build Finished. 0 errors, 0 warnings. (took 306ms)
-=======
-14:26:57 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
-make all 
-make: Nothing to be done for 'all'.
-
-14:26:58 Build Finished. 0 errors, 0 warnings. (took 838ms)
->>>>>>> f1dabc916c30cf5b3c89b14e0cdcc928d611fb7a
 

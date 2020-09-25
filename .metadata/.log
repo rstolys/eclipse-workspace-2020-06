@@ -968,11 +968,7 @@ java.io.FileNotFoundException: /mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc
 	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1021)
 	at org.eclipse.debug.internal.ui.DebugUIPlugin$2.run(DebugUIPlugin.java:1224)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
-<<<<<<< HEAD
 !SESSION 2020-09-23 13:29:55.724 -----------------------------------------------
-=======
-!SESSION 2020-09-23 17:43:16.084 -----------------------------------------------
->>>>>>> f1dabc916c30cf5b3c89b14e0cdcc928d611fb7a
 eclipse.buildId=4.16.0.I20200604-0540
 java.version=1.8.0_265
 java.vendor=Private Build
@@ -980,7 +976,6 @@ BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
 Framework arguments:  -product org.eclipse.epp.package.cpp.product
 Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.cpp.product
 
-<<<<<<< HEAD
 !ENTRY org.eclipse.ui 4 4 2020-09-23 13:30:14.911
 !MESSAGE Unable to create part
 !STACK 1
@@ -1805,17 +1800,6 @@ org.eclipse.core.runtime.CoreException: Cannot determine URI for '/Ensc351Part1/
 !MESSAGE Worker-28: Launching Ensc351Part1 thread is an instance of Worker or owns an ILock
 !STACK 0
 java.lang.IllegalStateException: Call stack for thread Worker-28: Launching Ensc351Part1
-=======
-!ENTRY org.eclipse.core.resources 2 10035 2020-09-23 17:43:20.088
-!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
-
-!ENTRY org.eclipse.ui 4 4 2020-09-23 18:56:03.844
-!MESSAGE To avoid deadlock while executing Display.syncExec() with argument: org.eclipse.debug.internal.ui.sourcelookup.Prompter$$Lambda$941/1279245952@46b2ac6f, thread Worker-59: Launching Ensc351Part1 will interrupt UI thread.
-!SUBENTRY 1 org.eclipse.ui 4 4 2020-09-23 18:56:03.844
-!MESSAGE Worker-59: Launching Ensc351Part1 thread is an instance of Worker or owns an ILock
-!STACK 0
-java.lang.IllegalStateException: Call stack for thread Worker-59: Launching Ensc351Part1
->>>>>>> f1dabc916c30cf5b3c89b14e0cdcc928d611fb7a
 	at sun.management.ThreadImpl.dumpThreads0(Native Method)
 	at sun.management.ThreadImpl.getThreadInfo(ThreadImpl.java:448)
 	at org.eclipse.ui.internal.UILockListener.reportInterruption(UILockListener.java:209)
@@ -1832,7 +1816,6 @@ java.lang.IllegalStateException: Call stack for thread Worker-59: Launching Ensc
 	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1021)
 	at org.eclipse.debug.internal.ui.DebugUIPlugin$2.run(DebugUIPlugin.java:1224)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
-<<<<<<< HEAD
 !SUBENTRY 1 org.eclipse.ui 4 4 2020-09-23 13:54:51.034
 !MESSAGE UI thread waiting on a job or lock.
 !STACK 0
@@ -1840,24 +1823,11 @@ java.lang.IllegalStateException: Call stack for thread main
 	at org.eclipse.swt.internal.gtk.OS.g_main_context_iteration(Native Method)
 	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:4444)
 	at org.eclipse.jface.window.Window.runEventLoop(Window.java:823)
-=======
-!SUBENTRY 1 org.eclipse.ui 4 4 2020-09-23 18:56:03.845
-!MESSAGE UI thread waiting on a job or lock.
-!STACK 0
-java.lang.IllegalStateException: Call stack for thread main
-	at org.eclipse.swt.internal.gtk.OS.Call(Native Method)
-	at org.eclipse.swt.widgets.Display.sleep(Display.java:5504)
-	at org.eclipse.jface.window.Window.runEventLoop(Window.java:824)
->>>>>>> f1dabc916c30cf5b3c89b14e0cdcc928d611fb7a
 	at org.eclipse.jface.window.Window.open(Window.java:799)
 	at org.eclipse.debug.internal.ui.launchConfigurations.SaveScopeResourcesHandler.showSaveDialog(SaveScopeResourcesHandler.java:250)
 	at org.eclipse.debug.internal.ui.launchConfigurations.SaveScopeResourcesHandler.handleStatus(SaveScopeResourcesHandler.java:180)
 	at org.eclipse.debug.internal.ui.sourcelookup.Prompter.lambda$0(Prompter.java:73)
-<<<<<<< HEAD
 	at org.eclipse.debug.internal.ui.sourcelookup.Prompter$$Lambda$1052/1721288305.run(Unknown Source)
-=======
-	at org.eclipse.debug.internal.ui.sourcelookup.Prompter$$Lambda$941/1279245952.run(Unknown Source)
->>>>>>> f1dabc916c30cf5b3c89b14e0cdcc928d611fb7a
 	at org.eclipse.ui.internal.PendingSyncExec.run(PendingSyncExec.java:68)
 	at org.eclipse.ui.internal.UILockListener.doPendingWork(UILockListener.java:171)
 	at org.eclipse.ui.internal.UILockListener.aboutToWait(UILockListener.java:139)
@@ -1872,11 +1842,7 @@ java.lang.IllegalStateException: Call stack for thread main
 	at org.eclipse.ui.part.PageBookView.removePage(PageBookView.java:810)
 	at org.eclipse.ui.part.PageBookView.partClosed(PageBookView.java:743)
 	at org.eclipse.cdt.debug.internal.ui.views.debuggerconsole.DebuggerConsoleView.lambda$1(DebuggerConsoleView.java:375)
-<<<<<<< HEAD
 	at org.eclipse.cdt.debug.internal.ui.views.debuggerconsole.DebuggerConsoleView$$Lambda$1128/1197894942.run(Unknown Source)
-=======
-	at org.eclipse.cdt.debug.internal.ui.views.debuggerconsole.DebuggerConsoleView$$Lambda$1014/397955987.run(Unknown Source)
->>>>>>> f1dabc916c30cf5b3c89b14e0cdcc928d611fb7a
 	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
 	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:185)
 	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4928)
@@ -1886,11 +1852,7 @@ java.lang.IllegalStateException: Call stack for thread main
 	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1047)
 	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
 	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:658)
-<<<<<<< HEAD
 	at org.eclipse.ui.internal.Workbench$$Lambda$117/803149788.run(Unknown Source)
-=======
-	at org.eclipse.ui.internal.Workbench$$Lambda$38/376601584.run(Unknown Source)
->>>>>>> f1dabc916c30cf5b3c89b14e0cdcc928d611fb7a
 	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
 	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:557)
 	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:154)
@@ -1909,21 +1871,12 @@ java.lang.IllegalStateException: Call stack for thread main
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1447)
 	at org.eclipse.equinox.launcher.Main.main(Main.java:1420)
 
-<<<<<<< HEAD
 !ENTRY org.eclipse.ui 4 4 2020-09-23 14:01:25.182
 !MESSAGE To avoid deadlock while executing Display.syncExec() with argument: org.eclipse.debug.internal.ui.sourcelookup.Prompter$$Lambda$1052/1721288305@39dd28c5, thread Worker-26: Launching Ensc351Part1 will interrupt UI thread.
 !SUBENTRY 1 org.eclipse.ui 4 4 2020-09-23 14:01:25.182
 !MESSAGE Worker-26: Launching Ensc351Part1 thread is an instance of Worker or owns an ILock
 !STACK 0
 java.lang.IllegalStateException: Call stack for thread Worker-26: Launching Ensc351Part1
-=======
-!ENTRY org.eclipse.ui 4 4 2020-09-23 18:56:04.916
-!MESSAGE To avoid deadlock while executing Display.syncExec() with argument: org.eclipse.debug.internal.ui.sourcelookup.Prompter$$Lambda$941/1279245952@46b2ac6f, thread Worker-59: Launching Ensc351Part1 will interrupt UI thread.
-!SUBENTRY 1 org.eclipse.ui 4 4 2020-09-23 18:56:04.916
-!MESSAGE Worker-59: Launching Ensc351Part1 thread is an instance of Worker or owns an ILock
-!STACK 0
-java.lang.IllegalStateException: Call stack for thread Worker-59: Launching Ensc351Part1
->>>>>>> f1dabc916c30cf5b3c89b14e0cdcc928d611fb7a
 	at sun.management.ThreadImpl.dumpThreads0(Native Method)
 	at sun.management.ThreadImpl.getThreadInfo(ThreadImpl.java:448)
 	at org.eclipse.ui.internal.UILockListener.reportInterruption(UILockListener.java:209)
@@ -1940,11 +1893,7 @@ java.lang.IllegalStateException: Call stack for thread Worker-59: Launching Ensc
 	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1021)
 	at org.eclipse.debug.internal.ui.DebugUIPlugin$2.run(DebugUIPlugin.java:1224)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
-<<<<<<< HEAD
 !SUBENTRY 1 org.eclipse.ui 4 4 2020-09-23 14:01:25.182
-=======
-!SUBENTRY 1 org.eclipse.ui 4 4 2020-09-23 18:56:04.917
->>>>>>> f1dabc916c30cf5b3c89b14e0cdcc928d611fb7a
 !MESSAGE UI thread waiting on a job or lock.
 !STACK 0
 java.lang.IllegalStateException: Call stack for thread main
@@ -1955,11 +1904,7 @@ java.lang.IllegalStateException: Call stack for thread main
 	at org.eclipse.debug.internal.ui.launchConfigurations.SaveScopeResourcesHandler.showSaveDialog(SaveScopeResourcesHandler.java:250)
 	at org.eclipse.debug.internal.ui.launchConfigurations.SaveScopeResourcesHandler.handleStatus(SaveScopeResourcesHandler.java:180)
 	at org.eclipse.debug.internal.ui.sourcelookup.Prompter.lambda$0(Prompter.java:73)
-<<<<<<< HEAD
 	at org.eclipse.debug.internal.ui.sourcelookup.Prompter$$Lambda$1052/1721288305.run(Unknown Source)
-=======
-	at org.eclipse.debug.internal.ui.sourcelookup.Prompter$$Lambda$941/1279245952.run(Unknown Source)
->>>>>>> f1dabc916c30cf5b3c89b14e0cdcc928d611fb7a
 	at org.eclipse.ui.internal.PendingSyncExec.run(PendingSyncExec.java:68)
 	at org.eclipse.ui.internal.UILockListener.doPendingWork(UILockListener.java:171)
 	at org.eclipse.ui.internal.UILockListener.aboutToWait(UILockListener.java:139)
@@ -1974,11 +1919,7 @@ java.lang.IllegalStateException: Call stack for thread main
 	at org.eclipse.ui.part.PageBookView.removePage(PageBookView.java:810)
 	at org.eclipse.ui.part.PageBookView.partClosed(PageBookView.java:743)
 	at org.eclipse.cdt.debug.internal.ui.views.debuggerconsole.DebuggerConsoleView.lambda$1(DebuggerConsoleView.java:375)
-<<<<<<< HEAD
 	at org.eclipse.cdt.debug.internal.ui.views.debuggerconsole.DebuggerConsoleView$$Lambda$1128/1197894942.run(Unknown Source)
-=======
-	at org.eclipse.cdt.debug.internal.ui.views.debuggerconsole.DebuggerConsoleView$$Lambda$1014/397955987.run(Unknown Source)
->>>>>>> f1dabc916c30cf5b3c89b14e0cdcc928d611fb7a
 	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
 	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:185)
 	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4928)
@@ -1988,11 +1929,7 @@ java.lang.IllegalStateException: Call stack for thread main
 	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1047)
 	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
 	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:658)
-<<<<<<< HEAD
 	at org.eclipse.ui.internal.Workbench$$Lambda$117/803149788.run(Unknown Source)
-=======
-	at org.eclipse.ui.internal.Workbench$$Lambda$38/376601584.run(Unknown Source)
->>>>>>> f1dabc916c30cf5b3c89b14e0cdcc928d611fb7a
 	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:338)
 	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:557)
 	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:154)
@@ -2011,7 +1948,6 @@ java.lang.IllegalStateException: Call stack for thread main
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1447)
 	at org.eclipse.equinox.launcher.Main.main(Main.java:1420)
 
-<<<<<<< HEAD
 !ENTRY org.eclipse.ui 4 4 2020-09-23 14:01:26.278
 !MESSAGE To avoid deadlock while executing Display.syncExec() with argument: org.eclipse.debug.internal.ui.sourcelookup.Prompter$$Lambda$1052/1721288305@39dd28c5, thread Worker-26: Launching Ensc351Part1 will interrupt UI thread.
 !SUBENTRY 1 org.eclipse.ui 4 4 2020-09-23 14:01:26.278
@@ -2030,21 +1966,10 @@ java.lang.IllegalStateException: Call stack for thread Worker-26: Launching Ensc
 	at org.eclipse.debug.core.model.LaunchConfigurationDelegate.preLaunchCheck(LaunchConfigurationDelegate.java:197)
 	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.preLaunchCheck(GdbLaunchDelegate.java:356)
 	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:770)
-=======
-!ENTRY org.eclipse.cdt.dsf.gdb 4 104 2020-09-23 19:19:32.053
-!MESSAGE Program file does not exist
-!STACK 0
-java.io.FileNotFoundException: /mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part1/DebugMips/Ensc351Part1 not found
-	at org.eclipse.cdt.dsf.gdb.launching.LaunchUtils.verifyProgramPath(LaunchUtils.java:131)
-	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.checkBinaryDetails(GdbLaunchDelegate.java:315)
-	at org.eclipse.cdt.launch.remote.launching.RemoteGdbLaunchDelegate.launch(RemoteGdbLaunchDelegate.java:56)
-	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:807)
->>>>>>> f1dabc916c30cf5b3c89b14e0cdcc928d611fb7a
 	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:718)
 	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1021)
 	at org.eclipse.debug.internal.ui.DebugUIPlugin$2.run(DebugUIPlugin.java:1224)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
-<<<<<<< HEAD
 !SUBENTRY 1 org.eclipse.ui 4 4 2020-09-23 14:01:26.278
 !MESSAGE UI thread waiting on a job or lock.
 !STACK 0
@@ -2118,21 +2043,10 @@ java.lang.IllegalStateException: Call stack for thread Worker-40: Launching Ensc
 	at org.eclipse.debug.core.model.LaunchConfigurationDelegate.preLaunchCheck(LaunchConfigurationDelegate.java:197)
 	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.preLaunchCheck(GdbLaunchDelegate.java:356)
 	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:770)
-=======
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 104 2020-09-23 19:19:32.053
-!MESSAGE /mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part1/DebugMips/Ensc351Part1 not found
-!STACK 0
-java.io.FileNotFoundException: /mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part1/DebugMips/Ensc351Part1 not found
-	at org.eclipse.cdt.dsf.gdb.launching.LaunchUtils.verifyProgramPath(LaunchUtils.java:131)
-	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.checkBinaryDetails(GdbLaunchDelegate.java:315)
-	at org.eclipse.cdt.launch.remote.launching.RemoteGdbLaunchDelegate.launch(RemoteGdbLaunchDelegate.java:56)
-	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:807)
->>>>>>> f1dabc916c30cf5b3c89b14e0cdcc928d611fb7a
 	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:718)
 	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1021)
 	at org.eclipse.debug.internal.ui.DebugUIPlugin$2.run(DebugUIPlugin.java:1224)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
-<<<<<<< HEAD
 !SUBENTRY 1 org.eclipse.ui 4 4 2020-09-23 14:07:16.369
 !MESSAGE UI thread waiting on a job or lock.
 !STACK 0
@@ -2214,22 +2128,10 @@ java.lang.IllegalStateException: Call stack for thread Worker-40: Launching Ensc
 	at org.eclipse.debug.core.model.LaunchConfigurationDelegate.preLaunchCheck(LaunchConfigurationDelegate.java:197)
 	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.preLaunchCheck(GdbLaunchDelegate.java:356)
 	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:770)
-=======
-
-!ENTRY org.eclipse.cdt.dsf.gdb 4 104 2020-09-23 19:21:36.161
-!MESSAGE Program file does not exist
-!STACK 0
-java.io.FileNotFoundException: /mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part1/DebugMips/Ensc351Part1 not found
-	at org.eclipse.cdt.dsf.gdb.launching.LaunchUtils.verifyProgramPath(LaunchUtils.java:131)
-	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.checkBinaryDetails(GdbLaunchDelegate.java:315)
-	at org.eclipse.cdt.launch.remote.launching.RemoteGdbLaunchDelegate.launch(RemoteGdbLaunchDelegate.java:56)
-	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:807)
->>>>>>> f1dabc916c30cf5b3c89b14e0cdcc928d611fb7a
 	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:718)
 	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1021)
 	at org.eclipse.debug.internal.ui.DebugUIPlugin$2.run(DebugUIPlugin.java:1224)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
-<<<<<<< HEAD
 !SUBENTRY 1 org.eclipse.ui 4 4 2020-09-23 14:07:17.473
 !MESSAGE UI thread waiting on a job or lock.
 !STACK 0
@@ -2284,23 +2186,3 @@ java.lang.IllegalStateException: Call stack for thread main
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:594)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1447)
 	at org.eclipse.equinox.launcher.Main.main(Main.java:1420)
-=======
-!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 104 2020-09-23 19:21:36.162
-!MESSAGE /mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part1/DebugMips/Ensc351Part1 not found
-!STACK 0
-java.io.FileNotFoundException: /mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part1/DebugMips/Ensc351Part1 not found
-	at org.eclipse.cdt.dsf.gdb.launching.LaunchUtils.verifyProgramPath(LaunchUtils.java:131)
-	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.checkBinaryDetails(GdbLaunchDelegate.java:315)
-	at org.eclipse.cdt.launch.remote.launching.RemoteGdbLaunchDelegate.launch(RemoteGdbLaunchDelegate.java:56)
-	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:807)
-	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:718)
-	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1021)
-	at org.eclipse.debug.internal.ui.DebugUIPlugin$2.run(DebugUIPlugin.java:1224)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
-
-!ENTRY org.eclipse.cdt.core 1 0 2020-09-23 19:24:09.645
-!MESSAGE Indexed 'Ensc351Part1' (4 sources, 213 headers) in 10.7 sec: 15,798 declarations; 24,118 references; 0 unresolved inclusions; 0 syntax errors; 11 unresolved names (0.028%)
-
-!ENTRY org.eclipse.cdt.core 1 0 2020-09-23 19:25:55.309
-!MESSAGE Indexed 'Ensc351Part1' (4 sources, 212 headers) in 4.77 sec: 15,685 declarations; 23,996 references; 0 unresolved inclusions; 0 syntax errors; 11 unresolved names (0.028%)
->>>>>>> f1dabc916c30cf5b3c89b14e0cdcc928d611fb7a

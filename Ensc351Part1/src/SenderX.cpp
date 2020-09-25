@@ -1,17 +1,17 @@
 //============================================================================
 //
-//% Student Name 1: Ryan Stolys
-//% Student 1 #: 301303127
-//% Student 1 userid (email): rstolys (rstolys@sfu.ca)
+//% Student Name 1: student1
+//% Student 1 #: 123456781
+//% Student 1 userid (email): stu1 (stu1@sfu.ca)
 //
-//% Student Name 2: Matthew Nesdoly
-//% Student 2 #: 301328738
-//% Student 2 userid (email): mnesdoly (mnesdoly@sfu.ca)
+//% Student Name 2: student2
+//% Student 2 #: 123456782
+//% Student 2 userid (email): stu2 (stu2@sfu.ca)
 //
 //% Below, edit to list any people who helped you with the code in this file,
 //%      or put 'None' if nobody helped (the two of) you.
 //
-// Helpers: We recieved assistance from Jayden Cole
+// Helpers: _everybody helped us/me with the assignment (list names or put 'None')__
 //
 // Also, list any resources beyond the course textbooks and the course pages on Piazza
 // that you used in making your submission.
@@ -49,9 +49,10 @@ using namespace std;
 // SenderX class constructor. Uses PeerX construtor through inheritance
 //
 ////////////////////////////////////////////////////////////////
-SenderX::SenderX(const char *fname, int d):PeerX(d, fname), bytesRd(-1), blkNum(1), oneByte(0) 
+SenderX::SenderX(const char *fname, int d, bool crcFlag):PeerX(d, fname), bytesRd(-1), blkNum(1)  
   {
-  //No additional intialization needed
+  //Set the maximum number of bytes in the block
+  numBytesInBlock = (crcFlag) ? BLK_SZ_CRC : BLK_SZ_CS; 
   }
 
 
@@ -111,7 +112,7 @@ void SenderX::genBlk(uint8_t* dataBytes)
     else 
       {
       uint8_t myChkSum;
-      checksum8bit(&myChkSum, &dataBuf[0]);
+      checksum8bit(&myChkSum, &dataBuf[0], bytesRd);
 
       //Append the checksum to the blkBuf
       blkBuf[CHK_SUM_START] = myChkSum;
@@ -136,8 +137,7 @@ void SenderX::sendFile()
 	if(transferringFileD == -1) 
     {
     //Show that we have experienced an error and are aborting the current transmission
-    oneByte = CAN;
-    sendByte(oneByte);
+    sendByte(CAN);
 
     //Log the error
 		cout /* cerr */ << "Error opening input file named: " << fileName << endl;
@@ -146,9 +146,6 @@ void SenderX::sendFile()
 	else 
     {
 		cout << "Sender will send " << fileName << endl;
-
-    //Determine if we are using 8 or 16 bit checksum
-    int numBytesInBlock = (Crcflg) ? BLK_SZ_CRC : BLK_SZ_CS;
 
     //***
     //Assuming startup protocol has already begun and we have determined which checksum type we are using CRC 16 bit vs normal 8 bit
@@ -180,8 +177,7 @@ void SenderX::sendFile()
     
 		
     //Now that all of the data blocks have been sent, send a end of transmission byte
-    oneByte = EOT;
-    sendByte(oneByte);
+    sendByte(EOT);
 
     //Close file now that we are finished with transmission
 		if(-1 == myClose(transferringFileD))
