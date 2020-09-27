@@ -1188,3 +1188,50 @@ java.io.FileNotFoundException: /mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc
 
 !ENTRY org.eclipse.cdt.core 1 0 2020-09-23 19:25:55.309
 !MESSAGE Indexed 'Ensc351Part1' (4 sources, 212 headers) in 4.77 sec: 15,685 declarations; 23,996 references; 0 unresolved inclusions; 0 syntax errors; 11 unresolved names (0.028%)
+!SESSION 2020-09-27 14:42:33.037 -----------------------------------------------
+eclipse.buildId=4.16.0.I20200604-0540
+java.version=1.8.0_265
+java.vendor=Private Build
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.cpp.product
+
+!ENTRY org.eclipse.equinox.security 1 0 2020-09-27 14:48:35.085
+!MESSAGE New secure storage master password was generated (Linux libsecret integration module). 
+
+!ENTRY org.eclipse.equinox.security 4 0 2020-09-27 14:50:15.953
+!MESSAGE Secure storage was unable to save the master password.
+!STACK 0
+java.lang.SecurityException: Cannot create an item in a locked collection
+	at org.eclipse.equinox.internal.security.linux.LinuxPasswordProvider.saveMasterPassword(Native Method)
+	at org.eclipse.equinox.internal.security.linux.LinuxPasswordProvider.getPassword(LinuxPasswordProvider.java:70)
+	at org.eclipse.equinox.internal.security.storage.PasswordProviderModuleExt.getPassword(PasswordProviderModuleExt.java:38)
+	at org.eclipse.equinox.internal.security.storage.SecurePreferencesRoot.getModulePassword(SecurePreferencesRoot.java:265)
+	at org.eclipse.equinox.internal.security.storage.SecurePreferencesRoot.getPassword(SecurePreferencesRoot.java:230)
+	at org.eclipse.equinox.internal.security.storage.SecurePreferences.put(SecurePreferences.java:229)
+	at org.eclipse.equinox.internal.security.storage.SecurePreferencesWrapper.put(SecurePreferencesWrapper.java:128)
+	at org.eclipse.egit.core.securestorage.EGitSecureStore.putCredentials(EGitSecureStore.java:66)
+	at org.eclipse.egit.ui.internal.SecureStoreUtils.storeCredentials(SecureStoreUtils.java:39)
+	at org.eclipse.egit.ui.internal.clone.AbstractGitCloneWizard.executeCloneOperation(AbstractGitCloneWizard.java:497)
+	at org.eclipse.egit.ui.internal.clone.AbstractGitCloneWizard.access$2(AbstractGitCloneWizard.java:482)
+	at org.eclipse.egit.ui.internal.clone.AbstractGitCloneWizard$5.run(AbstractGitCloneWizard.java:443)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:122)
+
+!ENTRY org.eclipse.egit.ui 4 0 2020-09-27 14:50:15.974
+!MESSAGE Failed to write credentials for 'https://csil-git1.cs.surrey.sfu.ca/ensc351wcs/ensc351lib.git' to secure store
+!STACK 0
+org.eclipse.equinox.security.storage.StorageException: No password provided.
+	at org.eclipse.equinox.internal.security.storage.SecurePreferences.put(SecurePreferences.java:242)
+	at org.eclipse.equinox.internal.security.storage.SecurePreferencesWrapper.put(SecurePreferencesWrapper.java:128)
+	at org.eclipse.egit.core.securestorage.EGitSecureStore.putCredentials(EGitSecureStore.java:66)
+	at org.eclipse.egit.ui.internal.SecureStoreUtils.storeCredentials(SecureStoreUtils.java:39)
+	at org.eclipse.egit.ui.internal.clone.AbstractGitCloneWizard.executeCloneOperation(AbstractGitCloneWizard.java:497)
+	at org.eclipse.egit.ui.internal.clone.AbstractGitCloneWizard.access$2(AbstractGitCloneWizard.java:482)
+	at org.eclipse.egit.ui.internal.clone.AbstractGitCloneWizard$5.run(AbstractGitCloneWizard.java:443)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:122)
+
+!ENTRY org.eclipse.cdt.core 1 0 2020-09-27 15:51:35.908
+!MESSAGE Indexed 'Ensc351' (6 sources, 12 headers) in 2.16 sec: 560 declarations; 1,047 references; 32 unresolved inclusions; 10 syntax errors; 439 unresolved names (21%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2020-09-27 16:00:59.139
+!MESSAGE Indexed 'Ensc351Part2-1207' (7 sources, 273 headers) in 8.7 sec: 22,664 declarations; 34,899 references; 0 unresolved inclusions; 0 syntax errors; 10 unresolved names (0.017%)

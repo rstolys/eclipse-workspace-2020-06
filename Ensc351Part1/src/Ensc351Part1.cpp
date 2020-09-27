@@ -79,8 +79,8 @@ int main()
     }
   else 
     {
-    //testSenderX("/doesNotExist.txt", mediumD);                        // file does not exist
-    //testSenderX("/home/osboxes/.sudo_as_admin_successful", mediumD);  // empty file
+    testSenderX("/doesNotExist.txt", mediumD);                        // file does not exist
+    testSenderX("/home/osboxes/.sudo_as_admin_successful", mediumD);  // empty file
     testSenderX("/home/osboxes/hs_err_pid11506.log", mediumD);          // normal text file
 
     if (-1 == myClose(mediumD)) 

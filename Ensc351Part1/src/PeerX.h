@@ -82,7 +82,7 @@ protected:
 	const char* fileName;
 	int transferringFileD;	    // descriptor for file being read from or written to. -- ??? can't be both
 	bool Crcflg;                // use CRC if true (or else checksum if false)
-	bool bigEndian;          // flag for endianness of the processor;
+	bool bigEndian;             // flag for endianness of the processor;
 
 	//Send a byte to the remote peer across the medium
 	void /*PeerX::*/ sendByte(uint8_t byte);
