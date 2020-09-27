@@ -7,7 +7,15 @@
 
 //============================================================================
 //
-// TODO:
+//  Add needed variables to senderX class -- done
+//  Intialize SenderX Class     -- done
+//
+//  Complete genBlk function    -- done
+//
+//  Complete sendFile Function -- done
+//
+//  Create function to calculate checksum of block
+//  Fix/ Complete the CRC checksum function
 //
 //============================================================================
 
@@ -31,7 +39,7 @@ using namespace std;
 void testSenderX(const char* iFileName, int mediumD)
   {
   //Testing using checksum
-  SenderX xSender(iFileName, mediumD);
+  SenderX xSender(iFileName, mediumD, false);
   xSender.Crcflg = false;                   // test sending with checksum
 
   cout << "test sending with checksum" << endl;
@@ -40,7 +48,7 @@ void testSenderX(const char* iFileName, int mediumD)
 
 
   //Testing using CRC
-  SenderX xSender2(iFileName, mediumD);
+  SenderX xSender2(iFileName, mediumD, true);
   xSender2.Crcflg = true;                   // test sending with CRC16
 
   cout << "test sending with CRC" << endl;

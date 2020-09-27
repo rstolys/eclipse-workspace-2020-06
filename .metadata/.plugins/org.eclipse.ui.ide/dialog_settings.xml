@@ -26,4 +26,13 @@
 		<item key="DIALOG_HEIGHT" value="601"/>
 		<item key="DIALOG_FONT_NAME" value="1|Noto Sans|9.0|0|GTK|1|"/>
 	</section>
+	<section name="SmartImportWizard">
+		<item key="SmartImportRootWizardPage.STORE_HIDE_ALREADY_OPEN" value="false"/>
+		<item key="SmartImportRootWizardPage.STORE_CLOSE_IMPORTED" value="false"/>
+		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
+		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
+		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="/mnt/hgfs/VMsf2020/eclipse-workspace-2020-06"/>
+		</list>
+	</section>
 </section>

@@ -63,7 +63,7 @@ void crc16ns (uint16_t* crc16nsP, uint8_t* buf, bool bigEndian);
 // Will create an 8 bit checksum to append to the block of data
 //
 ////////////////////////////////////////////////////////////////
-void checksum8bit(uint8_t* myChkSum, uint8_t* buf);
+void checksum8bit(uint8_t* myChkSum, uint8_t* buf, ssize_t bytesRd);
 
 
 class PeerX 
