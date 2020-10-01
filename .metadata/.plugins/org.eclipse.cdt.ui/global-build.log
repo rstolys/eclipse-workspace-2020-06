@@ -1,28 +1,98 @@
-16:07:05 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
+15:31:43 **** Incremental Build of configuration Debug for project Ensc351 ****
 make all 
-Building file: ../src/Ensc351Part1.cpp
+make: Nothing to be done for 'all'.
+15:31:44 **** Incremental Build of configuration Debug for project Ensc351 ****
+make all 
+make: Nothing to be done for 'all'.
+15:31:44 **** Incremental Build of configuration Debug for project Ensc351Part2-wP1soln ****
+make all 
+make: Nothing to be done for 'all'.
+15:32:07 **** Incremental Build of configuration Debug for project Ensc351 ****
+make all 
+make: Nothing to be done for 'all'.
+15:32:08 **** Incremental Build of configuration Debug for project Ensc351Part2-wP1soln ****
+make all 
+make: Nothing to be done for 'all'.
+15:32:16 **** Incremental Build of configuration Debug for project Ensc351 ****
+make all 
+make: Nothing to be done for 'all'.
+15:32:16 **** Incremental Build of configuration Debug for project Ensc351Part2-wP1soln ****
+make all 
+make: Nothing to be done for 'all'.
+15:32:27 **** Incremental Build of configuration Debug for project Ensc351 ****
+make all 
+make: Nothing to be done for 'all'.
+15:32:27 **** Incremental Build of configuration Debug for project Ensc351Part2-wP1soln ****
+make all 
+make: Nothing to be done for 'all'.
+17:04:37 **** Incremental Build of configuration Debug for project Ensc351 ****
+make all 
+make: Nothing to be done for 'all'.
+17:04:38 **** Incremental Build of configuration Debug for project Ensc351Part2-wP1soln ****
+make all 
+Building file: ../src/Ensc351Part2.cpp
 Invoking: GCC C++ Compiler
-g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/Ensc351Part1.d" -MT"src/Ensc351Part1.o" -o "src/Ensc351Part1.o" "../src/Ensc351Part1.cpp"
-Finished building: ../src/Ensc351Part1.cpp
+g++ -std=c++1y -I"/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/Ensc351Part2.d" -MT"src/Ensc351Part2.o" -o "src/Ensc351Part2.o" "../src/Ensc351Part2.cpp"
+In file included from ../src/Ensc351Part2.cpp:47:
+/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351/posixThread.hpp: In instantiation of ‘void pthreadSupport::ctorHelperHigher(int, sched_param, sem_t&, _Callable&&, _Args&& ...) [with _Callable = void (&)(int, int, const char*); _Args = {<unnamed enum>}]’:
+/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351/posixThread.hpp:83:42:   required from ‘std::thread pthreadSupport::posixThread::beforeThread(int, sched_param, _Callable&&, _Args&& ...) [with _Callable = void (&)(int, int, const char*); _Args = {<unnamed enum>}]’
+/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351/posixThread.hpp:108:100:   required from ‘std::thread pthreadSupport::posixThread::beforeThread(int, int, _Callable&&, _Args&& ...) [with _Callable = void (&)(int, int, const char*); _Args = {<unnamed enum>}]’
+/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351/posixThread.hpp:127:104:   required from ‘pthreadSupport::posixThread::posixThread(int, int, _Callable&&, _Args&& ...) [with _Callable = void (&)(int, int, const char*); _Args = {<unnamed enum>}]’
+../src/Ensc351Part2.cpp:155:65:   required from here
+/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351/posixThread.hpp:50:6: error: too few arguments to function
+   50 |   __f(std::forward<_Args>(__args)...);
+      |   ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351/posixThread.hpp: In instantiation of ‘void pthreadSupport::ctorHelperLower(int, sched_param, sem_t&, _Callable&&, _Args&& ...) [with _Callable = void (&)(int, int, const char*); _Args = {<unnamed enum>}]’:
+/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351/posixThread.hpp:88:41:   required from ‘std::thread pthreadSupport::posixThread::beforeThread(int, sched_param, _Callable&&, _Args&& ...) [with _Callable = void (&)(int, int, const char*); _Args = {<unnamed enum>}]’
+/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351/posixThread.hpp:108:100:   required from ‘std::thread pthreadSupport::posixThread::beforeThread(int, int, _Callable&&, _Args&& ...) [with _Callable = void (&)(int, int, const char*); _Args = {<unnamed enum>}]’
+/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351/posixThread.hpp:127:104:   required from ‘pthreadSupport::posixThread::posixThread(int, int, _Callable&&, _Args&& ...) [with _Callable = void (&)(int, int, const char*); _Args = {<unnamed enum>}]’
+../src/Ensc351Part2.cpp:155:65:   required from here
+/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351/posixThread.hpp:59:7: error: too few arguments to function
+   59 |    __f(std::forward<_Args>(__args)...);
+      |    ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [src/subdir.mk:38: src/Ensc351Part2.o] Error 1
+"make all" terminated with exit code 2. Build might be incomplete.
+17:07:39 **** Incremental Build of configuration Debug for project Ensc351 ****
+make all 
+make: Nothing to be done for 'all'.
+17:07:40 **** Incremental Build of configuration Debug for project Ensc351Part2-wP1soln ****
+make all 
+Building file: ../src/Ensc351Part2.cpp
+Invoking: GCC C++ Compiler
+g++ -std=c++1y -I"/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/Ensc351Part2.d" -MT"src/Ensc351Part2.o" -o "src/Ensc351Part2.o" "../src/Ensc351Part2.cpp"
+../src/Ensc351Part2.cpp:57:12: warning: ‘daSktPrMT2’ defined but not used [-Wunused-variable]
+   57 | static int daSktPrMT2[2];   //Socket Pair between medium and term2
+      |            ^~~~~~~~~~
+../src/Ensc351Part2.cpp:56:12: warning: ‘daSktPrT1M’ defined but not used [-Wunused-variable]
+   56 | static int daSktPrT1M[2];   //Socket Pair between term1 and medium
+      |            ^~~~~~~~~~
+Finished building: ../src/Ensc351Part2.cpp
  
-Building file: ../src/PeerX.cpp
+Building target: Ensc351Part2-wP1soln
+Invoking: GCC C++ Linker
+g++ -L"/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351/Debug" -o "Ensc351Part2-wP1soln"  ./src/Ensc351Part2.o ./src/Medium.o ./src/PeerX.o ./src/ReceiverX.o ./src/SenderX.o ./src/main.o ./src/myIO.o   -lEnsc351 -lpthread
+Finished building target: Ensc351Part2-wP1soln
+ 
+17:47:22 **** Incremental Build of configuration Debug for project Ensc351 ****
+make all 
+make: Nothing to be done for 'all'.
+17:47:22 **** Incremental Build of configuration Debug for project Ensc351 ****
+make all 
+make: Nothing to be done for 'all'.
+17:47:22 **** Incremental Build of configuration Debug for project Ensc351Part2-wP1soln ****
+make all 
+Building file: ../src/ReceiverX.cpp
 Invoking: GCC C++ Compiler
-g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/PeerX.d" -MT"src/PeerX.o" -o "src/PeerX.o" "../src/PeerX.cpp"
-Finished building: ../src/PeerX.cpp
+g++ -std=c++1y -I"/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/ReceiverX.d" -MT"src/ReceiverX.o" -o "src/ReceiverX.o" "../src/ReceiverX.cpp"
+Finished building: ../src/ReceiverX.cpp
  
 Building file: ../src/SenderX.cpp
 Invoking: GCC C++ Compiler
-g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/SenderX.d" -MT"src/SenderX.o" -o "src/SenderX.o" "../src/SenderX.cpp"
+g++ -std=c++1y -I"/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/SenderX.d" -MT"src/SenderX.o" -o "src/SenderX.o" "../src/SenderX.cpp"
 Finished building: ../src/SenderX.cpp
  
-Building target: Ensc351Part1
+Building target: Ensc351Part2-wP1soln
 Invoking: GCC C++ Linker
-g++  -o "Ensc351Part1"  ./src/Ensc351Part1.o ./src/PeerX.o ./src/SenderX.o ./src/myIO.o   
-Finished building target: Ensc351Part1
+g++ -L"/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351/Debug" -o "Ensc351Part2-wP1soln"  ./src/Ensc351Part2.o ./src/Medium.o ./src/PeerX.o ./src/ReceiverX.o ./src/SenderX.o ./src/main.o ./src/myIO.o   -lEnsc351 -lpthread
+Finished building target: Ensc351Part2-wP1soln
  
-16:07:09 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
-make all 
-make: Nothing to be done for 'all'.
-16:07:11 **** Incremental Build of configuration Debug for project Ensc351Part1 ****
-make all 
-make: Nothing to be done for 'all'.
