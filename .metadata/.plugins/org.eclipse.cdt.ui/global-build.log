@@ -96,3 +96,45 @@ Invoking: GCC C++ Linker
 g++ -L"/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351/Debug" -o "Ensc351Part2-wP1soln"  ./src/Ensc351Part2.o ./src/Medium.o ./src/PeerX.o ./src/ReceiverX.o ./src/SenderX.o ./src/main.o ./src/myIO.o   -lEnsc351 -lpthread
 Finished building target: Ensc351Part2-wP1soln
  
+17:07:06 **** Incremental Build of configuration Debug for project Ensc351 ****
+make all 
+make: Nothing to be done for 'all'.
+17:07:07 **** Incremental Build of configuration Debug for project Ensc351Part2-wP1soln ****
+make all 
+Building file: ../src/Ensc351Part2.cpp
+Invoking: GCC C++ Compiler
+g++ -std=c++1y -I"/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/Ensc351Part2.d" -MT"src/Ensc351Part2.o" -o "src/Ensc351Part2.o" "../src/Ensc351Part2.cpp"
+../src/Ensc351Part2.cpp:57:12: warning: ‘daSktPrMT2’ defined but not used [-Wunused-variable]
+   57 | static int daSktPrMT2[2];   //Socket Pair between medium and term2
+      |            ^~~~~~~~~~
+../src/Ensc351Part2.cpp:56:12: warning: ‘daSktPrT1M’ defined but not used [-Wunused-variable]
+   56 | static int daSktPrT1M[2];   //Socket Pair between term1 and medium
+      |            ^~~~~~~~~~
+Finished building: ../src/Ensc351Part2.cpp
+ 
+Building target: Ensc351Part2-wP1soln
+Invoking: GCC C++ Linker
+g++ -L"/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351/Debug" -o "Ensc351Part2-wP1soln"  ./src/Ensc351Part2.o ./src/Medium.o ./src/PeerX.o ./src/ReceiverX.o ./src/SenderX.o ./src/main.o ./src/myIO.o   -lEnsc351 -lpthread
+Finished building target: Ensc351Part2-wP1soln
+ 
+18:15:30 **** Incremental Build of configuration Debug for project Ensc351 ****
+make all 
+make: Nothing to be done for 'all'.
+18:15:31 **** Incremental Build of configuration Debug for project Ensc351Part2-wP1soln ****
+make all 
+Building file: ../src/Ensc351Part2.cpp
+Invoking: GCC C++ Compiler
+g++ -std=c++1y -I"/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/Ensc351Part2.d" -MT"src/Ensc351Part2.o" -o "src/Ensc351Part2.o" "../src/Ensc351Part2.cpp"
+Finished building: ../src/Ensc351Part2.cpp
+ 
+Building target: Ensc351Part2-wP1soln
+Invoking: GCC C++ Linker
+g++ -L"/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351/Debug" -o "Ensc351Part2-wP1soln"  ./src/Ensc351Part2.o ./src/Medium.o ./src/PeerX.o ./src/ReceiverX.o ./src/SenderX.o ./src/main.o ./src/myIO.o   -lEnsc351 -lpthread
+Finished building target: Ensc351Part2-wP1soln
+ 
+18:15:36 **** Incremental Build of configuration Debug for project Ensc351 ****
+make all 
+make: Nothing to be done for 'all'.
+18:15:36 **** Incremental Build of configuration Debug for project Ensc351Part2-wP1soln ****
+make all 
+make: Nothing to be done for 'all'.

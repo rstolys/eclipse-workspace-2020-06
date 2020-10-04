@@ -105,7 +105,7 @@ void termFunc(int termNum)
 
 	    // Modify to daSktPrT1M[MediumSkt] ??
 
-        testReceiverX("hs_err_pid11506.log", daSktPr[Term1]);        // normal text file
+        testReceiverX("hs_err_pid11506.log", daSktPrT1M[TermSkt]);        // normal text file
 //        testReceiverX("sudo_as_admin_successful", daSktPr[Term1]);  // empty file
 //        testReceiverX("doesNotExist.txt", daSktPr[Term1]);                        // file does not exist
 	}
@@ -115,7 +115,7 @@ void termFunc(int termNum)
 
 		// Modify to daSktPrMT2[MediumSkt] ??
 
-	    testSenderX("/home/osboxes/hs_err_pid11506.log", daSktPr[Term2]);        // normal text file
+	    testSenderX("/home/osboxes/hs_err_pid11506.log", daSktPrMT2[TermSkt]);        // normal text file
 //        testSenderX("/home/osboxes/.sudo_as_admin_successful", daSktPr[Term2]);  // empty file
 //        testSenderX("/doesNotExist.txt", daSktPr[Term2]);                        // file does not exist
 	}
@@ -132,11 +132,11 @@ int Ensc351Part2()
 
 	// ***** switch from having one socketpair for direct connection to having two socketpairs
 	//			for connection through medium thread *****
-	PE(mySocketpair(AF_LOCAL, SOCK_STREAM, 0, daSktPr));
+	//PE(mySocketpair(AF_LOCAL, SOCK_STREAM, 0, daSktPr));
 
 	//Should create 2 socket pairs? between send-medium and recive-medium
-	//PE(mySocketpair(AF_LOCAL, SOCK_STREAM, 0, daSktPrT1M));
-	//PE(mySocketpair(AF_LOCAL, SOCK_STREAM, 0, daSktPrMT2));
+	PE(mySocketpair(AF_LOCAL, SOCK_STREAM, 0, daSktPrT1M));
+	PE(mySocketpair(AF_LOCAL, SOCK_STREAM, 0, daSktPrMT2));
 
 	// ???
 	//daSktPr[Term1] =  PE(/*myO*/open("/dev/ser2", O_RDWR));
@@ -152,12 +152,13 @@ int Ensc351Part2()
     //          ("xmodemData.dat").
     //      Make sure that thread is created at SCHED_FIFO priority 40
 
-   // posixThread mediumThrd(SCHED_FIFO, 40, mediumFunc, MediumSkt);
+    posixThread mediumThrd(SCHED_FIFO, 40, mediumFunc, daSktPrT1M[MediumSkt], daSktPrMT2[MediumSkt], "xmodemSenderData.dat" );
 
 	termFunc(Term1);
 
     term2Thrd.join();
-    // mediumThrd.join();
+
+    mediumThrd.join();
     // ***** join with thread for medium *****
 
 	return EXIT_SUCCESS;

@@ -136,8 +136,6 @@ void SenderX::genBlk(blkT blkBuf)
 void SenderX::prep1stBlk()
 {
 	// **** this function will need to be modified ****
-    // If we want to actually send block then blkBuf++ ?
-    // SHould read
 
 
 	genBlk(blkBuf);

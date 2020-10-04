@@ -14,4 +14,5 @@ org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Ensc351Part1-DebugMips/activeLa
 org.eclipse.launchbar.core.descriptorType.default\:Ensc351Part1/activeLaunchMode=debug
 org.eclipse.launchbar.core.descriptorType.default\:Ensc351Part1/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
 org.eclipse.launchbar.core.descriptorType.default\:Ensc351Part2-1207\ -\ Run/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
+org.eclipse.launchbar.core.descriptorType.default\:Ensc351Part2-wP1soln\ -\ Debug/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
 org.eclipse.launchbar.core.descriptorType.default\:Ensc351Part2-wP1soln\ -\ Run/activeLaunchMode=debug
