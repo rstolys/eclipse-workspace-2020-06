@@ -58,7 +58,15 @@ Invoking: GCC C++ Compiler
 g++ -std=c++1y -I"/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/Medium.d" -MT"src/Medium.o" -o "src/Medium.o" "../src/Medium.cpp"
 Finished building: ../src/Medium.cpp
  
-Building file: ../src/PeerX.cpp
+17:47:22 **** Incremental Build of configuration Debug for project Ensc351 ****
+make all 
+make: Nothing to be done for 'all'.
+17:47:22 **** Incremental Build of configuration Debug for project Ensc351 ****
+make all 
+make: Nothing to be done for 'all'.
+17:47:22 **** Incremental Build of configuration Debug for project Ensc351Part2-wP1soln ****
+make all 
+Building file: ../src/ReceiverX.cpp
 Invoking: GCC C++ Compiler
 g++ -std=c++1y -I"/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/PeerX.d" -MT"src/PeerX.o" -o "src/PeerX.o" "../src/PeerX.cpp"
 Finished building: ../src/PeerX.cpp

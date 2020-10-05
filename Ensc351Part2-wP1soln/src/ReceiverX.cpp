@@ -62,6 +62,10 @@ time that the block was received in "good" condition.
 */
 void ReceiverX::getRestBlk()
 {
+    // This should function should check the checksum or CRC and the decided if ack or nack
+    // Needs to decide if checksum or crc
+    // Read from disk to compare to previous blk??
+
 	// ********* this function must be improved ***********
 	PE_NOT(myReadcond(mediumD, &rcvBlk[1], REST_BLK_SZ_CRC, REST_BLK_SZ_CRC, 0, 0), REST_BLK_SZ_CRC);
 	goodBlk1st = goodBlk = true;
@@ -118,9 +122,14 @@ void ReceiverX::receiveFile()
         //      sender can send the first block
         sendByte(ctx.NCGbyte);
 
+        //run while the blocks from sender give us a SOH
         while(PE_NOT(myRead(mediumD, rcvBlk, 1), 1), (rcvBlk[0] == SOH))
         {
+            // needs improvment
             ctx.getRestBlk();
+
+            // getrestblk should check the CRC/chksum and then we can send a nack
+            // if it didnt match or ack and write use write chunk to write to disc
             ctx.sendByte(ACK); // assume the expected block was received correctly.
             ctx.writeChunk();
         };
@@ -131,6 +140,7 @@ void ReceiverX::receiveFile()
         // Check if the file closed properly.  If not, result should be "CloseError".
         if (ctx.closeTransferredFile()) {
             ; // ***** fill this in *****
+            // send nak ??
         }
         else {
              ctx.sendByte(ACK);  // ACK the second EOT

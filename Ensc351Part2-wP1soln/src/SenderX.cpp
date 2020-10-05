@@ -136,6 +136,8 @@ void SenderX::genBlk(blkT blkBuf)
 void SenderX::prep1stBlk()
 {
 	// **** this function will need to be modified ****
+
+
 	genBlk(blkBuf);
 }
 
@@ -162,6 +164,7 @@ void SenderX::sendBlkPrepNext()
 // Resends the block that had been sent previously to the xmodem receiver.
 void SenderX::resendBlk()
 {
+    // Not called in SenderX
 	// resend the block including the checksum or crc16
 	//  ***** You will have to write this simple function *****
 }
@@ -206,10 +209,18 @@ void SenderX::sendFile()
 		ctx.prep1stBlk();
 
 		while (ctx.bytesRd) {
+		    // GEts the next blk prepared ahead of time?
 			ctx.sendBlkPrepNext();
+
+			// how to recive ack or nack from medium?
+			// if nack then need to useSenderX::resendBlk()
+
+
 			// assuming below we get an ACK
 			PE_NOT(myRead(mediumD, &byteToReceive, 1), 1);
 		}
+
+		// Write a loop here to resend eot if NAK then ACK didnt come back in right order
 		ctx.sendByte(EOT); // send the first EOT
 		PE_NOT(myRead(mediumD, &byteToReceive, 1), 1); // assuming get a NAK
 		ctx.sendByte(EOT); // send the second EOT
