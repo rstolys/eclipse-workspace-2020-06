@@ -7,6 +7,8 @@
 		<item key="WizardProjectsImportPage.STORE_NESTED_PROJECTS" value="false"/>
 		<item key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID" value="false"/>
 		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="/mnt/hgfs/VMsf2020/git/ensc351lib"/>
+			<item value="/mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part1"/>
 			<item value="/mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part2-1207"/>
 			<item value=""/>
 		</list>
@@ -32,6 +34,8 @@
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="/home/osboxes/VMsf2020/eclipse-workspace-2020-06/Ensc351Part2-wP1soln"/>
+			<item value="/mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part1"/>
 			<item value="/mnt/hgfs/VMsf2020/eclipse-workspace-2020-06"/>
 		</list>
 	</section>
