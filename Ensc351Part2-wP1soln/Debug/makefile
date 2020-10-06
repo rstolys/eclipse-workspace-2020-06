@@ -41,13 +41,13 @@ endif
 all: Ensc351Part2-wP1soln
 
 dependents:
-	-cd /mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351/Debug && $(MAKE) all
+	-cd /home/osboxes/git/ensc351lib/Ensc351/Debug && $(MAKE) all
 
 # Tool invocations
-Ensc351Part2-wP1soln: $(OBJS) $(USER_OBJS) /mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351/Debug/libEnsc351.a
+Ensc351Part2-wP1soln: $(OBJS) $(USER_OBJS) /home/osboxes/git/ensc351lib/Ensc351/Debug/libEnsc351.a
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++ -L"/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351/Debug" -o "Ensc351Part2-wP1soln" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -L"/home/osboxes/git/ensc351lib/Ensc351/Debug" -o "Ensc351Part2-wP1soln" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -57,6 +57,6 @@ clean:
 	-@echo ' '
 
 .PHONY: all clean dependents
-/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351/Debug/libEnsc351.a:
+/home/osboxes/git/ensc351lib/Ensc351/Debug/libEnsc351.a:
 
 -include ../makefile.targets

@@ -186,3 +186,227 @@ make: Nothing to be done for 'all'.
 17:09:26 **** Incremental Build of configuration Debug for project Ensc351Part2-wP1soln ****
 make all 
 make: Nothing to be done for 'all'.
+15:16:09 **** Build of configuration Debug for project Ensc351Part2-wP1soln ****
+make all 
+make: Nothing to be done for 'all'.
+15:16:35 **** Incremental Build of configuration Debug for project Ensc351Part2-wP1soln ****
+make all 
+make: Nothing to be done for 'all'.
+15:16:41 **** Incremental Build of configuration Debug for project Ensc351Part2-wP1soln ****
+make all 
+make: Nothing to be done for 'all'.
+15:17:33 **** Incremental Build of configuration Debug for project Ensc351Part2-wP1soln ****
+make all 
+make: Nothing to be done for 'all'.
+16:33:31 **** Incremental Build of configuration Debug for project Ensc351Part2-wP1soln ****
+make all 
+Building file: ../src/ReceiverX.cpp
+Invoking: GCC C++ Compiler
+g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/ReceiverX.d" -MT"src/ReceiverX.o" -o "src/ReceiverX.o" "../src/ReceiverX.cpp"
+../src/ReceiverX.cpp:41:10: fatal error: VNPE.h: No such file or directory
+   41 | #include "VNPE.h"
+      |          ^~~~~~~~
+compilation terminated.
+make: *** [src/subdir.mk:38: src/ReceiverX.o] Error 1
+"make all" terminated with exit code 2. Build might be incomplete.
+16:39:06 **** Incremental Build of configuration Debug for project Ensc351 ****
+make all 
+Building file: ../AtomicConsole.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"AtomicConsole.d" -MT"AtomicConsole.o" -o "AtomicConsole.o" "../AtomicConsole.c"
+Finished building: ../AtomicConsole.c
+ 
+Building file: ../ScopedMutex.cpp
+Invoking: GCC C++ Compiler
+g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"ScopedMutex.d" -MT"ScopedMutex.o" -o "ScopedMutex.o" "../ScopedMutex.cpp"
+Finished building: ../ScopedMutex.cpp
+ 
+Building file: ../SocketReadcond.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"SocketReadcond.d" -MT"SocketReadcond.o" -o "SocketReadcond.o" "../SocketReadcond.c"
+Finished building: ../SocketReadcond.c
+ 
+Building file: ../VNPE.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"VNPE.d" -MT"VNPE.o" -o "VNPE.o" "../VNPE.c"
+Finished building: ../VNPE.c
+ 
+Building file: ../posixThread.cpp
+Invoking: GCC C++ Compiler
+g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"posixThread.d" -MT"posixThread.o" -o "posixThread.o" "../posixThread.cpp"
+Finished building: ../posixThread.cpp
+ 
+Building file: ../ss_api.cpp
+Invoking: GCC C++ Compiler
+g++ -std=c++1y -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"ss_api.d" -MT"ss_api.o" -o "ss_api.o" "../ss_api.cpp"
+In file included from ../ss_api.cpp:11:
+../ss_api.hxx:120:21: warning: dynamic exception specifications are deprecated in C++11 [-Wdeprecated]
+  120 |     int lParam = 0) throw (std::string);
+      |                     ^~~~~
+../ss_api.cpp:91:1: warning: dynamic exception specifications are deprecated in C++11 [-Wdeprecated]
+   91 | throw (std::string)
+      | ^~~~~
+Finished building: ../ss_api.cpp
+ 
+Building target: libEnsc351.a
+Invoking: GCC Archiver
+ar -r  "libEnsc351.a"  ./AtomicConsole.o ./ScopedMutex.o ./SocketReadcond.o ./VNPE.o ./posixThread.o ./ss_api.o   
+ar: creating libEnsc351.a
+Finished building target: libEnsc351.a
+ 
+16:39:08 **** Incremental Build of configuration Debug for project Ensc351Part2-wP1soln ****
+make all 
+Building file: ../src/ReceiverX.cpp
+Invoking: GCC C++ Compiler
+g++ -std=c++1y -I"/home/osboxes/git/ensc351lib/Ensc351" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/ReceiverX.d" -MT"src/ReceiverX.o" -o "src/ReceiverX.o" "../src/ReceiverX.cpp"
+../src/ReceiverX.cpp: In member function ‘void ReceiverX::getRestBlk()’:
+../src/ReceiverX.cpp:77:52: error: ISO C++ forbids comparison between pointer and integer [-fpermissive]
+   77 |         goodBlk = (CRC_tot == rcvBlk[PAST_CHUNK + 1] ? 1 : 0);
+      |                                                    ^
+../src/ReceiverX.cpp:90:47: error: ISO C++ forbids comparison between pointer and integer [-fpermissive]
+   90 |         goodBlk = (CS_tot == rcvBlk[PAST_CHUNK] ? 1 : 0);
+      |                                               ^
+make: *** [src/subdir.mk:38: src/ReceiverX.o] Error 1
+"make all" terminated with exit code 2. Build might be incomplete.
+16:39:40 **** Incremental Build of configuration Debug for project Ensc351 ****
+make all 
+make: Nothing to be done for 'all'.
+16:39:40 **** Incremental Build of configuration Debug for project Ensc351Part2-wP1soln ****
+make all 
+Building file: ../src/ReceiverX.cpp
+Invoking: GCC C++ Compiler
+g++ -std=c++1y -I"/home/osboxes/git/ensc351lib/Ensc351" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/ReceiverX.d" -MT"src/ReceiverX.o" -o "src/ReceiverX.o" "../src/ReceiverX.cpp"
+../src/ReceiverX.cpp: In member function ‘void ReceiverX::getRestBlk()’:
+../src/ReceiverX.cpp:77:29: error: expected primary-expression before ‘==’ token
+   77 |         goodBlk = (CRC_tot* == rcvBlk[PAST_CHUNK + 1] ? 1 : 0);
+      |                             ^~
+../src/ReceiverX.cpp:90:28: error: expected primary-expression before ‘==’ token
+   90 |         goodBlk = (CS_tot* == rcvBlk[PAST_CHUNK] ? 1 : 0);
+      |                            ^~
+make: *** [src/subdir.mk:38: src/ReceiverX.o] Error 1
+"make all" terminated with exit code 2. Build might be incomplete.
+16:40:09 **** Incremental Build of configuration Debug for project Ensc351 ****
+make all 
+make: Nothing to be done for 'all'.
+16:40:09 **** Incremental Build of configuration Debug for project Ensc351Part2-wP1soln ****
+make all 
+Building file: ../src/ReceiverX.cpp
+Invoking: GCC C++ Compiler
+g++ -std=c++1y -I"/home/osboxes/git/ensc351lib/Ensc351" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/ReceiverX.d" -MT"src/ReceiverX.o" -o "src/ReceiverX.o" "../src/ReceiverX.cpp"
+../src/ReceiverX.cpp: In member function ‘void ReceiverX::getRestBlk()’:
+../src/ReceiverX.cpp:77:19: error: expected primary-expression before ‘if’
+   77 |         goodBlk = if (CRC_tot* == rcvBlk[PAST_CHUNK + 1] ? 1 : 0);
+      |                   ^~
+../src/ReceiverX.cpp:90:19: error: expected primary-expression before ‘if’
+   90 |         goodBlk = if (CS_tot* == rcvBlk[PAST_CHUNK] ? 1 : 0);
+      |                   ^~
+../src/ReceiverX.cpp:82:18: warning: unused variable ‘CS_tot’ [-Wunused-variable]
+   82 |         uint8_t* CS_tot;
+      |                  ^~~~~~
+make: *** [src/subdir.mk:38: src/ReceiverX.o] Error 1
+"make all" terminated with exit code 2. Build might be incomplete.
+16:40:55 **** Incremental Build of configuration Debug for project Ensc351 ****
+make all 
+make: Nothing to be done for 'all'.
+16:40:56 **** Incremental Build of configuration Debug for project Ensc351Part2-wP1soln ****
+make all 
+Building file: ../src/ReceiverX.cpp
+Invoking: GCC C++ Compiler
+g++ -std=c++1y -I"/home/osboxes/git/ensc351lib/Ensc351" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/ReceiverX.d" -MT"src/ReceiverX.o" -o "src/ReceiverX.o" "../src/ReceiverX.cpp"
+../src/ReceiverX.cpp: In member function ‘void ReceiverX::getRestBlk()’:
+../src/ReceiverX.cpp:77:30: error: expected primary-expression before ‘==’ token
+   77 |         goodBlk =  (CRC_tot* == rcvBlk[PAST_CHUNK + 1] ? 1 : 0);
+      |                              ^~
+../src/ReceiverX.cpp:90:29: error: expected primary-expression before ‘==’ token
+   90 |         goodBlk =  (CS_tot* == rcvBlk[PAST_CHUNK] ? 1 : 0);
+      |                             ^~
+make: *** [src/subdir.mk:38: src/ReceiverX.o] Error 1
+"make all" terminated with exit code 2. Build might be incomplete.
+16:43:54 **** Incremental Build of configuration Debug for project Ensc351 ****
+make all 
+make: Nothing to be done for 'all'.
+16:43:54 **** Incremental Build of configuration Debug for project Ensc351Part2-wP1soln ****
+make all 
+Building file: ../src/ReceiverX.cpp
+Invoking: GCC C++ Compiler
+g++ -std=c++1y -I"/home/osboxes/git/ensc351lib/Ensc351" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/ReceiverX.d" -MT"src/ReceiverX.o" -o "src/ReceiverX.o" "../src/ReceiverX.cpp"
+../src/ReceiverX.cpp: In member function ‘void ReceiverX::getRestBlk()’:
+../src/ReceiverX.cpp:74:16: warning: ‘CRC_tot’ may be used uninitialized in this function [-Wmaybe-uninitialized]
+   74 |         crc16ns(CRC_tot, &rcvBlk[DATA_POS]);
+      |         ~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../src/ReceiverX.cpp:90:29: warning: ‘CS_tot’ may be used uninitialized in this function [-Wmaybe-uninitialized]
+   90 |         goodBlk =  (CS_tot[0] == rcvBlk[PAST_CHUNK] ? 1 : 0);
+      |                     ~~~~~~~~^
+Finished building: ../src/ReceiverX.cpp
+ 
+Building file: ../src/SenderX.cpp
+Invoking: GCC C++ Compiler
+g++ -std=c++1y -I"/home/osboxes/git/ensc351lib/Ensc351" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/SenderX.d" -MT"src/SenderX.o" -o "src/SenderX.o" "../src/SenderX.cpp"
+Finished building: ../src/SenderX.cpp
+ 
+Building target: Ensc351Part2-wP1soln
+Invoking: GCC C++ Linker
+g++ -L"/home/osboxes/git/ensc351lib/Ensc351/Debug" -o "Ensc351Part2-wP1soln"  ./src/Ensc351Part2.o ./src/Medium.o ./src/PeerX.o ./src/ReceiverX.o ./src/SenderX.o ./src/main.o ./src/myIO.o   -lEnsc351 -lpthread
+Finished building target: Ensc351Part2-wP1soln
+ 
+16:44:17 **** Incremental Build of configuration Debug for project Ensc351 ****
+make all 
+make: Nothing to be done for 'all'.
+16:44:17 **** Incremental Build of configuration Debug for project Ensc351Part2-wP1soln ****
+make all 
+Building file: ../src/ReceiverX.cpp
+Invoking: GCC C++ Compiler
+g++ -std=c++1y -I"/home/osboxes/git/ensc351lib/Ensc351" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/ReceiverX.d" -MT"src/ReceiverX.o" -o "src/ReceiverX.o" "../src/ReceiverX.cpp"
+../src/ReceiverX.cpp: In member function ‘void ReceiverX::getRestBlk()’:
+../src/ReceiverX.cpp:82:18: warning: unused variable ‘CS_tot’ [-Wunused-variable]
+   82 |         uint8_t* CS_tot;
+      |                  ^~~~~~
+../src/ReceiverX.cpp:74:16: warning: ‘CRC_tot’ may be used uninitialized in this function [-Wmaybe-uninitialized]
+   74 |         crc16ns(CRC_tot, &rcvBlk[DATA_POS]);
+      |         ~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Finished building: ../src/ReceiverX.cpp
+ 
+Building target: Ensc351Part2-wP1soln
+Invoking: GCC C++ Linker
+g++ -L"/home/osboxes/git/ensc351lib/Ensc351/Debug" -o "Ensc351Part2-wP1soln"  ./src/Ensc351Part2.o ./src/Medium.o ./src/PeerX.o ./src/ReceiverX.o ./src/SenderX.o ./src/main.o ./src/myIO.o   -lEnsc351 -lpthread
+Finished building target: Ensc351Part2-wP1soln
+ 
+16:44:50 **** Incremental Build of configuration Debug for project Ensc351 ****
+make all 
+make: Nothing to be done for 'all'.
+16:44:50 **** Incremental Build of configuration Debug for project Ensc351Part2-wP1soln ****
+make all 
+Building file: ../src/ReceiverX.cpp
+Invoking: GCC C++ Compiler
+g++ -std=c++1y -I"/home/osboxes/git/ensc351lib/Ensc351" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/ReceiverX.d" -MT"src/ReceiverX.o" -o "src/ReceiverX.o" "../src/ReceiverX.cpp"
+../src/ReceiverX.cpp: In member function ‘void ReceiverX::getRestBlk()’:
+../src/ReceiverX.cpp:74:25: error: expected primary-expression before ‘,’ token
+   74 |         crc16ns(CRC_tot*, &rcvBlk[DATA_POS]);
+      |                         ^
+../src/ReceiverX.cpp:82:18: warning: unused variable ‘CS_tot’ [-Wunused-variable]
+   82 |         uint8_t* CS_tot;
+      |                  ^~~~~~
+make: *** [src/subdir.mk:38: src/ReceiverX.o] Error 1
+"make all" terminated with exit code 2. Build might be incomplete.
+16:45:01 **** Incremental Build of configuration Debug for project Ensc351 ****
+make all 
+make: Nothing to be done for 'all'.
+16:45:02 **** Incremental Build of configuration Debug for project Ensc351Part2-wP1soln ****
+make all 
+Building file: ../src/ReceiverX.cpp
+Invoking: GCC C++ Compiler
+g++ -std=c++1y -I"/home/osboxes/git/ensc351lib/Ensc351" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/ReceiverX.d" -MT"src/ReceiverX.o" -o "src/ReceiverX.o" "../src/ReceiverX.cpp"
+../src/ReceiverX.cpp: In member function ‘void ReceiverX::getRestBlk()’:
+../src/ReceiverX.cpp:82:18: warning: unused variable ‘CS_tot’ [-Wunused-variable]
+   82 |         uint8_t* CS_tot;
+      |                  ^~~~~~
+../src/ReceiverX.cpp:74:16: warning: ‘CRC_tot’ may be used uninitialized in this function [-Wmaybe-uninitialized]
+   74 |         crc16ns(CRC_tot, &rcvBlk[DATA_POS]);
+      |         ~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Finished building: ../src/ReceiverX.cpp
+ 
+Building target: Ensc351Part2-wP1soln
+Invoking: GCC C++ Linker
+g++ -L"/home/osboxes/git/ensc351lib/Ensc351/Debug" -o "Ensc351Part2-wP1soln"  ./src/Ensc351Part2.o ./src/Medium.o ./src/PeerX.o ./src/ReceiverX.o ./src/SenderX.o ./src/main.o ./src/myIO.o   -lEnsc351 -lpthread
+Finished building target: Ensc351Part2-wP1soln
+ 

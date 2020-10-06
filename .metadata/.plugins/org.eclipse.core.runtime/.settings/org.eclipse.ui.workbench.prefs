@@ -2,22 +2,4 @@
 RUN_IN_BACKGROUND=true
 UIActivities.org.eclipse.cdt.debug.dsfgdbActivity=true
 eclipse.preferences.version=1
-org.eclipse.cdt.debug.ui.ModulesDetailPaneFont=1|Monospace|8.0|0|GTK|1|;
-org.eclipse.cdt.internal.ui.compare.AsmMergeViewer=1|Monospace|8.0|0|GTK|1|;
-org.eclipse.cdt.internal.ui.compare.CMergeViewer=1|Monospace|8.0|0|GTK|1|;
-org.eclipse.cdt.make.internal.ui.compare.MakefileMergeViewer=1|Monospace|8.0|0|GTK|1|;
-org.eclipse.cdt.ui.buildconsole.ConsoleFont=1|Monospace|8.0|0|GTK|1|;
-org.eclipse.cdt.ui.editors.textfont=1|Monospace|8.0|0|GTK|1|;
-org.eclipse.compare.contentmergeviewer.TextMergeViewer=1|Monospace|8.0|0|GTK|1|;
-org.eclipse.debug.ui.DetailPaneFont=1|Monospace|8.0|0|GTK|1|;
-org.eclipse.debug.ui.MemoryViewTableFont=1|Monospace|8.0|0|GTK|1|;
-org.eclipse.debug.ui.consoleFont=1|Monospace|8.0|0|GTK|1|;
-org.eclipse.egit.ui.CommitMessageEditorFont=1|Monospace|8.0|0|GTK|1|;
-org.eclipse.egit.ui.CommitMessageFont=1|Monospace|8.0|0|GTK|1|;
-org.eclipse.egit.ui.DiffHeadlineFont=1|Monospace|8.0|0|GTK|1|;
-org.eclipse.jface.textfont=1|Monospace|8.0|0|GTK|1|;
-org.eclipse.mylyn.wikitext.ui.presentation.textFont=1|Monospace|8.0|0|GTK|1|;
-org.eclipse.tracecompass.tmf.ui.font.eventraw=1|Monospace|8.0|0|GTK|1|;
 org.eclipse.ui.commands=<?xml version\="1.0" encoding\="UTF-8"?>\n<org.eclipse.ui.commands>\n<keyBinding commandId\="org.eclipse.ui.edit.redo" contextId\="org.eclipse.ui.contexts.dialogAndWindow" keyConfigurationId\="org.eclipse.ui.defaultAcceleratorConfiguration" keySequence\="CTRL+Y"/>\n</org.eclipse.ui.commands>
-org.eclipse.wst.sse.ui.textfont=1|Monospace|8.0|0|GTK|1|;
-terminal.views.view.font.definition=1|Monospace|8.0|0|GTK|1|;

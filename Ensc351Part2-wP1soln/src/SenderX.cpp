@@ -136,7 +136,7 @@ void SenderX::genBlk(blkT blkBuf)
 void SenderX::prep1stBlk()
 {
 	// **** this function will need to be modified ****
-
+    //Maybe related to cs1stBlk ??
 
 	genBlk(blkBuf);
 }
@@ -148,6 +148,7 @@ SenderX::
 cs1stBlk()
 {
 	// **** this function will need to be modified ****
+    //particukar case for checksum??
 }
 
 /* While sending the now current block for the first time, prepare the next block if possible.
@@ -155,6 +156,10 @@ cs1stBlk()
 void SenderX::sendBlkPrepNext()
 {
 	// **** this function will need to be modified ****
+
+    // Need Array to hold previous values in case of resend?
+    // In which case we would not want to incremnet number and generate a new blk
+
 	blkNum ++; // 1st block about to be sent or previous block ACK'd
 	uint8_t lastByte = sendMostBlk(blkBuf);
 	genBlk(blkBuf); // prepare next block
@@ -210,10 +215,10 @@ void SenderX::sendFile()
 
 		while (ctx.bytesRd) {
 		    // GEts the next blk prepared ahead of time?
+		    // Copy block in case it gets sent and then later NAKed
 			ctx.sendBlkPrepNext();
 
-			// how to recive ack or nack from medium?
-			// if nack then need to useSenderX::resendBlk()
+			// if nack then need to useSenderX::resendBlk() with previous blk
 
 
 			// assuming below we get an ACK

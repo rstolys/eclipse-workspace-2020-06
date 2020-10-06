@@ -67,8 +67,29 @@ void ReceiverX::getRestBlk()
     // Read from disk to compare to previous blk??
 
 	// ********* this function must be improved ***********
-	PE_NOT(myReadcond(mediumD, &rcvBlk[1], REST_BLK_SZ_CRC, REST_BLK_SZ_CRC, 0, 0), REST_BLK_SZ_CRC);
-	goodBlk1st = goodBlk = true;
+    if (this->Crcflg)
+    {
+        uint16_t* CRC_tot;
+        PE_NOT(myReadcond(mediumD, &rcvBlk[1], REST_BLK_SZ_CRC, REST_BLK_SZ_CRC, 0, 0), REST_BLK_SZ_CRC);
+        crc16ns(CRC_tot, &rcvBlk[DATA_POS]);
+
+        // CRC should be at ENd?
+       // goodBlk =  (CRC_tot[0] == rcvBlk[PAST_CHUNK + 1] ? 1 : 0);
+        goodBlk1st = (rcvBlk[1] == 0 ? 1 : 0);
+    }
+    else
+    {
+        uint8_t* CS_tot;
+        PE_NOT(myReadcond(mediumD, &rcvBlk[1], REST_BLK_SZ_CS, REST_BLK_SZ_CS, 0, 0), REST_BLK_SZ_CS);
+        // Not sure about were to get bytes read? wont compile for now
+        /*
+        for( int ii = DATA_POS; ii < DATA_POS+bytesRd; ii++ )
+            CS_tot += rcvBlk[ii];
+           */
+
+        //goodBlk =  (CS_tot[0] == rcvBlk[PAST_CHUNK] ? 1 : 0);
+        goodBlk1st = (rcvBlk[1] == 0 ? 1 : 0);
+    }
 }
 
 //Write chunk (data) in a received block to disk
@@ -130,12 +151,25 @@ void ReceiverX::receiveFile()
 
             // getrestblk should check the CRC/chksum and then we can send a nack
             // if it didnt match or ack and write use write chunk to write to disc
-            ctx.sendByte(ACK); // assume the expected block was received correctly.
-            ctx.writeChunk();
+
+            if (goodBlk == 1)
+            {
+                ctx.sendByte(ACK);
+                ctx.writeChunk();
+            }
+            else
+            {
+                ctx.sendByte(NAK);
+                // SOmething else??
+            }
+
         };
+
+
         // assume EOT was just read in the condition for the while loop
         ctx.sendByte(NAK); // NAK the first EOT
         PE_NOT(myRead(mediumD, rcvBlk, 1), 1); // presumably read in another EOT
+
 
         // Check if the file closed properly.  If not, result should be "CloseError".
         if (ctx.closeTransferredFile()) {
