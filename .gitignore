@@ -2,3 +2,5 @@
 Ensc351Part1/.settings/
 Ensc351Part1/Debug/
 Ensc351Part1/DebugMips/
+*.log
+*.xml
