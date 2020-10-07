@@ -16,6 +16,17 @@
 
 
 
+////////////////////////////////////////////////////////////////
+// 
+// Constructor of PeerX class. Initalizes all variables in class
+//
+////////////////////////////////////////////////////////////////
+PeerX::PeerX(int d, const char *fname, bool useCrc)
+:result("ResultNotSet"), errCnt(0), mediumD(d), fileName(fname), transferringFileD(-1), Crcflg(useCrc)   //Set default values
+    {
+    //No further initalization needed
+    }
+
 
 
 ////////////////////////////////////////////////////////////////
@@ -60,7 +71,7 @@ unsigned short updcrc(register int c, register unsigned crc)
 // Line comments in function below show lines removed from original code.
 //
 ////////////////////////////////////////////////////////////////
-void crc16ns(uint16_t* crc16nsP, uint8_t* buf, bool bigEndian)
+void crc16ns(uint16_t* crc16nsP, uint8_t* buf)
     {
     register int wcj;
     register uint8_t *cp;
@@ -135,43 +146,13 @@ void checksum8bit(uint8_t* myChkSum, uint8_t* buf, ssize_t bytesRd)
 
 ////////////////////////////////////////////////////////////////
 // 
-// Constructor of PeerX class. Initalizes all variables in class
-//
-////////////////////////////////////////////////////////////////
-PeerX::PeerX(int d, const char *fname, bool useCrc)
-:result("ResultNotSet"), errCnt(0), mediumD(d), fileName(fname), transferringFileD(-1), Crcflg(useCrc)   //Set default values
-    {
-    //No initalization needed
-    }
-
-
-////////////////////////////////////////////////////////////////
-// 
 // Will send a byte to the to remote peer across the medium
 //
 ////////////////////////////////////////////////////////////////
 void PeerX::sendByte(uint8_t byte)
     {
     //Write byte to mediumD
-    int retVal = PE_NOT(myWrite(mediumD, &byte, sizeof(byte)));
-
-	switch (retVal) 
-        {
-		case 1:
-            {
-            return;
-            }
-		case -1:
-            {
-            ErrorPrinter("myWrite(mediumD, &byte, sizeof(byte))", __FILE__, __LINE__, errno);
-            break;
-            }
-		default:
-            {
-            std::cout /* cerr */ << "Wrong number of bytes written: " << retVal << std::endl;
-            exit(EXIT_FAILURE);
-            }
-	    }
+    PE_NOT(myWrite(mediumD, &byte, sizeof(byte)));
 
     return;
     }

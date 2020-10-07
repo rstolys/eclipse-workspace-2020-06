@@ -1,22 +1,23 @@
 //============================================================================
 //
-//% Student Name 1: student1
-//% Student 1 #: 123456781
-//% Student 1 userid (email): stu1 (stu1@sfu.ca)
+//% Student Name 1: Ryan Stolys
+//% Student 1 #: 301303127
+//% Student 1 userid (email): rstolys (rstolys@sfu.ca)
 //
-//% Student Name 2: student2
-//% Student 2 #: 123456782
-//% Student 2 userid (email): stu2 (stu2@sfu.ca)
+//% Student Name 2: Matthew Nesdoly
+//% Student 2 #: 301328738
+//% Student 2 userid (email): mnesdoly (mnesdoly@sfu.ca)
 //
 //% Below, edit to list any people who helped you with the code in this file,
 //%      or put 'None' if nobody helped (the two of) you.
 //
-// Helpers: _everybody helped us/me with the assignment (list names or put 'None')__
+// Helpers: 
+//          1. Worked with Jayden Cole on determing purpose of project files
 //
 // Also, list any resources beyond the course textbooks and the course pages on Piazza
 // that you used in making your submission.
 //
-// Resources:  ___________
+// Resources:  None
 //
 //%% Instructions:
 //% * Put your name(s), student number(s), userid(s) in the above section.
@@ -43,17 +44,28 @@
 
 using namespace std;
 
+
+////////////////////////////////////////////////////////////////
+//
+// SenderX class constructor. Uses PeerX construtor through inheritance
+//
+////////////////////////////////////////////////////////////////
 SenderX::SenderX(const char *fname, int d)
-:PeerX(d, fname),
- bytesRd(-1),
- firstCrcBlk(true),
- blkNum(0)  	// but first block sent will be block #1, not #0
-{
-}
+:PeerX(d, fname), bytesRd(-1), firstCrcBlk(true), blkNum(1)
+    {
+    //No further initialization needed
+    }
+
+
 
 //-----------------------------------------------------------------------------
 
-// get rid of any characters that may have arrived from the medium.
+
+////////////////////////////////////////////////////////////////
+//
+// get rid of any characters that may have arrived from the medium
+//
+////////////////////////////////////////////////////////////////
 void SenderX::dumpGlitches()
 {
 	const int dumpBufSz = 20;
@@ -62,97 +74,131 @@ void SenderX::dumpGlitches()
 	while (dumpBufSz == (bytesRead = PE(myReadcond(mediumD, buf, dumpBufSz, 0, 0, 0))));
 }
 
-// Send the block, less the block's last byte, to the receiver.
-// Returns the block's last byte.
 
-uint8_t SenderX::sendMostBlk(blkT blkBuf)
-//uint8_t SenderX::sendMostBlk(uint8_t blkBuf[BLK_SZ_CRC])
+
+////////////////////////////////////////////////////////////////
+//
+// Send the block, less the block's last byte, to the receiver
+// Returns the block's last byte
+//
+////////////////////////////////////////////////////////////////
+uint8_t SenderX::sendMostBlk(blkT blkBuffer)
 {
 	const int mostBlockSize = (this->Crcflg ? BLK_SZ_CRC : BLK_SZ_CS) - 1;
-	PE_NOT(myWrite(mediumD, blkBuf, mostBlockSize), mostBlockSize);
-	return *(blkBuf + mostBlockSize);
+	PE_NOT(myWrite(mediumD, blkBuffer, mostBlockSize), mostBlockSize);
+	return *(blkBuffer + mostBlockSize);
 }
 
+
+////////////////////////////////////////////////////////////////
+//
 // Send the last byte of a block to the receiver
-void
-SenderX::
-sendLastByte(uint8_t lastByte)
+//
+////////////////////////////////////////////////////////////////
+void SenderX::sendLastByte(uint8_t lastByte)
 {
-	PE(myTcdrain(mediumD)); // wait for previous part of block to be completely drained from the descriptor
-	dumpGlitches();			// dump any received glitches
+	PE(myTcdrain(mediumD));         // wait for previous part of block to be completely drained from the descriptor
+	dumpGlitches();			        // dump any received glitches
 
 	PE_NOT(myWrite(mediumD, &lastByte, sizeof(lastByte)), sizeof(lastByte));
 }
 
-/* tries to generate a block.  Updates the
-variable bytesRd with the number of bytes that were read
-from the input file in order to create the block. Sets
-bytesRd to 0 and does not actually generate a block if the end
-of the input file had been reached when the previously generated block
-was prepared or if the input file is empty (i.e. has 0 length).
-*/
+
+////////////////////////////////////////////////////////////////
+//
+// Will generate a block to be sent. Updates class variables to reflect actions
+//
+// CRAIG COMMENTS:
+// tries to generate a block.  Updates the
+// variable bytesRd with the number of bytes that were read
+// from the input file in order to create the block. Sets
+// bytesRd to 0 and does not actually generate a block if the end
+// of the input file had been reached when the previously generated block 
+// was prepared or if the input file is empty (i.e. has 0 length).
+//
+////////////////////////////////////////////////////////////////
 void SenderX::genBlk(blkT blkBuf)
-//void SenderX::genBlk(uint8_t blkBuf[BLK_SZ_CRC])
-{
-	//read data and store it directly at the data portion of the buffer
+    {
+	//Get the data from the input file and store it in the dataBuf array
 	bytesRd = PE(read(transferringFileD, &blkBuf[DATA_POS], CHUNK_SZ ));
-	if (bytesRd>0) {
-		blkBuf[0] = SOH; // can be pre-initialized for efficiency
-		//block number and its complement
-		uint8_t nextBlkNum = blkNum + 1;
-		blkBuf[SOH_OH] = nextBlkNum;
-		blkBuf[SOH_OH + 1] = ~nextBlkNum;
-		if (this->Crcflg) {
-			/*add padding*/
-			if(bytesRd<CHUNK_SZ)
-			{
-				//pad ctrl-z for the last block
-				uint8_t padSize = CHUNK_SZ - bytesRd;
-				memset(blkBuf+DATA_POS+bytesRd, CTRL_Z, padSize);
-			}
 
-			/* calculate and add CRC in network byte order */
-			crc16ns((uint16_t*)&blkBuf[PAST_CHUNK], &blkBuf[DATA_POS]);
-		}
-		else {
-			//checksum
-			blkBuf[PAST_CHUNK] = blkBuf[DATA_POS];
-			for( int ii=DATA_POS + 1; ii < DATA_POS+bytesRd; ii++ )
-				blkBuf[PAST_CHUNK] += blkBuf[ii];
+    //Add SOH btye 
+    blkBuf[SOH_BYTE] = SOH; 
 
-			//padding
-			if( bytesRd < CHUNK_SZ )  { // this line could be deleted
-				//pad ctrl-z for the last block
-				uint8_t padSize = CHUNK_SZ - bytesRd;
-				memset(blkBuf+DATA_POS+bytesRd, CTRL_Z, padSize);
-				blkBuf[PAST_CHUNK] += CTRL_Z * padSize;
-			}
-		}
-	}
-}
+    //Cast block number to uint8_t and add it to block buffer
+    blkBuf[BLK_NUM_BYTE] = (uint8_t) blkNum;
 
-/* tries to prepare the first block.
-*/
+    //Compute the complment of the blkNum and add that to the blkBuf
+    blkBuf[BLK_NUM_COMP_BYTE] = ~(blkBuf[BLK_NUM_BYTE]);        // '~' is bit flip operator
+
+
+    //If we did not read a full 128 bytes, append with zeros 
+    for(int i = bytesRd; i < CHUNK_SZ; i++)
+        {
+        dataBuf[i] = CTRL_Z;                                        //Hex for ctrl Z (^Z)
+        } 
+
+    //Add all 128 bytes of data to the blkBuf array
+    memcpy(&blkBuf[BLK_DATA_START], dataBuf, CHUNK_SZ);
+    
+
+    
+
+    //Calculate checksum depending on if we are using crc or normal checksum
+    if(Crcflg)
+        {
+        uint16_t myCrc16ns;
+        crc16ns(&myCrc16ns, &dataBuf[0]);
+
+        //Append the checksum to the blkBuf
+        memcpy(&blkBuf[CHK_SUM_START], &myCrc16ns, CRC_CHK_SUM_SIZE);
+        }
+    else 
+        {
+        uint8_t myChkSum;
+        checksum8bit(&myChkSum, &dataBuf[0], bytesRd);              //Defined in PeerX.cpp
+
+        //Append the checksum to the blkBuf
+        blkBuf[CHK_SUM_START] = myChkSum;
+        }
+
+	
+    return;
+    }
+
+
+////////////////////////////////////////////////////////////////
+//
+// Prepare the first block of the data transfer
+//
+////////////////////////////////////////////////////////////////
 void SenderX::prep1stBlk()
 {
 	// **** this function will need to be modified ****
     //Maybe related to cs1stBlk ??
 
-	genBlk(blkBuf);
+	genBlk(blkBufs[CURRENT]);
 }
 
-/* refit the 1st block with a checksum
-*/
-void
-SenderX::
-cs1stBlk()
+
+////////////////////////////////////////////////////////////////
+//
+// refit the 1st block with a checksum
+//
+////////////////////////////////////////////////////////////////
+void SenderX::cs1stBlk()
 {
 	// **** this function will need to be modified ****
     //particukar case for checksum??
 }
 
-/* While sending the now current block for the first time, prepare the next block if possible.
-*/
+
+////////////////////////////////////////////////////////////////
+//
+// While sending the now current block for the first time
+//      prepare the next block if possible.
+//
+////////////////////////////////////////////////////////////////
 void SenderX::sendBlkPrepNext()
 {
 	// **** this function will need to be modified ****
@@ -160,83 +206,237 @@ void SenderX::sendBlkPrepNext()
     // Need Array to hold previous values in case of resend?
     // In which case we would not want to incremnet number and generate a new blk
 
-	blkNum ++; // 1st block about to be sent or previous block ACK'd
-	uint8_t lastByte = sendMostBlk(blkBuf);
-	genBlk(blkBuf); // prepare next block
+    //Save the current block into the saved block position before it gets overwritten
+    memcpy(&blkBufs[SAVED], &blkBufs[CURRENT], BLK_SZ_CRC);
+
+	blkNum++; // 1st block about to be sent or previous block ACK'd
+	uint8_t lastByte = sendMostBlk(blkBufs[CURRENT]);
+	genBlk(blkBufs[CURRENT]); // prepare next block
 	sendLastByte(lastByte);
 }
 
-// Resends the block that had been sent previously to the xmodem receiver.
+
+////////////////////////////////////////////////////////////////
+//
+// Resends the block that had been sent previously to the xmodem receiver
+//
+////////////////////////////////////////////////////////////////
 void SenderX::resendBlk()
 {
-    // Not called in SenderX
-	// resend the block including the checksum or crc16
-	//  ***** You will have to write this simple function *****
+    //Send the saved block
+    uint8_t lastByte = sendMostBlk(blkBufs[SAVED]);
+
+    //Send the final byte 
+    sendLastByte(lastByte);
 }
 
-int
-SenderX::
-openFileToTransfer()
-{
+
+////////////////////////////////////////////////////////////////
+//
+// Opens the file specified to send via the xModem protocol
+//
+////////////////////////////////////////////////////////////////
+int SenderX::openFileToTransfer()
+    {
     transferringFileD = myOpen(fileName, O_RDONLY);
     return transferringFileD;
-}
+    }
 
-//Send CAN_LEN copies of CAN characters in a row to the XMODEM receiver, to inform it of
-//	the cancelling of a file transfer
+
+////////////////////////////////////////////////////////////////
+//
+// Send CAN_LEN copies of CAN characters in a row to the XMODEM receiver
+//      to inform it of the cancelling of a file transfer
+//
+////////////////////////////////////////////////////////////////
 void SenderX::can8()
-{
+    {
 	// No need to space in time CAN chars for Part 2.
 	// This function will be more complicated in later parts. 
     char buffer[CAN_LEN];
     memset( buffer, CAN, CAN_LEN);
     PE_NOT(myWrite(mediumD, buffer, CAN_LEN), CAN_LEN);
-}
+    }
 
+
+////////////////////////////////////////////////////////////////
+//
+// Send CAN_LEN copies of CAN characters in a row to the XMODEM receiver
+//      to inform it of the cancelling of a file transfer
+//
+////////////////////////////////////////////////////////////////
 void SenderX::sendFile()
-{
-    SenderX& ctx = *this; // needed to work with SmartState-generated code
+    {
+    SenderX& ctx = *this;       // needed to work with SmartState-generated code
 
     // ***** modify the below code according to the protocol *****
     // below is just a starting point.  You can follow a
     //  different structure if you want.
 
     char byteToReceive;
-    PE_NOT(myRead(mediumD, &byteToReceive, 1), 1); // assuming get a 'C'
-    ctx.Crcflg = true;
+    PE_NOT(myRead(mediumD, &byteToReceive, 1), 1);   
+    
+    //Loop until we recieve the correct byte to set the flag
+    bool flagNotSet = true;
+    int numberOfInvalidMessages = 0; 
+    while(flagNotSet)
+        {
+        //If we recieve 10 consecutive invalid characters
+        if(numberOfInvalidMessages >= 10)
+            {
+            can8();
+            ctx->result = "Failure to recieve valid acknowledgement to begin transmission. Tranmission Failed";
+            return;
+            }
 
-	if(openFileToTransfer() == -1) {
+        //Set the Crcflg depening on byte recieved
+        if(byteToReceive == 'C')
+            {
+            ctx.Crcflg = true;          //Set program to CRC mode
+            }
+        else if(byteToReceive == NAK)
+            {
+            ctx.Crcflg = false;         //Set program to checksum mode
+            }
+        else 
+            {
+            numberOfInvalidMessages++;
+            PE_NOT(myRead(mediumD, &byteToReceive, 1), 1);   
+            }
+        }
+    
+    //Open the file to send to the reciever
+	if(openFileToTransfer() == -1) 
+        {
 		can8();
-		// cout /* cerr */ << "Error opening input file named: " << fileName << endl;
 		result = "OpenError";
-	}
-	else {
+	    }
+	else 
+        {
+        //Prepare the first block for sending 
 		ctx.prep1stBlk();
 
-		while (ctx.bytesRd) {
-		    // GEts the next blk prepared ahead of time?
-		    // Copy block in case it gets sent and then later NAKed
+		while (ctx.bytesRd) 
+            {
+		    // send the prepared block and prepare the next one
+            //      will have the save the current block in buffer until we get a positive acknowledgement
 			ctx.sendBlkPrepNext();
 
-			// if nack then need to useSenderX::resendBlk() with previous blk
-
-
+			
 			// assuming below we get an ACK
 			PE_NOT(myRead(mediumD, &byteToReceive, 1), 1);
-		}
 
-		// Write a loop here to resend eot if NAK then ACK didnt come back in right order
-		ctx.sendByte(EOT); // send the first EOT
-		PE_NOT(myRead(mediumD, &byteToReceive, 1), 1); // assuming get a NAK
-		ctx.sendByte(EOT); // send the second EOT
-		PE_NOT(myRead(mediumD, &byteToReceive, 1), 1); // assuming get an ACK
+            int numberOfNAKs = 0; 
+            while(byteToReceive != ACK)
+                {
+                numberOfNAKs++;
+
+                //After we recieve 10 consecutive NAKs we will abort transmission
+                if(numberOfNAKs >= 10)
+                    {
+                    can8();
+                    ctx.result = "Fatal loss of synchronization or connection. Transmission Failed";
+                    return;
+                    }
+
+                //Resend the previous block
+                SenderX::resendBlk();
+            
+                //Wait for positive acknowledgement of that block -- continue loop until we get ACK
+                PE_NOT(myRead(mediumD, &byteToReceive, 1), 1);
+                }
+
+            //We have recieved a positive acknowlegdment of the first block
+            ctx.firstCrcBlk = false;
+		    }
+
+		ctx.sendByte(EOT);                                  // send an EOT character
+		PE_NOT(myRead(mediumD, &byteToReceive, 1), 1);      // read the reciever response
+
+        //If we do not recieve an ACK -- try again
+        int numberOfNAKs = 0; 
+        while(byteToReceive != ACK)
+            {
+            numberOfNAKs++;
+
+            if(numberOfNAKs >= 10)
+                {
+                can8();
+                ctx.result = "Fatal loss of synchronization or connection during EOT communication. Transmission was unsuccessful";
+                return;
+                }
+            
+            ctx.sendByte(EOT);                                  //Send another EOT until it is positivly acknowledged
+		    PE_NOT(myRead(mediumD, &byteToReceive, 1), 1);      // Read the response from the reciever
+            }
+		
+        //We successfully recieived a positive acknowledgement to EOT character -- transmission successful
 		ctx.result = "Done";
 
+        //Close the file we are transferring 
 		PE(myClose(transferringFileD));
-		/*
-		if (-1 == myClose(transferringFileD))
-			VNS_ErrorPrinter("myClose(transferringFileD)", __func__, __FILE__, __LINE__, errno);
-		*/
-	}
-}
+	    }
 
+    return;
+    }
+
+
+
+
+/*
+////////////////////////////////////////////////////////////////
+//
+// Craigs solution to genBlk -- we used our own
+//
+////////////////////////////////////////////////////////////////
+void SenderX::genBlk(blkT blkBuf)
+    {
+	//read data and store it directly at the data portion of the buffer
+	bytesRd = PE(read(transferringFileD, &blkBuf[DATA_POS], CHUNK_SZ ));
+
+	if (bytesRd>0) 
+        {
+		blkBuf[0] = SOH;            // can be pre-initialized for efficiency
+
+		//block number and its complement
+		uint8_t nextBlkNum = blkNum + 1;            //Set the block number to the blkNum
+		blkBuf[SOH_OH] = nextBlkNum;                //Set block number
+		blkBuf[SOH_OH + 1] = ~nextBlkNum;           //Set complement  of block number
+
+
+		if(this->Crcflg) 
+            {
+			if(bytesRd < CHUNK_SZ)          //Add padding if block isn't long enough
+			    {
+				//pad ctrl-z for the last block
+				uint8_t padSize = CHUNK_SZ - bytesRd;
+				memset(blkBuf+DATA_POS+bytesRd, CTRL_Z, padSize);
+			    }
+
+			//calculate and add CRC in network byte order
+			crc16ns((uint16_t*)&blkBuf[PAST_CHUNK], &blkBuf[DATA_POS]);
+		    }
+		else 
+            {
+			// Compute the checksum
+			blkBuf[PAST_CHUNK] = blkBuf[DATA_POS];
+			for(int ii = DATA_POS + 1; ii < (DATA_POS + bytesRd); ii++)
+                {
+                blkBuf[PAST_CHUNK] += blkBuf[ii];
+                }
+				
+
+			//Add padding  if needed padding
+			if( bytesRd < CHUNK_SZ )  
+                {
+				//pad ctrl-z for the last block
+				uint8_t padSize = CHUNK_SZ - bytesRd;
+				memset(blkBuf+DATA_POS+bytesRd, CTRL_Z, padSize);
+				blkBuf[PAST_CHUNK] += CTRL_Z * padSize;
+			    }
+		    }
+	    }
+
+    return;
+    }
+*/

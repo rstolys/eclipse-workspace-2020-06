@@ -5,6 +5,10 @@
 #include <stdint.h> // uint8_t
 #include "PeerX.h"
 
+
+#define CURRENT     0
+#define SAVED       1
+
 class SenderX : public PeerX
 {
 public:
@@ -29,7 +33,8 @@ public:
 
     ssize_t bytesRd;  // The number of bytes last read from the input file.
 
-	/* true if Checksum has not been requested by receiver and first CRC16 block
+	/* 
+     * true if Checksum has not been requested by receiver and first CRC16 block
 	 * has not yet been received correctly
 	 */
 	bool firstCrcBlk;
@@ -39,8 +44,8 @@ public:
 //  unsigned errCnt;    // found in PeerX.h
 
 private:
-	uint8_t blkBuf[BLK_SZ_CRC];     // a  block
-	//blkT blkBufs[2];	// Array of two blocks
+	//uint8_t blkBuf[BLK_SZ_CRC];     // a  block
+	blkT blkBufs[2];	            // Array of two blocks
 
 	uint8_t blkNum;		// number of current block to be acknowledged
 

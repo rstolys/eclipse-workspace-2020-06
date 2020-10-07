@@ -39,6 +39,15 @@
 #define CAN 0x18 // 24  
 #define	CTRL_Z 0x1A //	26
 
+
+//Define btye locations for the header and data blocks
+#define SOH_BYTE              0                                   //SOH byte
+#define BLK_NUM_BYTE          1                                   //Block number byte
+#define BLK_NUM_COMP_BYTE     2                                   //Complement of block number byte
+#define BLK_DATA_START        3                                   //Data starting byte
+#define CHK_SUM_START         131                                 //Checksum starting byte (for both normal and crc)
+#define CRC_CHK_SUM_SIZE      2                                   //Number of bytes of CRC checksum
+
 #define UNITS_PER_SEC 10
 
 #define TM_2CHAR (2*UNITS_PER_SEC) // wait for more than 1 second (1 second plus)
@@ -48,25 +57,35 @@
 
 typedef uint8_t blkT[BLK_SZ_CRC];
 
-void 
-crc16ns (uint16_t* crc16nsP, uint8_t* buf);
 
-/*
-void 
-checksum(uint8_t* sumP, blkT blkBuf) // uint8_t* buf
-; 
-*/
+////////////////////////////////////////////////////////////////
+// 
+// Will create the CRC checksum to append to the block of data
+//
+////////////////////////////////////////////////////////////////
+void crc16ns (uint16_t* crc16nsP, uint8_t* buf);
 
-class PeerX {
+
+////////////////////////////////////////////////////////////////
+// 
+// Will create an 8 bit checksum to append to the block of data
+//
+////////////////////////////////////////////////////////////////
+void checksum8bit(uint8_t* myChkSum, uint8_t* buf, ssize_t bytesRd);
+
+
+class PeerX 
+{
 public:
-	PeerX(int d, const char *fname, bool useCrc=true)
-	;
+    ////////////////////////////////////////////////////////////////
+    // 
+    // Constructor of PeerX class. Initalizes all variables in class
+    //
+    ////////////////////////////////////////////////////////////////
+	PeerX(int d, const char *fname, bool useCrc=true);
 
 	//Send a byte to the remote peer across the medium
-	void
-	//PeerX::
-	sendByte(uint8_t byte)
-	;
+	void /*PeerX::*/ sendByte(uint8_t byte);
 
 	std::string result;  // result of the file transfer
 	unsigned errCnt;	 // counts the number of "errors" in a row
