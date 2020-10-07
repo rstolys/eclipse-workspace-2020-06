@@ -1,22 +1,23 @@
 //============================================================================
 //
-//% Student Name 1: student1
-//% Student 1 #: 123456781
-//% Student 1 userid (email): stu1 (stu1@sfu.ca)
+//% Student Name 1: Ryan Stolys
+//% Student 1 #: 301303127
+//% Student 1 userid (email): rstolys (rstolys@sfu.ca)
 //
-//% Student Name 2: student2
-//% Student 2 #: 123456782
-//% Student 2 userid (email): stu2 (stu2@sfu.ca)
+//% Student Name 2: Matthew Nesdoly
+//% Student 2 #: 301328738
+//% Student 2 userid (email): mnesdoly (mnesdoly@sfu.ca)
 //
 //% Below, edit to list any people who helped you with the code in this file,
 //%      or put 'None' if nobody helped (the two of) you.
 //
-// Helpers: _everybody helped us/me with the assignment (list names or put 'None')__
+// Helpers: 
+//          1. Worked with Jayden Cole on determing purpose of project files
 //
 // Also, list any resources beyond the course textbooks and the course pages on Piazza
 // that you used in making your submission.
 //
-// Resources:  ___________
+// Resources:  None
 //
 //%% Instructions:
 //% * Put your name(s), student number(s), userid(s) in the above section.
@@ -102,64 +103,62 @@ void termFunc(int termNum)
 	// ***** modify this function to communicate with the "Kind Medium" *****
 
 	if (termNum == Term1) {
-
-	    // Modify to daSktPrT1M[MediumSkt] ??
-
-        testReceiverX("hs_err_pid11506.log", daSktPrT1M[TermSkt]);        // normal text file
-//        testReceiverX("sudo_as_admin_successful", daSktPr[Term1]);  // empty file
-//        testReceiverX("doesNotExist.txt", daSktPr[Term1]);                        // file does not exist
+        testReceiverX("hs_err_pid11506.log", daSktPrT1M[TermSkt]);          // normal text file
+        //testReceiverX("sudo_as_admin_successful", daSktPr[Term1]);        // empty file
+        //testReceiverX("doesNotExist.txt", daSktPr[Term1]);                // file does not exist
 	}
 	else { // Term2
-		PE_0(pthread_setname_np(pthread_self(), "T2")); // give the thread (terminal 2) a name
-	    // PE_0(pthread_setname_np("T2")); // Mac OS X
+		PE_0(pthread_setname_np(pthread_self(), "T2"));                     // give the thread (terminal 2) a name
 
-		// Modify to daSktPrMT2[MediumSkt] ??
-
-	    testSenderX("/home/osboxes/hs_err_pid11506.log", daSktPrMT2[TermSkt]);        // normal text file
-//        testSenderX("/home/osboxes/.sudo_as_admin_successful", daSktPr[Term2]);  // empty file
-//        testSenderX("/doesNotExist.txt", daSktPr[Term2]);                        // file does not exist
+	    testSenderX("/home/osboxes/hs_err_pid11506.log", daSktPrMT2[TermSkt]);          // normal text file
+        //testSenderX("/home/osboxes/.sudo_as_admin_successful", daSktPr[Term2]);       // empty file
+        //testSenderX("/doesNotExist.txt", daSktPr[Term2]);                             // file does not exist
 	}
+
+    //Have thread sleep for 10ms
     std::this_thread::sleep_for (std::chrono::milliseconds(10));
-	PE(myClose(daSktPr[termNum]));
+
+    //Close the file we were writing to -- don' really need to do this
+	//PE(myClose(daSktPr[termNum]));
+
+    return;
 }
 
 int Ensc351Part2()
 {
 	// ***** Modify this function to create the "Kind Medium" thread and communicate with it *****
 
-	PE_0(pthread_setname_np(pthread_self(), "P-T1")); // give the primary thread (terminal 1) a name
-    // PE_0(pthread_setname_np("P-T1")); // Mac OS X
+	PE_0(pthread_setname_np(pthread_self(), "P-T1"));       // give the primary thread (terminal 1) a name
 
-	// ***** switch from having one socketpair for direct connection to having two socketpairs
-	//			for connection through medium thread *****
-	//PE(mySocketpair(AF_LOCAL, SOCK_STREAM, 0, daSktPr));
 
-	//Should create 2 socket pairs? between send-medium and recive-medium
+	//Create 2 socket pairs. Between sender and medium and medium and recieved
 	PE(mySocketpair(AF_LOCAL, SOCK_STREAM, 0, daSktPrT1M));
 	PE(mySocketpair(AF_LOCAL, SOCK_STREAM, 0, daSktPrMT2));
 
-	// ???
+	// This looks like it would be used to open the socket but I don't know if we need to do that
 	//daSktPr[Term1] =  PE(/*myO*/open("/dev/ser2", O_RDWR));
 
+    //Set the thread priority to 70
     posixThread term2Thrd(SCHED_FIFO, 70, termFunc, Term2);
 
-    // ***** create thread with SCHED_FIFO priority 40 for medium *****
-    //     have the thread run the function found in Medium.cpp:
-    //          void mediumFunc(int T1d, int T2d, const char *fname)
-    //          where T1d is the descriptor for the socket to Term1
-    //          and T2d is the descriptor for the socket to Term2
-    //          and fname is the name of the binary medium "log" file
-    //          ("xmodemData.dat").
-    //      Make sure that thread is created at SCHED_FIFO priority 40
-
+    
+    //Create the medium thread to act as middle man between reciever and sender
     posixThread mediumThrd(SCHED_FIFO, 40, mediumFunc, daSktPrT1M[MediumSkt], daSktPrMT2[MediumSkt], "xmodemSenderData.dat" );
+                // Set to prirotity 40
+                // Begin Thread in mediumFunc -- void mediumFunc(int T1d, int T2d, const char *fname)
+                // Pass Agrguements:
+                //      T1d is descriptor of the socket to Term 1
+                //      T2d is descriptor of the socket to Term 2
+                //      fname is file name of the log file to be used
 
+    //Send the main thread to termFunc as terminal 1
 	termFunc(Term1);
 
+    //Wait for terminal 2 thread to rejoin before exitting
     term2Thrd.join();
 
+    //Wait for medium thread to rejoin before exiting
     mediumThrd.join();
-    // ***** join with thread for medium *****
 
 	return EXIT_SUCCESS;
 }
