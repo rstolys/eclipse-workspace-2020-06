@@ -28,6 +28,20 @@ PeerX::PeerX(int d, const char *fname, bool useCrc)
     }
 
 
+////////////////////////////////////////////////////////////////
+// 
+// Place Bytes in Network Byte Order
+//
+// Code from Craig Scratchley
+//
+////////////////////////////////////////////////////////////////
+uint16_t my_htons(uint16_t n)
+    {
+    unsigned char *np = (unsigned char *)&n;
+
+    return ((uint16_t)np[0] << 8) | (uint16_t)np[1];
+    }
+
 
 ////////////////////////////////////////////////////////////////
 // 
@@ -87,11 +101,11 @@ void crc16ns(uint16_t* crc16nsP, uint8_t* buf)
 
 
     //Place bytes in network byte order -- Prof Craig Solution
-    *crc16nsP = my_htons((uint16_t) oldcrc);
+    //*crc16nsP = my_htons((uint16_t) oldcrc);
 
 
     //Place bytes in network byte order -- Our solution from part 1
-    /*
+    int n = 1;
     if(*(char *) & n == 1)  
         { 
         //Processor is little endian
@@ -102,24 +116,8 @@ void crc16ns(uint16_t* crc16nsP, uint8_t* buf)
         //Processor is big endian
         *crc16nsP = oldcrc;   
         }
-    */
 
     return;
-    }
-
-
-////////////////////////////////////////////////////////////////
-// 
-// Place Bytes in Network Byte Order
-//
-// Code from Craig Scratchley
-//
-////////////////////////////////////////////////////////////////
-uint16_t my_htons(uint16_t n)
-    {
-    unsigned char *np = (unsigned char *)&n;
-
-    return ((uint16_t)np[0] << 8) | (uint16_t)np[1];
     }
 
 
@@ -152,24 +150,7 @@ void checksum8bit(uint8_t* myChkSum, uint8_t* buf, ssize_t bytesRd)
 void PeerX::sendByte(uint8_t byte)
     {
     //Write byte to mediumD
-    PE_NOT(myWrite(mediumD, &byte, sizeof(byte)));
+    PE_NOT(myWrite(mediumD, &byte, sizeof(byte)), 1);
 
     return;
-    }
-
-
-////////////////////////////////////////////////////////////////
-// 
-// Will print an error message to the screen with specified parameters
-//
-////////////////////////////////////////////////////////////////
-void ErrorPrinter (const char* functionCall, const char* file, int line, int error)
-    {
-    fprintf (stdout/*stderr*/, " \n!!! Error %d (%s) occurred at line %d of file %s\n"
-                "\t resulted from invocation: %s\n"
-                "\t Exiting program!\n",
-                error, strerror(error), line, file, functionCall);
-
-    fflush(stdout);          // with MinGW the error doesn't show up sometimes.
-    exit(EXIT_FAILURE);
     }

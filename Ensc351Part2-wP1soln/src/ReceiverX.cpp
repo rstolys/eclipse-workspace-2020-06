@@ -98,7 +98,7 @@ void ReceiverX::getRestBlk()
             {
             //Check the CRC to see if it valid
             bool validChkSum = (CRC_tot[0] == rcvBlk[CHK_SUM_START]);
-            validChkSum = (CRC_tot[1] == rcvBlk[CHK_SUM_START + 1])
+            validChkSum = (CRC_tot[1] == rcvBlk[CHK_SUM_START + 1]);
             goodBlk = validChkSum;
 
             //Set our last good block to the current block
@@ -134,7 +134,8 @@ void ReceiverX::getRestBlk()
         else 
             {
             //Check the checksum to see if it valid
-            goodBlk = (CS_tot == rcvBlk[CHK_SUM_START]) ? true : false;
+            bool validChkSum = (CS_tot[0] == rcvBlk[CHK_SUM_START]);
+            goodBlk = validChkSum;
 
             //Set our last good block to the current block
             numLastGoodBlk++;
@@ -256,7 +257,7 @@ void ReceiverX::receiveFile()
             }
 
         //Set the CRC flag to indicate the checksum method we are using based on sender response
-        if(ctx.NCGbyte = 'C';)
+        if(ctx.NCGbyte == 'C')
             this->Crcflg = true;
         else 
             this->Crcflg = false;
@@ -349,7 +350,7 @@ void ReceiverX::receiveFile()
                 PE_NOT(myRead(mediumD, rcvBlk, 1), 1);
                 }
         
-            } while (while(transmissionActive));
+            } while(transmissionActive);
 
 
         // Check if the file closed properly

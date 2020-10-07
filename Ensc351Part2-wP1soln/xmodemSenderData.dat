@@ -1,21 +1,4 @@
 Cş#
 # A fatal error has been detected by the Java Runtime Environment:
 #
-#  SIGSEGV (0xb) at pc=0x00007feac8a6ab18, pid=11506, tidsı=11507
-#
-# JRE version: OpenJDK Runtime Environment (11.0.4+11) (build 11.0.4+11-post-Ubuntu-1ubuntu218.04.3)
-# Java VM: OpenJDK¦@ü 64-Bit Server VM (11.0.4+11-post-Ubuntu-1ubuntu218.04.3, mixed mode, tiered, compressed oops, g1 gc, linux-amd64)
-# Problemat–céHû frame:
-# C  [ld-linux-x86-64.so.2+0xcb18]
-#
-# Core dump will be written. Default location: Core dumps may be processed with "/uSğúsr/share/apport/apport %p %s %c %d %P %E" (or dumping to /snap/bin/core.11506)
-#
-# If you would like to submit a bug report, pleòùase visit:
-#   https://bugs.launchpad.net/ubuntu/+source/openjdk-lts
-# The crash happened outside the Java Virtual Machineßin na¼Ìøtive code.
-# See problematic frame for where to report the bug.
-#
-
----------------  S U M M A R Y ------------
-
-Command Line: -XÇˆ÷X:MaxPermSize=512m -Xms128m -Xmx2048m -Dorg.eclipse.swt.browser.DefaultType=webkit -Dorg.eclipse.swt.browser.UseWebKitGTK=true /ğæ
+#  SIGSEGV (0xb) at pc=0x00007feac8a6ab18, pid=11506, tids

@@ -135,20 +135,15 @@ void SenderX::genBlk(blkT blkBuf)
     //If we did not read a full 128 bytes, append with zeros 
     for(int i = bytesRd; i < CHUNK_SZ; i++)
         {
-        dataBuf[i] = CTRL_Z;                                        //Hex for ctrl Z (^Z)
-        } 
-
-    //Add all 128 bytes of data to the blkBuf array
-    memcpy(&blkBuf[BLK_DATA_START], dataBuf, CHUNK_SZ);
-    
-
+        blkBuf[DATA_POS + i] = CTRL_Z;                          //Hex for ctrl Z (^Z)
+        }
     
 
     //Calculate checksum depending on if we are using crc or normal checksum
     if(Crcflg)
         {
         uint16_t myCrc16ns;
-        crc16ns(&myCrc16ns, &dataBuf[0]);
+        crc16ns(&myCrc16ns, &blkBuf[DATA_POS]);
 
         //Append the checksum to the blkBuf
         memcpy(&blkBuf[CHK_SUM_START], &myCrc16ns, CRC_CHK_SUM_SIZE);
@@ -156,7 +151,7 @@ void SenderX::genBlk(blkT blkBuf)
     else 
         {
         uint8_t myChkSum;
-        checksum8bit(&myChkSum, &dataBuf[0], bytesRd);              //Defined in PeerX.cpp
+        checksum8bit(&myChkSum, &blkBuf[DATA_POS], bytesRd);    //Defined in PeerX.cpp
 
         //Append the checksum to the blkBuf
         blkBuf[CHK_SUM_START] = myChkSum;
@@ -285,7 +280,7 @@ void SenderX::sendFile()
         if(numberOfInvalidMessages >= 10)
             {
             can8();
-            ctx->result = "Failure to recieve valid acknowledgement to begin transmission. Tranmission Failed";
+            ctx.result = "Failure to recieve valid acknowledgement to begin transmission. Tranmission Failed";
             return;
             }
 
@@ -293,10 +288,12 @@ void SenderX::sendFile()
         if(byteToReceive == 'C')
             {
             ctx.Crcflg = true;          //Set program to CRC mode
+            flagNotSet = false;
             }
         else if(byteToReceive == NAK)
             {
             ctx.Crcflg = false;         //Set program to checksum mode
+            flagNotSet = false;
             }
         else 
             {
@@ -323,7 +320,7 @@ void SenderX::sendFile()
 			ctx.sendBlkPrepNext();
 
 			
-			// assuming below we get an ACK
+			// read the byte returned by the recieved to determine next step
 			PE_NOT(myRead(mediumD, &byteToReceive, 1), 1);
 
             int numberOfNAKs = 0; 
