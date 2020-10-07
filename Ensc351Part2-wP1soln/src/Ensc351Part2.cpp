@@ -32,11 +32,11 @@
 // Description : Starting point for ENSC 351 Project Part 2
 //============================================================================
 
-#include <stdlib.h> // EXIT_SUCCESS
+#include <stdlib.h>         // EXIT_SUCCESS
 #include <sys/socket.h>
 #include <pthread.h>
 //#include <thread>
-#include <chrono>         // std::chrono::
+#include <chrono>           // std::chrono::
 
 #include "myIO.h"
 #include "SenderX.h"
@@ -53,16 +53,24 @@ using namespace pthreadSupport;
 enum  {Term1, Term2};
 enum  {TermSkt, MediumSkt};
 
-static int daSktPr[2];	  //Socket Pair between term1 and term2
+//static int daSktPr[2];	  //Socket Pair between term1 and term2
 static int daSktPrT1M[2];	  //Socket Pair between term1 and medium
 static int daSktPrMT2[2];	  //Socket Pair between medium and term2
 
+
+////////////////////////////////////////////////////////////////
+//
+// Setup the reciever thread
+//
+////////////////////////////////////////////////////////////////
 void testReceiverX(const char* iFileName, int mediumD)
-{
+    {
 #define LIM 400
+
     char receiverFileName[LIM + 1];    /* +1 for terminating null byte */
 
-/*  // For Checksum
+/*  
+    // For Checksum
     receiverFileName[0] = '\0';
     strcat(receiverFileName, iFileName);
     strcat(receiverFileName, "-cs-recd");
@@ -72,6 +80,7 @@ void testReceiverX(const char* iFileName, int mediumD)
     xReceiverCS.receiveFile();
     COUT << "xReceiver result was: " << xReceiverCS.result << endl << endl;
 */
+
     receiverFileName[0] = '\0';
     strcat(receiverFileName, iFileName);
     strcat(receiverFileName, "-CRC-recd");
@@ -82,51 +91,74 @@ void testReceiverX(const char* iFileName, int mediumD)
     COUT << "xReceiver result was: " << xReceiverCRC.result << endl  << endl;
 
     this_thread::sleep_for (chrono::milliseconds(5));
-}
+    }
 
+
+////////////////////////////////////////////////////////////////
+//
+// Setup the sender thread
+//
+////////////////////////////////////////////////////////////////
 void testSenderX(const char* iFileName, int mediumD)
-{
-    /* // For checksum
+    {
+/* 
+    // For checksum
     SenderX xSender(iFileName, mediumD);
     COUT << "test sending" << endl;
     xSender.sendFile();
     COUT << "Sender finished with result: " << xSender.result << endl;
 */
+
     SenderX xSender2(iFileName, mediumD);
     COUT << "Will try to send file:  " << iFileName << endl;
     xSender2.sendFile();
     COUT << "Sender finished with result: " << xSender2.result << endl;
-}
+    }
 
+
+////////////////////////////////////////////////////////////////
+//
+// Starting point for the reciever and sender threads
+//
+////////////////////////////////////////////////////////////////
 void termFunc(int termNum)
-{
-	// ***** modify this function to communicate with the "Kind Medium" *****
-
-	if (termNum == Term1) {
+{   
+	if(termNum == Term1) 
+        {
         testReceiverX("hs_err_pid11506.log", daSktPrT1M[TermSkt]);          // normal text file
-        //testReceiverX("sudo_as_admin_successful", daSktPr[Term1]);        // empty file
-        //testReceiverX("doesNotExist.txt", daSktPr[Term1]);                // file does not exist
-	}
-	else { // Term2
+        //testReceiverX("sudo_as_admin_successful", daSktPrT1M[TermSkt]);        // empty file
+        //testReceiverX("doesNotExist.txt", daSktPrT1M[TermSkt]);                // file does not exist
+	    }
+	else  // Term2
+        { 
 		PE_0(pthread_setname_np(pthread_self(), "T2"));                     // give the thread (terminal 2) a name
 
 	    testSenderX("/home/osboxes/hs_err_pid11506.log", daSktPrMT2[TermSkt]);          // normal text file
-        //testSenderX("/home/osboxes/.sudo_as_admin_successful", daSktPr[Term2]);       // empty file
-        //testSenderX("/doesNotExist.txt", daSktPr[Term2]);                             // file does not exist
-	}
+        //testSenderX("/home/osboxes/.sudo_as_admin_successful", daSktPrT1M[TermSkt]);       // empty file
+        //testSenderX("/doesNotExist.txt", daSktPrT1M[TermSkt]);                             // file does not exist
+	    }
 
     //Have thread sleep for 10ms
     std::this_thread::sleep_for (std::chrono::milliseconds(10));
 
-    //Close the file we were writing to -- don' really need to do this
-	//PE(myClose(daSktPr[termNum]));
+    //Close the file we were writing to -- is this required? -- last check it broke program
+    if(termNum == Term1)
+        PE(myClose(daSktPrT1M[TermSkt]));
+    else 
+        PE(myClose(daSktPrMT2[TermSkt]));
+	
 
     return;
-}
+    }
 
+
+////////////////////////////////////////////////////////////////
+//
+// Startup threads and begin program
+//
+////////////////////////////////////////////////////////////////
 int Ensc351Part2()
-{
-	// ***** Modify this function to create the "Kind Medium" thread and communicate with it *****
+    {
 
 	PE_0(pthread_setname_np(pthread_self(), "P-T1"));       // give the primary thread (terminal 1) a name
 
@@ -136,7 +168,9 @@ int Ensc351Part2()
 	PE(mySocketpair(AF_LOCAL, SOCK_STREAM, 0, daSktPrMT2));
 
 	// This looks like it would be used to open the socket but I don't know if we need to do that
+    //      if we do -- change the name it gets assigned to
 	//daSktPr[Term1] =  PE(/*myO*/open("/dev/ser2", O_RDWR));
+
 
     //Set the thread priority to 70
     posixThread term2Thrd(SCHED_FIFO, 70, termFunc, Term2);
@@ -151,6 +185,7 @@ int Ensc351Part2()
                 //      T2d is descriptor of the socket to Term 2
                 //      fname is file name of the log file to be used
 
+
     //Send the main thread to termFunc as terminal 1
 	termFunc(Term1);
 
@@ -161,4 +196,4 @@ int Ensc351Part2()
     mediumThrd.join();
 
 	return EXIT_SUCCESS;
-}
+    }
