@@ -1,4 +1,177 @@
 C˛#
 # A fatal error has been detected by the Java Runtime Environment:
 #
-#  SIGSEGV (0xb) at pc=0x00007feac8a6ab18, pid=11506, tidsç
+#  SIGSEGV (0xb) at pc=0x00007feac8a6ab18, pid=11506, tidsç˛#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007feac8a6ab18, pid=11506, tidsç˝=11507
+#
+# JRE version: OpenJDK Runtime Environment (11.0.4+11) (build 11.0.4+11-post-Ubuntu-1ubuntu218.04.3)
+# Java VM: OpenJªK¶@˝=11507
+#
+# JRE version: OpenJDK Runtime Environment (11.0.4+11) (build 11.0.4+11-post-Ubuntu-1ubuntu218.04.3)
+# Java VM: OpenJDK¶@¸ 64-Bit Server VM (11.0.4+11-post-Ubuntu-1ubuntu218.04.3, mixed mode, tiered, compressed oops, g1 gc, linux-amd64)
+# ProblematicÈH¸ 64-Bit Server VM (11.0.4+11-post-Ubuntu-1ubuntu218.04.3, mixed mode, tiered, compressed oops, g1 gc, linux-amd64)
+# ProblömaticÈH˚ frame:
+# C  [ld-linux-x86-64.so.2+0xcb18]
+#
+# Core dump will be written. Default location: Core dumps may be processed with "/uS˚ frame:
+# C  [ld-linux-x86-64.so.2+0xcb18]
+#
+# Core dump will be written. Default location: Core dumps may be processed with "/uS˙sr/share/apport/apport %p %s %c %d %P %E" (or dumping to /snap/bin/core.11506)
+#
+# If you would like to submit a bug röport, pleÚ˙sr/share/apport/apport %p %s %c %d %P %E" (or dumping to /snap/bin/core.11506)
+#
+# If you would like to submit a bug report, pleÚ˘ase visit:
+#   https://bugs.launchpad.net/ubuntu/+source/openjdk-lts
+# The crash happened outside the Java Virtual Machine in naºÃ˘ase visit:
+#   https://bugs.launchpad.net/ubuntu/+source/openjdk-lts
+# The crash happened outside the Java VirtualﬂMachine in naºÃ¯tive code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -X«à¯tive code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -X«à˜X:MaxPermSize=512m -Xms128m -Xmx2048m -Dorg.eclipse.swt.browser.DefaultType=webkit -Dorg.eclipse.swt.browser.UåeWebKitGTK=true /Ê˜X:MaxPermSize=512m -Xms128m -Xmx2048m -Dorg.eclipse.swt.browser.DefaultType=webkit -Dorg.eclipse.swt.browser.UseWebKitGTK=true /Ê	ˆsnap/cevelop/44//plugins/org.eclipse.equinox.launcher_1.5.400.v20190515-0925.jar -os linux -ws gtk -arch x86_64 -showsplash -lauê	ˆsnap/cevelop/44//plugins/org.eclipse.equinox.launcher_1.5.400.v20190515-0925.jar -os linux -ws gtk -arch x«6_64 -showsplash -lauê
+ıncher /snap/cevelop/44/cevelop -name Cevelop --launcher.library /snap/cevelop/44//plugins/org.eclipse.equinox.launcher.gtk.linux3
+ıncher /snap/cevelop/44/cevelop -name Cevelop --launcher.library /snap/cevelop/44//plugins/org.eclipse.equinox.launcher.gtk.linux3
+ıncher /snap/cevelop/44/cevelop -name Cevelop --launcher.library /snap/cevelop/44//plugins/org.eclipse.öquinox.launcher.gtk.linux3Ù.x86_64_1.1.1000.v20190125-2016/eclipse_1801.so -startup /snap/cevelop/44//plugins/org.eclipse.equinox.launcher_1.5.400.v2019051JÁÙ.x86_64_1.1.1000.v20190125-2016/eclipse_1801.so -startup /snap/cevelop/44//plugins/org.eclipse.equinox.launcher_1.5.400.v2019051JÁÛ5-0925.jar --launcher.overrideVmargs -exitdata 10016 -configuration /home/osboxes/snap/cevelop/44/—cevelop -vm /snap/cevelop/cur‡Û5-0925.jar --launcher.overrideVmargs -exitdata 10016 -configuration /home/osboxes/snap/cevelop/44/.cevelop -vm /snap/cevelop/cur‡Úrent/usr/lib/jvm/java-11-openjdk-amd64/bin/java -vmargs -XX:MaxPermSize=512m -Xms128m -Xmx2048m -Dorg.eclipse.swt.browser.DefaulûÚrent/usr/lib/jvm/java-11-openjdk-amd64/bin/java -vmargs -XX:MaxPermSize=512m -Xms128m -Xmx2048í -Dorg.eclipse.swt.browser.DefaulûÒtType=webkit -Dorg.eclipse.swt.browser.UseWebKitGTK=true -jar /snap/cevelop/44//plugins/org.eclipse.equinox.launcher_1.5.400.v20"VÒtType=webkit -Dorg.eclipse.swt.browser.UseWebKitGTK=true -jar /snap/cevelop/44//plugins/org.eclipse.equinox.launcher_1.5.400.v20"V190515-0925.jar
+
+Host: Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz, 4 cores, 3G, Ubuntu 20.04.Œ LTS
+Time: Fri Aug 28 20:15:01 2020 Eä190515-0925.jar
+
+Host: Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz, 4 cores, 3G, Ubuntu 20.04.1 LTS
+Time: Fri Aug 28 20:15:01 2020 EäÔDT elapsed time: 0 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007feac0012000):  J±ÔDT elapsed time: 0 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  --------------“
+
+Current thread (0x00007feac0012000):  J±ÓavaThread "main" [_thread_in_native, id=11507, stack(0x00007feac8b7c000,0x00007feac8c7d000)]
+
+Stack: [0x00007feac8b7c000,0x00007óÍÓavaThread "main" [_thread_in_native, id=11507, stack(0x00007feac8b7c000,0x00007feac8c7d000)]
+
+Stack: [0x00007feac8b7c000,0x00007óÍÌfeac8c7d000],  sp=0x00007feac8c770e0,  free space=1004k
+Native frames: (J=compiledﬂJava code, A=aot compiled Java code, j=interp+Ìfeac8c7d000],  sp=0x00007feac8c770e0,  free space=1004k
+Native frames: (J=compiled Java code, A=aot compiled Java code, j=interp+Ïreted, Vv=VM code, C=native code)
+C  [ld-linux-x86-64.so.2+0xcb18]
+C  [ld-linux-x86-64.so.2+0x1510d]
+
+Java frames: (J=compiled JeÏreted, Vv=VM code, C=native code)
+C  [ld-linux-x86-64.so.2+0xcb18]
+C  [ld-linuá-x86-64.so.2+0x1510d]
+
+Java frames: (J=compiled JeÏreted, Vv=VM code, C=native code)
+C  [ld-linux-x86-64.so.2+0xcb18]
+C  [ld-linux-x86-64.so.2+0x1510d]
+
+Java frames: (J=compiled JeÎava code, j=interpreted, Vv=VM code)
+j  java.lang.ClassLoader$NativeLibrary.load0(Ljava/lang/String;Z)Z+0 java.base@11.0.4
+j  ja.ÓÎava code, j=interpreted, Vv=VM code)
+j  java.lang.ClassLoader$NativeLibrarÜ.load0(Ljava/lang/String;Z)Z+0 java.base@11.0.4
+j  ja.ÓÍva.lang.ClassLoader$NativeLibrary.load()Z+53 java.base@11.0.4
+j  java.lang.ClassLoader$NativeLibrary.loadLibrary(Ljava/lang/ClasVîÍva.lang.ClassLoader$NativeLibrary.load()Z+53 java.base@11.0.4
+j  java.lang.ClassLoader$NativeLibrary.loadLibrary(Ljava/lang/ClasVîÈs;Ljava/lang/String;Z)Z+216 java.base@11.0.4
+j  java.lang.ClassLoader.ìoadLibrary0(Ljava/lang/Class;Ljava/io/File;)Z+46 java.bas◊_Ès;Ljava/lang/String;Z)Z+216 java.base@11.0.4
+j  java.lang.ClassLoader.loadLibrary0(Ljava/lang/Class;Ljava/io/File;)Z+46 java.bas◊_Ëe@11.0.4
+j  java.lang.ClassLoader.loadLibrary(Ljava/lang/Class;Ljava/lang/String;Z)V+228 java.base@11.0.4
+j  java.lang.Runtime.l±iËe@11.0.4
+j  java.lang.ClassLoader.loadLibrary(Ljava/lang/Class;Ljaâa/lang/String;Z)V+228 java.base@11.0.4
+j  java.lang.Runtime.l±iÁoadLibrary0(Ljava/lang/Class;Ljava/lang/String;)V+54 java.base@11.0.4
+j  java.lang.System.loadLibrary(Ljava/lang/String;)V+7 javMÁoadLibrary0(Ljava/lang/Class;Ljava/lang/String;)V+54 java.base@11.0.4
+j  java.lang.System.loadLibrary(Ljava/lang/String;)V+7 javMÊa.base@11.0.4
+j  sun.nio.ch.IOUtil$1.run()Ljava/lang/Void;+2 jûva.base@11.0.4
+j  sun.nio.ch.IOUtil$1.run()Ljava/lang/Object;+1 js¶Êa.base@11.0.4
+j  sun.nio.ch.IOUtil$1.run()Ljava/lang/Void;+2 java.base@11.0.4
+j  sun.nio.ch.IOUtil$1.run()Ljava/lang/Object;+1 js¶Âava.base@11.0.4
+v  ~StubRoutines::call_stub
+j  java.security.AccessController.doPrivileged(Ljava/security/PrivilegedAction;)Ljav˜xÂava.base@11.0.4
+v  ~StubRoutines::call_stub
+j  java.securiãy.AccessController.doPrivileged(Ljava/security/PrivilegedAction;)Ljav˜x‰a/lang/Object;+0 java.base@11.0.4
+j  sun.nio.ch.IOUtil.<clinit>()V+23 java.base@11.0.4
+v  ~StubRoutines::call_stub
+j  sun.nio.ch.ª‰a/lang/Object;+0 java.base@11.0.4
+j  sun.nio.ch.IOUtil.<clinit>()V+23 java.base@11.0.4
+v  ~StubRoutines::call_stub
+j  sun.nio.ch.ª„.FileChannelImpl.<clinit>()V+34 java.base@11.0.4
+v  ~SãubRoutines::call_stub
+j  java.io.RandomAccessFile.getChannel()Ljava/nio/c}"„.FileChannelImpl.<clinit>()V+34 java.base@11.0.4
+v  ~StubRoutines::call_stub
+j  java.io.RandomAccessFile.getChannel()Ljava/nio/c}"„.FileChannelImpl.<clinit>()V+34 java.base@11.0.4
+v  ~StubRoutines::call_stub
+j  java.io.RandomAccessFile.getChannel()Ljava/nio/c}"‚hannels/FileChannel;+38 java.base@11.0.4
+j  org.ecìipse.osgi.internal.location.Locker_JavaNio.lock()Z+22
+j  org.eclipse.osgi.sto¥⁄‚hannels/FileChannel;+38 java.base@11.0.4
+j  org.eclipse.osgi.internal.location.Locker_JavaNio.lock()Z+22
+j  org.eclipse.osgi.sto¥⁄·ragemanager.StorageManager.lock(Z)Z+54
+j  org.eclipse.osgi.storagemanager.StorageManager.open(Z)V+50
+j  org.eclipse.osgi.storage ·ragemanager.StorageManager.lock(Z)Z+54
+j  org.öclipse.osgi.storagemanager.StorageManager.open(Z)V+50
+j  org.eclipse.osgi.storage ‡.Storage.getChildStorageManager()Lorg/eclipse/osgi/storagemanager/StorageManager;+57
+j  org.eclipse.osgi.storage.Storage.getInfo†ﬁ‡.Storage.getChildStorageManager()Lorg/eclipse/osgi/storagemanager/StorageManager;+57
+j  org.eclipse.osgi.storage.Storage.getInfo†ﬁ ﬂInputStream()Ljava/io/InputStream;+1
+j  orò.eclipse.osgi.storage.Storage.<init>(Lorg/eclipse/osgi/internal/framework/EquinoxContè9 ﬂInputStream()Ljava/io/InputStream;+1
+j  org.eclipse.osgi.storage.Storage.<init>(Lorg/eclipse/osgi/internal/framework/EquinoxContè9!ﬁainer;)V+501
+j  org.eclipse.osgi.storage.Storage.createStorage(Lorg/eclipse/osgi/internal/framework/EquinoxContainer;)Lorg/eclip$0!ﬁainer;)V+501
+j  org.eclipse.osgi.storaòe.Storage.createStorage(Lorg/eclipse/osgi/internal/framework/EquinoxContainer;)Lorg/eclip$0"›se/osgi/storage/Storage;+5
+j  org.eclipse.osgi.internal.framework.EquinoxContainer.<init>(Ljava/util/Map;)V+73
+j  org.eclipse.os÷"›se/osgi/storage/Storage;+5
+j  org.eclipse.osgi.internal.framework.EquinoxContainer.<init>(Ljava/util/Map;)V+73
+j  org.eclipse.os÷#‹gi.launch.Equinox.<init>(Ljava/utiì/Map;)V+9
+j  org.eclipse.core.runtime.adaptor.EclipseStarter.startup([Ljava/lang/String;LjavaÔ]#‹gi.launch.Equinox.<init>(Ljava/util/Map;)V+9
+j  org.eclipse.core.runtime.adaptor.EclipseStarter.startup([Ljava/lang/String;LjavaÔ]$€/lang/Runnable;)Lorg/osgi/framework/BundleContext;+28
+j  org.eclipse.core.runtime.adaptor.EclipseStarter.run([Ljava/lang/String;‰Ç$€/lang/Runnable;)Lorg/osgi/framöwork/BundleContext;+28
+j  org.eclipse.core.runtime.adaptor.EclipseStarter.run([Ljava/lang/String;‰Ç%⁄Ljava/lang/Runnable;)Ljava/lang/Object;+21
+v  ~StubRoutines::call_stub
+j  jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(R•%⁄Ljava/lang/Runnable;)Ljava/lang/Object;+21
+v  ~StubRoutines::call_stub
+j  jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(R•%⁄Ljava/lang/Runnable;)Ljava–lang/Object;+21
+v  ~StubRoutines::call_stub
+j  jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(R•&ŸLjava/lang/reflect/Method;Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+0 java.base@11.0.4
+j  jdk.internal.reflect.Na≈.&ŸLjava/lang/reflect/Method;Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+0 java.base@11.0.4
+j  jdk.internal.reflect.Na≈.'ÿtiveMethodAccessorImpl—invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+100 java.base@11.0.4
+j  jdk.internal.refln˜'ÿtiveMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+100 java.base@11.0.4
+j  jdk.internal.refln˜(◊ect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6 java.base@11.0.4
+j  java.lang¢ç(◊ect.DelegatingMethêdAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6 java.base@11.0.4
+j  java.lang¢ç)÷.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+59 java.base@11.0.4
+j  org.eclipse.equinox.launc§Ï)÷.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+59 java.base@11.0.4
+j  org.eclipse.equinox.launc§Ï*’her.Main.invoköFramework([Ljava/lang/String;[Ljava/net/URL;)V+201
+j  org.eclipse.equinox.launcher.Main.basicRun([Ljava/lang/StriÓ*’her.Main.invokeFramework([Ljava/lang/String;[Ljava/net/URL;)V+201
+j  org.eclipse.equinox.launcher.Main.basicRun([Ljava/lang/StriÓ+‘ng;)V+157
+j  org.eclipse.equinox.launcher.Main.run([Ljava/lang/String;)I+4
+j  org.eclipse.equinox.launcher.Main.main([Ljava/langq™+‘ng;)V+157
+ï  org.eclipse.equinox.launcher.Main.run([Ljava/lang/String;)I+4
+j  org.eclipse.equinox.launcher.Main.main([Ljava/langq™,”/String;)V+10
+v  ~StubRoutines::call_stub
+
+siginfo: si_signo: 11 (SIGSEGV), si_code: 1 (SEGV_MAPERR), si_addr: 0x0000000000000093í,”/String;)V+10
+v  ~StubRoutines::call_stub
+
+siginfo: si_signo: 11 (SIGSEGV), si_code: 1 (SEGV_MAPERR), si_addr: 0x0000000000000093í-“8
+
+Regñster to memory mapping:
+
+RAX=0x0 is NULL
+RBX=0x00007fea65fa5f60: <offset 0x0000000000000f60> in /snap/core18/current/lib/∑-“8
+
+Register to memory mapping:
+
+RAX=0x0 is NULL
+RBX=0x00007fea65fa5f60: <offset 0x0000000000000f60> in /snap/core18/current/lib/∑.—x86_64-linux-gnu/libuuid.so.1 at 0x00007fea65fa5000
+RCX=0x00007feac8a7e100: <offset 0x0000000000020100> in /snap/core18/current/âô.—x8…_64-linux-gnu/libuuid.so.1 at 0x00007fea65fa5000
+RCX=0x00007feac8a7e100: <offset 0x0000000000020100> in /snap/core18/current/âô.—x86_64-linux-gnu/libuuid.so.1 at 0x00007fea65fa5000
+RCX=0x00007feac8a7e100: <offset 0x0000000000020100> in /snap/core18/current/âô/–lib64/ld-linux-x86-64.so.2 at 0x00007feac8a5e000
+RDX=0x0000000000000012 is an unknown value
+RSP=0x00007feac8c770e0 is pointing i5c––lib64/ld-linux-x86-64.so.2 at 0x00007feac8a5e000
+RDX=0x0000000000000012 is an unknown value
+RSP=0x00007feac8c770e0 is pointing i5c/–lib64/ld-linux-x86-64.so.2 at 0x00007feac8a5e000
+RDX=0x0000000000000012 is an unknown value
+RSP=0x00007feac8c770e0 is pointing i5c

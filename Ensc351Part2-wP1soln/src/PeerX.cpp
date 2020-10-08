@@ -92,18 +92,18 @@ void crc16ns(uint16_t* crc16nsP, uint8_t* buf)
     unsigned oldcrc = 0;
 
 	for(wcj = CHUNK_SZ, cp = buf; --wcj >= 0; ) 
-    {
-    oldcrc = updcrc((0377 & *cp++), oldcrc);       //For each byte, update the crc
-	  }
+        {
+	    oldcrc = updcrc((0377 & *cp++), oldcrc);       //For each byte, update the crc
+        }
 
     //Set oldcrc to the correct value of the crc for the block of data
     oldcrc = updcrc(0, updcrc(0, oldcrc));
 
 
     //Place bytes in network byte order -- Prof Craig Solution
-    //*crc16nsP = my_htons((uint16_t) oldcrc);
+    *crc16nsP = my_htons((uint16_t) oldcrc);
 
-
+    /*
     //Place bytes in network byte order -- Our solution from part 1
     int n = 1;
     if(*(char *) & n == 1)  
@@ -116,6 +116,7 @@ void crc16ns(uint16_t* crc16nsP, uint8_t* buf)
         //Processor is big endian
         *crc16nsP = oldcrc;   
         }
+    */
 
     return;
     }

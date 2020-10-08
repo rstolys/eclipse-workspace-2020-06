@@ -72,7 +72,7 @@ void ReceiverX::getRestBlk()
     if(this->Crcflg)
         {
         //Define the CRC checksum to be computed
-        uint16_t* CRC_tot;
+        uint16_t* CRC_tot = new uint16_t;
 
         //Read the final byte from the socket -- I think the address provided should be indexed to the end of the data and 1st CRC byte...
         PE_NOT(myReadcond(mediumD, &rcvBlk[1], REST_BLK_SZ_CRC, REST_BLK_SZ_CRC, 0, 0), REST_BLK_SZ_CRC);
@@ -108,7 +108,7 @@ void ReceiverX::getRestBlk()
     else    //We are not using CRC but instead using regular checksum
         {
         //Define the checksum to be computed
-        uint8_t* CS_tot;
+        uint8_t* CS_tot = new uint8_t;
 
         //Read the final byte from the socket -- I think the address provided should be indexed to the end of the data
         PE_NOT(myReadcond(mediumD, &rcvBlk[1], REST_BLK_SZ_CS, REST_BLK_SZ_CS, 0, 0), REST_BLK_SZ_CS);
@@ -328,18 +328,16 @@ void ReceiverX::receiveFile()
                 }
             else if(rcvBlk[0] == CAN)               //if the sender seems to be terminating the transmission
                 {
-                //The sender is terminating the transmission
-                byteToSend = NAK;
-                ctx.sendByte(byteToSend);           //Send NAK assuming it is an error
+                //Set the result to cancel called
+                ctx.result = "SndCancelled";
 
-                //Read the next message and check if it is a CAN
-                PE_NOT(myRead(mediumD, rcvBlk, 1), 1);
-
-                if(rcvBlk[0] == CAN)
+                if(rcvBlk[1] != CAN)
                     {
-                    //terminate the transmission 
-                    transmissionActive = false;
+                    //COUT << "Receiver received totally unexpected char #" << rcvBlk[1] << ": " << (char) rcvBlk[1] << end
                     }
+
+                //terminate the transmission
+                transmissionActive = false;
                 }
             else    // We recieved a first byte other than a CAN, SOH or EOT
                 {
