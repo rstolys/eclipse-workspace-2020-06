@@ -131,6 +131,10 @@ void SenderX::genBlk(blkT blkBuf)
     //Compute the complment of the blkNum and add that to the blkBuf
     blkBuf[BLK_NUM_COMP_BYTE] = ~(blkBuf[BLK_NUM_BYTE]);        // '~' is bit flip operator
 
+    if (blkNum == 48 || blkNum == 0)
+    {
+    	blkNum = blkNum;
+    }
 
     //If we did not read a full 128 bytes, append with zeros 
     for(int i = bytesRd; i < CHUNK_SZ; i++)

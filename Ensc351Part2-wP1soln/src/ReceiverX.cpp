@@ -36,13 +36,13 @@
 #include <string.h>         // for memset()
 #include <fcntl.h>
 #include <stdint.h>
-//#include <iostream>
+#include <iostream>
 #include "myIO.h"
 #include "ReceiverX.h"
 #include "VNPE.h"
 
 
-//using namespace std;
+using namespace std;
 
 ReceiverX::
 ReceiverX(int d, const char *fname, bool useCrc)
@@ -51,6 +51,8 @@ ReceiverX(int d, const char *fname, bool useCrc)
                                              // transfer will end when syncLoss becomes true
     {
     blockAlreadyRecieved = false;
+    numNaks = 0;
+    badBlkNum = false;
     }
 
 ////////////////////////////////////////////////////////////////
@@ -69,6 +71,7 @@ ReceiverX(int d, const char *fname, bool useCrc)
 void ReceiverX::getRestBlk()
     {
     //Execute slightly different read process depening on if CRC checksum or regular checksum being used
+	syncLoss = false;
     if(this->Crcflg)
         {
         //Define the CRC checksum to be computed
@@ -80,29 +83,54 @@ void ReceiverX::getRestBlk()
         //Compute the crc checksum
         crc16ns(CRC_tot, &rcvBlk[DATA_POS]);
 
+        bool validChkSum = ((CRC_tot[0]& 0xFF) == (rcvBlk[CHK_SUM_START]& 0xFF));
+        validChkSum = (((CRC_tot[0]  & 0xFF00)>>8) == (rcvBlk[CHK_SUM_START +1]& 0xFF));
+        goodBlk = validChkSum;
+
+        if (((rcvBlk[BLK_NUM_BYTE] & 0xFF) ) !=  (~rcvBlk[BLK_NUM_BYTE+1] & 0xFF))
+        {
+        	goodBlk = false;
+        }
+
+        cout << (rcvBlk[BLK_NUM_BYTE] & 0xFF) << "  " <<  (~rcvBlk[BLK_NUM_BYTE+1] & 0xFF) << endl;
+
         //Check if the block number is not what we are expecting 
         if(rcvBlk[BLK_NUM_BYTE] != numLastGoodBlk + 1)
             {
-            if(rcvBlk[BLK_NUM_BYTE] > numLastGoodBlk + 1)
-                {
-                syncLoss = true;                    // we missed a block. This is a fatal loss of syncronization
-                goodBlk = false;                    // Indicate a bad block. Will end up aborting transmission
-                }
-            else if(rcvBlk[BLK_NUM_BYTE] == numLastGoodBlk)
+        	if(rcvBlk[BLK_NUM_BYTE] == numLastGoodBlk)
                 {
                 blockAlreadyRecieved = true;        // Our ACK likely got corrupted. Resend out ACK
                 goodBlk = false;                    // Indicate this isn't a good block. We don't want to rewrite it
                 }  
+
+            // When blk number reaches 255 it resets to 0
+        	// Weird case
+            else if(rcvBlk[BLK_NUM_BYTE] == 0 && numLastGoodBlk == 255)
+            	{
+            	  //Set our last good block to the current block
+            	if (goodBlk)
+            	numLastGoodBlk = 0;
+
+            	}
+            else if(rcvBlk[BLK_NUM_BYTE] != numLastGoodBlk + 1)
+            	{
+
+            	goodBlk = false;
+            	syncLoss = true;  // we missed a block. This is a fatal loss of syncronization
+            		  				// Indicate a bad block. Will end up aborting transmission
+            	}
             }
         else 
             {
-            //Check the CRC to see if it valid
-            bool validChkSum = (CRC_tot[0] == rcvBlk[CHK_SUM_START]);
-            validChkSum = (CRC_tot[1] == rcvBlk[CHK_SUM_START + 1]);
-            goodBlk = validChkSum;
+
 
             //Set our last good block to the current block
+            if (goodBlk)
             numLastGoodBlk++;
+
+            // Might need to catch wierd case here?
+            //if the complment is affected then it might come here with goodblk = false
+
             }
         }
     else    //We are not using CRC but instead using regular checksum
@@ -122,7 +150,7 @@ void ReceiverX::getRestBlk()
             {
             if(rcvBlk[BLK_NUM_BYTE] > numLastGoodBlk + 1)
                 {
-                syncLoss = true;                    // We missed a block. This is a fatal loss of syncronization
+               syncLoss = true;                    // We missed a block. This is a fatal loss of syncronization
                 goodBlk = false;                    // Indicate a bad block. Will end up aborting transmission
                 }
             else if(rcvBlk[BLK_NUM_BYTE] == numLastGoodBlk)
@@ -276,7 +304,7 @@ void ReceiverX::receiveFile()
                 {
                 //Reset the flags 
                 blockAlreadyRecieved = false;
-                goodBlk = false; 
+                goodBlk = false;
                     //Don't need to reset syncLoss since this will 
 
                 //Get the remainder of the block being sent
@@ -284,23 +312,23 @@ void ReceiverX::receiveFile()
                     //Flags for the validity of the block are set in the getRestBlk function
                     //Those flags are checked below to determine how to proceed
 
-                if(goodBlk == true)
-                    {
-                    byteToSend = ACK;
-                    ctx.sendByte(byteToSend);       // Send positive acknowledgement
-                    ctx.writeChunk();               // Write the data to the file
-                    }
-                else if(blockAlreadyRecieved)       //If we have already recieved this block
-                    {
-                    byteToSend = ACK; 
-                    ctx.sendByte(byteToSend);       // resend our positive acknowledgement          
-                    } 
-                else if(syncLoss)                   //This is the end of tranmission
+                if(syncLoss && goodBlk)                   //This is the end of tranmission
                     {
                     can8();
                     ctx.result = "Fatal loss of syncronization. Tramission Failed";
                     return;
                     }
+                else if(goodBlk == true)
+                	{
+                	byteToSend = ACK;
+                	ctx.sendByte(byteToSend);       // Send positive acknowledgement
+                	ctx.writeChunk();               // Write the data to the file
+                	}
+                else if(blockAlreadyRecieved)       //If we have already recieved this block
+                  	{
+                    byteToSend = ACK; 
+                    ctx.sendByte(byteToSend);       // resend our positive acknowledgement          
+                    } 
                 else    //If we recieved a block with corrupted data
                     {
                     byteToSend = NAK; 
