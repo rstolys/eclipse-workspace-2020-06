@@ -51,8 +51,6 @@ ReceiverX(int d, const char *fname, bool useCrc)
                                              // transfer will end when syncLoss becomes true
     {
     blockAlreadyRecieved = false;
-    numNaks = 0;
-    badBlkNum = false;
     }
 
 ////////////////////////////////////////////////////////////////
@@ -61,17 +59,15 @@ ReceiverX(int d, const char *fname, bool useCrc)
 //
 // CRAIGS COMMENNTS:
 // Only called after an SOH character has been received.
-// The function tries
-// to receive the remaining characters to form a complete
-// block.  The member
-// variable goodBlk1st will be made true if this is the first
-// time that the block was received in "good" condition.
+// The function tries to receive the remaining characters 
+//      to form a complete block.  
+// The member variable goodBlk1st will be made true if this is the first
+//      time that the block was received in "good" condition.
 //
 ////////////////////////////////////////////////////////////////
 void ReceiverX::getRestBlk()
     {
     //Execute slightly different read process depening on if CRC checksum or regular checksum being used
-	syncLoss = false;
     if(this->Crcflg)
         {
         //Define the CRC checksum to be computed
@@ -83,54 +79,46 @@ void ReceiverX::getRestBlk()
         //Compute the crc checksum
         crc16ns(CRC_tot, &rcvBlk[DATA_POS]);
 
-        bool validChkSum = ((CRC_tot[0]& 0xFF) == (rcvBlk[CHK_SUM_START]& 0xFF));
-        validChkSum = (((CRC_tot[0]  & 0xFF00)>>8) == (rcvBlk[CHK_SUM_START +1]& 0xFF));
-        goodBlk = validChkSum;
 
-        if (((rcvBlk[BLK_NUM_BYTE] & 0xFF) ) !=  (~rcvBlk[BLK_NUM_BYTE+1] & 0xFF))
-        {
+        //Confirm the checksum is correct
+        bool validChkSum = ((CRC_tot[0] & 0xFF) == (rcvBlk[CHK_SUM_START] & 0xFF));
+        validChkSum = (((CRC_tot[0] & 0xFF00)>>8) == (rcvBlk[CHK_SUM_START +1] & 0xFF));
+
+        //cout << (rcvBlk[BLK_NUM_BYTE] & 0xFF) << "  " <<  (~rcvBlk[BLK_NUM_BYTE+1] & 0xFF) << endl;
+
+        //Check if the block number and block complement do not match -- we recieved a bit error, not a good block
+        if( (rcvBlk[BLK_NUM_BYTE] & 0xFF) !=  (~rcvBlk[BLK_NUM_BYTE + 1] & 0xFF) )
+            {
         	goodBlk = false;
-        }
-
-        cout << (rcvBlk[BLK_NUM_BYTE] & 0xFF) << "  " <<  (~rcvBlk[BLK_NUM_BYTE+1] & 0xFF) << endl;
-
-        //Check if the block number is not what we are expecting 
-        if(rcvBlk[BLK_NUM_BYTE] != numLastGoodBlk + 1)
+            }
+        else if(rcvBlk[BLK_NUM_BYTE] != numLastGoodBlk + 1)                 //Check if the block number is not what we are expecting 
             {
         	if(rcvBlk[BLK_NUM_BYTE] == numLastGoodBlk)
                 {
                 blockAlreadyRecieved = true;        // Our ACK likely got corrupted. Resend out ACK
-                goodBlk = false;                    // Indicate this isn't a good block. We don't want to rewrite it
+                goodBlk = false;                    // Indicate this isn't a good block. We don't want to rewrite it to the file
                 }  
-
-            // When blk number reaches 255 it resets to 0
-        	// Weird case
-            else if(rcvBlk[BLK_NUM_BYTE] == 0 && numLastGoodBlk == 255)
+            else if(rcvBlk[BLK_NUM_BYTE] == 0 && numLastGoodBlk == 255)     // When blk number reaches 255 it resets to 0
             	{
-            	  //Set our last good block to the current block
-            	if (goodBlk)
-            	numLastGoodBlk = 0;
-
+            	if(validChkSum)
+                    {
+                    goodBlk = true;                 //This is still a good block since block number matched and checksum is true
+                    numLastGoodBlk = 0;             //Set our last good block to 0
+                    }   
             	}
-            else if(rcvBlk[BLK_NUM_BYTE] != numLastGoodBlk + 1)
+            else if(rcvBlk[BLK_NUM_BYTE] != numLastGoodBlk + 1)     //This means the block number is either multiple behind or ahead
             	{
-
-            	goodBlk = false;
-            	syncLoss = true;  // we missed a block. This is a fatal loss of syncronization
-            		  				// Indicate a bad block. Will end up aborting transmission
+            	goodBlk = false;    // Indicate a bad block. Will end up aborting transmission
+            	syncLoss = true;    // We missed a block. This is a fatal loss of syncronization	  				
             	}
             }
-        else 
+        else    //The block number is valid and is what we were expecting
             {
-
-
-            //Set our last good block to the current block
-            if (goodBlk)
-            numLastGoodBlk++;
-
-            // Might need to catch wierd case here?
-            //if the complment is affected then it might come here with goodblk = false
-
+            if(validChkSum)
+                {
+                goodBlk = true;         // This block is valid and can be written to the file
+                numLastGoodBlk++;       // Set our last good block to the current block
+                }
             }
         }
     else    //We are not using CRC but instead using regular checksum
@@ -145,28 +133,42 @@ void ReceiverX::getRestBlk()
         checksum8bit(CS_tot, &rcvBlk[DATA_POS], CHUNK_SZ);
 
 
-        //Check if the block number is not what we are expecting 
-        if(rcvBlk[BLK_NUM_BYTE] != numLastGoodBlk + 1)
+        //Check that the checksum matches
+        bool validChkSum = ((CS_tot[0] & 0xFF) == (rcvBlk[CHK_SUM_START] & 0xFF));
+
+        //Check if the block number and block complement do not match -- we recieved a bit error, not a good block
+        if( (rcvBlk[BLK_NUM_BYTE] & 0xFF) !=  (~rcvBlk[BLK_NUM_BYTE + 1] & 0xFF) )
             {
-            if(rcvBlk[BLK_NUM_BYTE] > numLastGoodBlk + 1)
-                {
-               syncLoss = true;                    // We missed a block. This is a fatal loss of syncronization
-                goodBlk = false;                    // Indicate a bad block. Will end up aborting transmission
-                }
-            else if(rcvBlk[BLK_NUM_BYTE] == numLastGoodBlk)
+        	goodBlk = false;
+            }
+        else if(rcvBlk[BLK_NUM_BYTE] != numLastGoodBlk + 1)          //Check if the block number is not what we are expecting 
+            {
+            if(rcvBlk[BLK_NUM_BYTE] == numLastGoodBlk)
                 {
                 blockAlreadyRecieved = true;        // Our ACK likely got corrupted. Resend out ACK
-                goodBlk = false;                    // Indicate this isn't a good block. We don't want to rewrite it
+                goodBlk = false;                    // Indicate this isn't a good block. We don't want to rewrite it to the file
                 }  
+            else if(rcvBlk[BLK_NUM_BYTE] == 0 && numLastGoodBlk == 255)     // When blk number reaches 255 it resets to 0
+            	{
+            	if(validChkSum)
+                    {
+                    goodBlk = true;                 //This is still a good block since block number matched and checksum is true
+                    numLastGoodBlk = 0;             //Set our last good block to 0
+                    }   
+            	}
+            else if(rcvBlk[BLK_NUM_BYTE] != numLastGoodBlk + 1)     //This means the block number is either multiple behind or ahead
+            	{
+            	goodBlk = false;    // Indicate a bad block. Will end up aborting transmission
+            	syncLoss = true;    // We missed a block. This is a fatal loss of syncronization	  				
+            	}
             }
-        else 
+        else        //The block number is valid and is what we were expecting
             {
-            //Check the checksum to see if it valid
-            bool validChkSum = (CS_tot[0] == rcvBlk[CHK_SUM_START]);
-            goodBlk = validChkSum;
-
-            //Set our last good block to the current block
-            numLastGoodBlk++;
+            if(validChkSum)
+                {
+                goodBlk = true;         // This block is valid and can be written to the file
+                numLastGoodBlk++;       // Set our last good block to the current block
+                }
             }
         }
 
@@ -252,7 +254,6 @@ void ReceiverX::receiveFile()
         //      If we still fail to recieve any response to checksum then abort the transmission
         //
         int numberOfFailedCRC_Startups = 0; 
-        int numberOfFailedCS_Startups = 0; 
         while(PE_NOT(myRead(mediumD, rcvBlk, 1), 1), (rcvBlk[0] != SOH))
             {
             if(ctx.NCGbyte == 'C')
@@ -261,7 +262,7 @@ void ReceiverX::receiveFile()
                 }
             else 
                 {
-                numberOfFailedCS_Startups++;
+                ctx.errCnt++;
                 }
             
 
@@ -272,11 +273,11 @@ void ReceiverX::receiveFile()
                 //This would occur is our sender is unable to accomodate CRC checksums
                 }
 
-            if(numberOfFailedCS_Startups >= 10)
+            if(ctx.errCnt >= 10)
                 {
                 //We are failing to reach our sender host. Abort the transmission
                 can8();
-                ctx.result = "Failed to startup transmission with checksum. Tranmission Failed";
+                ctx.result = "ExcessiveErrors";
                 return;
                 }
             
@@ -296,7 +297,7 @@ void ReceiverX::receiveFile()
         //      All future blocks recieved will be processed using the below routine 
         //
 
-        //perform the following actions to process byte and return response to sender
+        // Perform the following actions to process byte and return response to sender
         bool transmissionActive = true;
         do
             {
@@ -312,10 +313,10 @@ void ReceiverX::receiveFile()
                     //Flags for the validity of the block are set in the getRestBlk function
                     //Those flags are checked below to determine how to proceed
 
-                if(syncLoss && goodBlk)                   //This is the end of tranmission
+                if(syncLoss)                        //This is the end of tranmission
                     {
                     can8();
-                    ctx.result = "Fatal loss of syncronization. Tramission Failed";
+                    ctx.result = "LossOfSyncronization";
                     return;
                     }
                 else if(goodBlk == true)
@@ -351,17 +352,19 @@ void ReceiverX::receiveFile()
                     byteToSend = ACK;
                     ctx.sendByte(byteToSend);       //Acknowledge that we got this byte and end our transmission
 
-                    transmissionActive = false;    
+                    transmissionActive = false; 
+
+                    ctx.result = "Done";
                     }
                 }
             else if(rcvBlk[0] == CAN)               //if the sender seems to be terminating the transmission
                 {
-                //Set the result to cancel called
+                //Set the result to send cancel
                 ctx.result = "SndCancelled";
 
                 if(rcvBlk[1] != CAN)
                     {
-                    //COUT << "Receiver received totally unexpected char #" << rcvBlk[1] << ": " << (char) rcvBlk[1] << end
+                    cout << "Receiver received totally unexpected char #" << rcvBlk[0] << ": " << (char) rcvBlk[0] << endl;
                     }
 
                 //terminate the transmission
@@ -382,11 +385,7 @@ void ReceiverX::receiveFile()
         // Check if the file closed properly
         if (ctx.closeTransferredFile()) 
             {
-            ctx.result = "Close Error";
-            }
-        else 
-            {
-            ctx.result = "Done";
+            ctx.result = "CloseError";
             }
         }
     }

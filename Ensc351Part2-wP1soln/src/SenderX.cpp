@@ -57,22 +57,18 @@ SenderX::SenderX(const char *fname, int d)
     }
 
 
-
-//-----------------------------------------------------------------------------
-
-
 ////////////////////////////////////////////////////////////////
 //
 // get rid of any characters that may have arrived from the medium
 //
 ////////////////////////////////////////////////////////////////
 void SenderX::dumpGlitches()
-{
+    {
 	const int dumpBufSz = 20;
 	char buf[dumpBufSz];
 	int bytesRead;
 	while (dumpBufSz == (bytesRead = PE(myReadcond(mediumD, buf, dumpBufSz, 0, 0, 0))));
-}
+    }
 
 
 
@@ -83,11 +79,11 @@ void SenderX::dumpGlitches()
 //
 ////////////////////////////////////////////////////////////////
 uint8_t SenderX::sendMostBlk(blkT blkBuffer)
-{
+    {
 	const int mostBlockSize = (this->Crcflg ? BLK_SZ_CRC : BLK_SZ_CS) - 1;
 	PE_NOT(myWrite(mediumD, blkBuffer, mostBlockSize), mostBlockSize);
 	return *(blkBuffer + mostBlockSize);
-}
+    }
 
 
 ////////////////////////////////////////////////////////////////
@@ -96,12 +92,12 @@ uint8_t SenderX::sendMostBlk(blkT blkBuffer)
 //
 ////////////////////////////////////////////////////////////////
 void SenderX::sendLastByte(uint8_t lastByte)
-{
+    {
 	PE(myTcdrain(mediumD));         // wait for previous part of block to be completely drained from the descriptor
 	dumpGlitches();			        // dump any received glitches
 
 	PE_NOT(myWrite(mediumD, &lastByte, sizeof(lastByte)), sizeof(lastByte));
-}
+    }
 
 
 ////////////////////////////////////////////////////////////////
@@ -172,12 +168,12 @@ void SenderX::genBlk(blkT blkBuf)
 //
 ////////////////////////////////////////////////////////////////
 void SenderX::prep1stBlk()
-{
-	// **** this function will need to be modified ****
-    //Maybe related to cs1stBlk ??
+    {
+	// We have already determined if we will be using a checksum or CRC
+    // We can simply create this block using our regular method for this stage of the project
 
 	genBlk(blkBufs[CURRENT]);
-}
+    }
 
 
 ////////////////////////////////////////////////////////////////
@@ -186,10 +182,9 @@ void SenderX::prep1stBlk()
 //
 ////////////////////////////////////////////////////////////////
 void SenderX::cs1stBlk()
-{
-	// **** this function will need to be modified ****
-    //particukar case for checksum??
-}
+    {
+	//We do not need to implement this at this stage in the project
+    }
 
 
 ////////////////////////////////////////////////////////////////
@@ -199,20 +194,15 @@ void SenderX::cs1stBlk()
 //
 ////////////////////////////////////////////////////////////////
 void SenderX::sendBlkPrepNext()
-{
-	// **** this function will need to be modified ****
-
-    // Need Array to hold previous values in case of resend?
-    // In which case we would not want to incremnet number and generate a new blk
-
+    {
     //Save the current block into the saved block position before it gets overwritten
     memcpy(&blkBufs[SAVED], &blkBufs[CURRENT], BLK_SZ_CRC);
 
-	blkNum++; // 1st block about to be sent or previous block ACK'd
+	blkNum++;                   // 1st block about to be sent or previous block ACK'd
 	uint8_t lastByte = sendMostBlk(blkBufs[CURRENT]);
-	genBlk(blkBufs[CURRENT]); // prepare next block
+	genBlk(blkBufs[CURRENT]);   // prepare next block
 	sendLastByte(lastByte);
-}
+    }
 
 
 ////////////////////////////////////////////////////////////////
@@ -221,13 +211,13 @@ void SenderX::sendBlkPrepNext()
 //
 ////////////////////////////////////////////////////////////////
 void SenderX::resendBlk()
-{
+    {
     //Send the saved block
     uint8_t lastByte = sendMostBlk(blkBufs[SAVED]);
 
     //Send the final byte 
     sendLastByte(lastByte);
-}
+    }
 
 
 ////////////////////////////////////////////////////////////////
@@ -284,7 +274,7 @@ void SenderX::sendFile()
         if(numberOfInvalidMessages >= 10)
             {
             can8();
-            ctx.result = "Failure to recieve valid acknowledgement to begin transmission. Tranmission Failed";
+            ctx.result = "ExcessiveErrors";
             return;
             }
 
@@ -336,7 +326,7 @@ void SenderX::sendFile()
                 if(numberOfNAKs >= 10)
                     {
                     can8();
-                    ctx.result = "Fatal loss of synchronization or connection. Transmission Failed";
+                    ctx.result = "Fatal loss of connection. Transmission Failed";
                     return;
                     }
 
@@ -380,64 +370,3 @@ void SenderX::sendFile()
 
     return;
     }
-
-
-
-
-/*
-////////////////////////////////////////////////////////////////
-//
-// Craigs solution to genBlk -- we used our own
-//
-////////////////////////////////////////////////////////////////
-void SenderX::genBlk(blkT blkBuf)
-    {
-	//read data and store it directly at the data portion of the buffer
-	bytesRd = PE(read(transferringFileD, &blkBuf[DATA_POS], CHUNK_SZ ));
-
-	if (bytesRd>0) 
-        {
-		blkBuf[0] = SOH;            // can be pre-initialized for efficiency
-
-		//block number and its complement
-		uint8_t nextBlkNum = blkNum + 1;            //Set the block number to the blkNum
-		blkBuf[SOH_OH] = nextBlkNum;                //Set block number
-		blkBuf[SOH_OH + 1] = ~nextBlkNum;           //Set complement  of block number
-
-
-		if(this->Crcflg) 
-            {
-			if(bytesRd < CHUNK_SZ)          //Add padding if block isn't long enough
-			    {
-				//pad ctrl-z for the last block
-				uint8_t padSize = CHUNK_SZ - bytesRd;
-				memset(blkBuf+DATA_POS+bytesRd, CTRL_Z, padSize);
-			    }
-
-			//calculate and add CRC in network byte order
-			crc16ns((uint16_t*)&blkBuf[PAST_CHUNK], &blkBuf[DATA_POS]);
-		    }
-		else 
-            {
-			// Compute the checksum
-			blkBuf[PAST_CHUNK] = blkBuf[DATA_POS];
-			for(int ii = DATA_POS + 1; ii < (DATA_POS + bytesRd); ii++)
-                {
-                blkBuf[PAST_CHUNK] += blkBuf[ii];
-                }
-				
-
-			//Add padding  if needed padding
-			if( bytesRd < CHUNK_SZ )  
-                {
-				//pad ctrl-z for the last block
-				uint8_t padSize = CHUNK_SZ - bytesRd;
-				memset(blkBuf+DATA_POS+bytesRd, CTRL_Z, padSize);
-				blkBuf[PAST_CHUNK] += CTRL_Z * padSize;
-			    }
-		    }
-	    }
-
-    return;
-    }
-*/

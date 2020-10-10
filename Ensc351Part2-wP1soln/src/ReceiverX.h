@@ -55,8 +55,6 @@ private:
 
 	// ********** you can add more data members if needed *******
     bool blockAlreadyRecieved; 
-    bool badBlkNum;
-    int numNaks;
 
 };
 
