@@ -86,7 +86,7 @@ void testReceiverX(const char* iFileName, int mediumD)
     strcat(receiverFileName, "-CRC-recd");
 
     COUT << "Will try to receive with CRC to file:  " << receiverFileName << endl;
-    ReceiverX xReceiverCRC(mediumD, receiverFileName, true);
+    ReceiverX xReceiverCRC(mediumD, receiverFileName, false);
     xReceiverCRC.receiveFile();
     COUT << "xReceiver result was: " << xReceiverCRC.result << endl  << endl;
 
