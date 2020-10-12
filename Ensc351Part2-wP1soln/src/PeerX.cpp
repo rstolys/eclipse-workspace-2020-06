@@ -133,7 +133,7 @@ void checksum8bit(uint8_t* myChkSum, uint8_t* buf, ssize_t bytesRd)
     *myChkSum = 0x00;
 
     // If the last block chksum is calculated we only want to add to the end of the blk
-    for (int ii = BLK_DATA_START; ii < bytesRd + BLK_DATA_START; ii++)
+    for (int ii = 0; ii < bytesRd; ii++)
       {
       //By using binary and operation we force a binary operation and discard the carry
       *myChkSum = ((*myChkSum & 0xFF) + (buf[ii] & 0xFF)) & 0xFF;      

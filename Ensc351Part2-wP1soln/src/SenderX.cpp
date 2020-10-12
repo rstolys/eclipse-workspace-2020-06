@@ -127,10 +127,6 @@ void SenderX::genBlk(blkT blkBuf)
     //Compute the complment of the blkNum and add that to the blkBuf
     blkBuf[BLK_NUM_COMP_BYTE] = ~(blkBuf[BLK_NUM_BYTE]);        // '~' is bit flip operator
 
-    if (blkNum == 48 || blkNum == 0)
-    {
-    	blkNum = blkNum;
-    }
 
     //If we did not read a full 128 bytes, append with zeros 
     for(int i = bytesRd; i < CHUNK_SZ; i++)
@@ -151,7 +147,7 @@ void SenderX::genBlk(blkT blkBuf)
     else 
         {
         uint8_t myChkSum;
-        checksum8bit(&myChkSum, &blkBuf[DATA_POS], bytesRd);    //Defined in PeerX.cpp
+        checksum8bit(&myChkSum, &blkBuf[DATA_POS], CHUNK_SZ);    //Defined in PeerX.cpp
 
         //Append the checksum to the blkBuf
         blkBuf[CHK_SUM_START] = myChkSum;
@@ -304,6 +300,9 @@ void SenderX::sendFile()
 	    }
 	else 
         {
+	    //Decalre varaible to count NAKs recieved
+	    int numberOfNAKs = 0;
+
         //Prepare the first block for sending 
 		ctx.prep1stBlk();
 
@@ -317,7 +316,7 @@ void SenderX::sendFile()
 			// read the byte returned by the recieved to determine next step
 			PE_NOT(myRead(mediumD, &byteToReceive, 1), 1);
 
-            int numberOfNAKs = 0; 
+			numberOfNAKs = 0;
             while(byteToReceive != ACK)
                 {
                 numberOfNAKs++;
@@ -345,7 +344,7 @@ void SenderX::sendFile()
 		PE_NOT(myRead(mediumD, &byteToReceive, 1), 1);      // read the reciever response
 
         //If we do not recieve an ACK -- try again
-        int numberOfNAKs = 0; 
+        numberOfNAKs = 0;
         while(byteToReceive != ACK)
             {
             numberOfNAKs++;
