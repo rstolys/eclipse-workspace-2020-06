@@ -1,6 +1,6 @@
 .metadata/
-Ensc351Part1/.settings/
-Ensc351Part1/Debug/
-Ensc351Part1/DebugMips/
+*/.settings/
+*/Debug/
+*/DebugMips/
 *.log
 *.xml

@@ -2,6 +2,7 @@
  * Medium.cpp
  *
  *      Author: Craig Scratchley
+ *      Version: October 10, 2020
  *      Copyright(c) 2020 Craig Scratchley
  */
 
@@ -15,19 +16,29 @@
 #include "myIO.h"
 #include "VNPE.h"
 #include "AtomicCOUT.h"
+#include "posixThread.hpp"
 
 #include "PeerX.h"
 
 // Uncomment the line below to turn on debugging output from the medium
-//#define REPORT_INFO
+#define REPORT_INFO
 
-#define SEND_EXTRA_ACKS
+//#define SEND_EXTRA_ACKS
 
 //This is the kind medium.
 
 #define T2toT1_CORRUPT_BYTE         395
 
 using namespace std;
+using namespace pthreadSupport;
+
+ssize_t mediumRead( int fildes, void* buf, size_t nbyte )
+{
+ ssize_t numOfByte = myRead(fildes, buf, nbyte );
+ if (numOfByte == -1 && errno == 104) // errno 104 is "Connection reset by peer"
+  numOfByte = 0; // switch errno 104 to 0 bytes read
+ return numOfByte;
+}
 
 Medium::Medium(int d1, int d2, const char *fname)
 :Term1D(d1), Term2D(d2), logFileName(fname)
@@ -36,6 +47,7 @@ Medium::Medium(int d1, int d2, const char *fname)
 	ACKforwarded = 0;
 	ACKreceived = 0;
 	sendExtraAck = false;
+    crcMode = false;
 
 	mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 	logFileD = PE2(myCreat(logFileName, mode), logFileName);
@@ -51,7 +63,7 @@ bool Medium::MsgFromTerm2()
 	int numOfBytesReceived;
 	int byteToCorrupt;
 
-	if (!(numOfBytesReceived = PE(myRead(Term2D, bytesReceived, 1)))) {
+	if (!(numOfBytesReceived = PE(mediumRead(Term2D, bytesReceived, 1)))) {
 		COUT << "Medium thread: TERM2's socket closed, Medium terminating" << endl;
 		return false;
 	}
@@ -62,14 +74,13 @@ bool Medium::MsgFromTerm2()
 	PE_NOT(myWrite(Term1D,   bytesReceived, numOfBytesReceived), numOfBytesReceived);
 
 	if(bytesReceived[0] == CAN) {
-	       numOfBytesReceived = PE_NOT(myRead(Term2D, bytesReceived, CAN_LEN - 1), CAN_LEN - 1);
+	       numOfBytesReceived = PE_NOT(mediumRead(Term2D, bytesReceived, CAN_LEN - 1), CAN_LEN - 1);
 	       // byteCount += numOfBytesReceived;
 	       PE_NOT(myWrite(logFileD, bytesReceived, numOfBytesReceived), numOfBytesReceived);
 	       //Forward the bytes to Term1 (usually RECEIVER),
 	       PE_NOT(myWrite(Term1D,   bytesReceived, numOfBytesReceived), numOfBytesReceived);
 	}
-
-    if (bytesReceived[0] == SOH) {
+    else if (bytesReceived[0] == SOH) {
         if (sendExtraAck) {
     #ifdef REPORT_INFO
                 COUT << "{" << "+A" << "}" << flush;
@@ -82,7 +93,7 @@ bool Medium::MsgFromTerm2()
             sendExtraAck = false;
         }
 
-        numOfBytesReceived = PE(myRead(Term2D, bytesReceived, (BLK_SZ_CRC - numOfBytesReceived)));
+        numOfBytesReceived = PE(mediumRead(Term2D, bytesReceived, (crcMode ? BLK_SZ_CRC : BLK_SZ_CS) - numOfBytesReceived));
 
         byteCount += numOfBytesReceived;
         if (byteCount >= T2toT1_CORRUPT_BYTE) {
@@ -106,37 +117,47 @@ bool Medium::MsgFromTerm2()
 bool Medium::MsgFromTerm1()
 {
 	uint8_t buffer[CAN_LEN];
-	int numOfByte = PE(myRead(Term1D, buffer, CAN_LEN));
+	int numOfByte = PE(mediumRead(Term1D, buffer, CAN_LEN));
 	if (numOfByte == 0) {
 		COUT << "Medium thread: TERM1's socket closed, Medium terminating" << endl;
 		return false;
 	}
 
     /*note that we record the corrupted ACK in the log file so that we can for it*/
-	if(buffer[0]==ACK)
-	{
-		ACKreceived++;
+	switch(buffer[0]) {
+        case 'C':
+            crcMode = true;
+            break;
+        case CAN:
+            crcMode = false;
+            break;
+        case EOT:
+            crcMode = false;
+            break;
+        case ACK: {
+            ACKreceived++;
 
-		if((ACKreceived%10)==0)
-		{
-			ACKreceived = 0;
-			buffer[0]=NAK;
-#ifdef REPORT_INFO
-			COUT << "{" << "AxN" << "}" << flush;
-#endif
-		}
-#ifdef SEND_EXTRA_ACKS
-		else/*actually forwarded ACKs*/
-		{
-			ACKforwarded++;
+            if((ACKreceived%10)==0)
+            {
+                ACKreceived = 0;
+                buffer[0]=NAK;
+    #ifdef REPORT_INFO
+                COUT << "{" << "AxN" << "}" << flush;
+    #endif
+            }
+    #ifdef SEND_EXTRA_ACKS
+            else/*actually forwarded ACKs*/
+            {
+                ACKforwarded++;
 
-			if((ACKforwarded%6)==0)/*Note that this extra ACK is not an ACK forwarded from receiver to the sender, so we don't increment ACKforwarded*/
-			{
-				ACKforwarded = 0;
-				sendExtraAck = true;
-			}
-		}
-#endif
+                if((ACKforwarded%6)==0)/*Note that this extra ACK is not an ACK forwarded from receiver to the sender, so we don't increment ACKforwarded*/
+                {
+                    ACKforwarded = 0;
+                    sendExtraAck = true;
+                }
+            }
+    #endif
+        }
 	}
 
 	PE_NOT(write(logFileD, buffer, numOfByte), numOfByte);
@@ -146,16 +167,24 @@ bool Medium::MsgFromTerm1()
 	return true;
 }
 
+void
+Medium::
+mediumFuncT1toT2()
+{
+    PE_0(pthread_setname_np(pthread_self(), "M1to2"));
+    while (MsgFromTerm1());
+}
+
 void Medium::run()
 {
-    do
-        //transfer byte from Term1 (receiver)
-        MsgFromTerm1();
+//    posixThread mediumThrd1to2(SCHED_FIFO, 45, &Medium::mediumFuncT1toT2, this);
+    thread mediumThrd1to2(&Medium::mediumFuncT1toT2, this);
+    pthreadSupport::setSchedPrio(45); // raise priority up somewhat for this thread.
 
-        //transfer data from Term2 (sender)
+    //transfer data from Term2 (sender)
     while (MsgFromTerm2());
 
-
+    mediumThrd1to2.join(); 
 	PE(myClose(logFileD));
 	PE(myClose(Term1D));
 	PE(myClose(Term2D));
@@ -164,8 +193,7 @@ void Medium::run()
 
 void mediumFunc(int T1d, int T2d, const char *fname)
 {
-    PE_0(pthread_setname_np(pthread_self(), "M")); // give the thread (medium) a name
-    // PE_0(pthread_setname_np("M")); // give the thread (medium) a name // Mac OS X
+    PE_0(pthread_setname_np(pthread_self(), "M2to1"));
     Medium medium(T1d, T2d, fname);
     medium.run();
 }
