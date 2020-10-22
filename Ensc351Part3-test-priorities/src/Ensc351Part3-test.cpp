@@ -32,7 +32,26 @@ myReadcond(daSktPr[1], Ba, 200, 0, 0, 0) -1 errno 9: Bad file descriptor
 myWrite(daSktPr[1], Ba, 200) -1 errno 9: Bad file descriptor
 myTcdrain(daSktPr[1]) -1 errno 9: Bad file descriptor
 
- *
+MY OUTPUT
+Primary Thread was executing at policy 2 and priority 99
+Primary Thread now executing at policy (should be 1) 1 and priority (should be 30) 30
+RetVal 0 in T41: 0
+RetVal 1 in T41: 14 Ba: abcd123456789
+RetVal in T42: 0
+RetVal in T32: 0
+myWrite(daSktPr[1], "Added", 6) -1 errno 32: Broken pipe
+RetVal 2 in T41: 4 Ba: xyz
+myRead(daSktPr[1], Ba, 200) -1
+myRead(daSktPr[1], Ba, 200) 0 errno 104: Connection reset by peer
+myClose(daSktPr[1]) 0
+myClose(daSktPr[1]) -1 errno 9: Bad file descriptor
+myRead(daSktPr[1], Ba, 200) -1 errno 9: Bad file descriptor
+myReadcond(daSktPr[1], Ba, 200, 0, 0, 0) -1 errno 9: Bad file descriptor
+myWrite(daSktPr[1], Ba, 200) -1 errno 9: Bad file descriptor
+myTcdrain(daSktPr[1]) -1 errno 9: Bad file descriptor
+==3332==LeakSanitizer has encountered a fatal error.
+==3332==HINT: For debugging, try setting environment variable LSAN_OPTIONS=verbosity=1:log_threads=1
+==3332==HINT: LeakSanitizer does not work under ptrace (strace, gdb, etc)
  */
 
 using namespace std;
