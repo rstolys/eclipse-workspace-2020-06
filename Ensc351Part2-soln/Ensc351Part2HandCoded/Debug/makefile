@@ -41,13 +41,13 @@ endif
 all: Ensc351Part2HandCoded
 
 dependents:
-	-cd /mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part2SolnLib/Debug && $(MAKE) clean all
+	-cd /mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part2-soln/Ensc351Part2SolnLib/Debug && $(MAKE) clean all
 
 # Tool invocations
-Ensc351Part2HandCoded: $(OBJS) $(USER_OBJS) /mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part2SolnLib/Debug/libEnsc351Part2SolnLib.a
+Ensc351Part2HandCoded: $(OBJS) $(USER_OBJS) /mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part2-soln/Ensc351Part2SolnLib/Debug/libEnsc351Part2SolnLib.a
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++ -L"/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351/Debug" -L"/mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part2SolnLib/Debug" -o "Ensc351Part2HandCoded" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -L"/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351/Debug" -L"/mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part2-soln/Ensc351Part2SolnLib/Debug" -o "Ensc351Part2HandCoded" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -57,6 +57,6 @@ clean:
 	-@echo ' '
 
 .PHONY: all clean dependents
-/mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part2SolnLib/Debug/libEnsc351Part2SolnLib.a:
+/mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part2-soln/Ensc351Part2SolnLib/Debug/libEnsc351Part2SolnLib.a:
 
 -include ../makefile.targets

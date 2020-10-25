@@ -79,10 +79,10 @@ void threadT32Func(void) // starts at priority 60 and drops to priority 40
     PE_NOT(myWrite(daSktPr[0], "abcd", 4), 4);
 	PE(myTcdrain(daSktPr[0])); // will block until 1st myReadcond
 
-	setSchedPrio(40);
-
 	PE_NOT(myWrite(daSktPr[0], "123456789", 10), 10); // don't forget nul termination character
 
+	setSchedPrio(40);
+    //setSchedPrio(40);
 	PE(myWrite(daSktPr[0], "xyz", 4));
 	int RetVal = PE(myClose(daSktPr[0]));
 

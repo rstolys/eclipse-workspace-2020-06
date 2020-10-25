@@ -20,7 +20,7 @@ CPP_DEPS += \
 src/%.o: ../src/%.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: GCC C++ Compiler'
-	g++ -std=c++1y -I"/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351" -I"/mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part2SolnLib" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
+	g++ -std=c++1y -I"/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351" -I"/mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part2-soln/Ensc351Part2SolnLib" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
