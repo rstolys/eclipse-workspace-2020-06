@@ -38,22 +38,22 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: Ensc351Part2CodedBySmartState
+all: Ensc351Part3-test-priorities-improved
 
 dependents:
 	-cd /mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part2-soln/Ensc351Part2SolnLib/Debug && $(MAKE) all
 
 # Tool invocations
-Ensc351Part2CodedBySmartState: $(OBJS) $(USER_OBJS) /mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part2-soln/Ensc351Part2SolnLib/Debug/libEnsc351Part2SolnLib.a
+Ensc351Part3-test-priorities-improved: $(OBJS) $(USER_OBJS) /mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part2-soln/Ensc351Part2SolnLib/Debug/libEnsc351Part2SolnLib.a
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++ -L"/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351/Debug" -L"/mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part2-soln/Ensc351Part2SolnLib/Debug" -pthread -o "Ensc351Part2CodedBySmartState" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -L"/mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part2-soln/Ensc351Part2SolnLib/Debug" -L"/mnt/hgfs/VMsf2020/git/ensc351lib/Ensc351/Debug" -fsanitize=address       -fsanitize=leak     -fsanitize=undefined       -fsanitize=pointer-compare  -fsanitize=pointer-subtract -pthread -o "Ensc351Part3-test-priorities-improved" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(CC_DEPS)$(C++_DEPS)$(EXECUTABLES)$(C_UPPER_DEPS)$(CXX_DEPS)$(OBJS)$(CPP_DEPS)$(C_DEPS) Ensc351Part2CodedBySmartState
+	-$(RM) $(CC_DEPS)$(C++_DEPS)$(EXECUTABLES)$(C_UPPER_DEPS)$(CXX_DEPS)$(OBJS)$(CPP_DEPS)$(C_DEPS) Ensc351Part3-test-priorities-improved
 	-@echo ' '
 
 .PHONY: all clean dependents

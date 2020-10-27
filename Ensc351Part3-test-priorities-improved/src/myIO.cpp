@@ -204,7 +204,7 @@ int myTcdrain(int des)
     return rv;
     }
 
-/* 
+/*
     Arguments:
 des
     The file descriptor associated with the terminal device that you want to read from.

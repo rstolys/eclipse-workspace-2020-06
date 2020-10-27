@@ -23,7 +23,7 @@
 // Uncomment the line below to turn on debugging output from the medium
 #define REPORT_INFO
 
-//#define SEND_EXTRA_ACKS
+#define SEND_EXTRA_ACKS
 
 //This is the kind medium.
 
@@ -101,6 +101,9 @@ bool Medium::MsgFromTerm2()
             byteToCorrupt = numOfBytesReceived - byteCount; // how small could byteToCorrupt be?
             if (byteToCorrupt < numOfBytesReceived) {
                 bytesReceived[byteToCorrupt] = (255 - bytesReceived[byteToCorrupt]);
+
+                if(byteToCorrupt == 81)
+                    COUT << "<***" << (bytesReceived[byteToCorrupt]&0xFF) << "***x>" << flush;
         #ifdef REPORT_INFO
                 COUT << "<" << byteToCorrupt << "x>" << flush;
         #endif

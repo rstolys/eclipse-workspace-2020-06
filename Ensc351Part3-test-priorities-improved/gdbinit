@@ -1,0 +1,8 @@
+# Craig Scratchley, October 2020
+# gdb initialization file for ENSC 351
+
+#set debug infrun 1
+set logging overwrite on
+set logging on
+
+handle SIGPIPE nostop
