@@ -175,6 +175,11 @@ void SenderX::resendBlk()
 	// block will be "r"ewritten
 	COUT << "[r" << (int)(blkNum) << "]" << flush;
 #endif
+	if(blkNum == 194)
+        {
+        COUT << "First Value of Block: " << (blkBufs[blkNum%2][0] & 0xFF) << flush;
+        }
+
 	sendLastByte(sendMostBlk(blkBufs[blkNum%2]));
 }
 

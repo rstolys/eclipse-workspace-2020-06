@@ -49,11 +49,10 @@ int myReadcond(int des, void * buf, int n, int min, int time, int timeout);
 
 //Define struct to hold socket information about our sockets
 struct socketInfo {
-    bool blk_read;
-    bool blk_written;
-    bool socketPairOpen;
-    int  numBytes;
     int  socketPair;
+    bool socketPairOpen;
+
+    int  numBytes;
 };
 
 
@@ -62,13 +61,11 @@ std::mutex                      mut;
 
 std::map<int,socketInfo>        socket_map;
 
-std::condition_variable         read_cond_var;
-std::condition_variable         write_cond_var;
 std::condition_variable         cond_var;
 
 
 ////////////////////////////////////////////////////////
-/// Returns boolean if descriptor specified is in socket_map and partner is open
+/// Returns boolean if both descriptor specified is in socket_map and partner is open
 ////////////////////////////////////////////////////////
 bool desIsOpenSocket(int des)
     {
@@ -112,9 +109,9 @@ int mySocketpair(int domain, int type, int protocol, int des_array[2])
     //Add each of the descriptors to the des_map
     std::lock_guard<std::mutex> lk(mut);          //Lock the mutex to allow us to edit global varaibles
 
-    //                       {blk_read, blk_written, socketPairOpen, numBytes, socketpair}
-    struct socketInfo des0 = {false, false, true, 0, des_array[1]};
-    struct socketInfo des1 = {false, false, true, 0, des_array[0]};
+    //                       {socketpair, socketPairOpen, numBytes, }
+    struct socketInfo des0 = {des_array[1], true, 0};
+    struct socketInfo des1 = {des_array[0], true, 0};
 
     socket_map[des_array[0]] = des0;
     socket_map[des_array[1]] = des1;
@@ -149,12 +146,11 @@ ssize_t myWrite( int des, const void* buf, size_t nbyte )
         {
         std::lock_guard<std::mutex> lk(mut);
 
-        //Record write operation info
-        socket_map[des].blk_read = false;
-        socket_map[des].blk_written = true;
-        socket_map[des].numBytes += nbyte;
-
         rv = write(des, buf, nbyte);
+
+        //if there was an error we don't want to change with our numBytes
+        if(rv >= 0)
+            socket_map[des].numBytes += nbyte;
 
         cond_var.notify_all();
         }
@@ -180,7 +176,7 @@ int myClose(int des)
             cond_var.notify_all();            //Notify condition varaibles to check again if waiting to read from write of this socket
             }
 
-        //Erase our both sockets from mapping
+        //Erase our socket from mapping
         socket_map.erase(des);
         }
 
@@ -196,7 +192,7 @@ int myTcdrain(int des)
         {
         //Wait until the block has been read from the buffer
         std::unique_lock<std::mutex> lk(mut);
-        cond_var.wait(lk, [des]{return socket_map[des].blk_read || !socket_map[des].socketPairOpen;});
+        cond_var.wait(lk, [des]{return socket_map[des].numBytes <= 0 || !socket_map[des].socketPairOpen;});
 
         rv = 0;
         }
@@ -208,7 +204,8 @@ int myTcdrain(int des)
     return rv;
     }
 
-/* Arguments:
+/*
+    Arguments:
 des
     The file descriptor associated with the terminal device that you want to read from.
 buf
@@ -225,52 +222,46 @@ min, time, timeout
 int myReadcond(int des, void * buf, int n, int min, int time, int timeout)
     {
     int numBytesRead = 0;
-    int rv = -1;            //Assume error to start
+    int rv = 0;                    //Assume error to start
 
-    if(!desIsOpenSocket(des))
+    if(!desIsOpenSocket(des))       //if the socket were trying to read from is not open
         {
         rv = wcsReadcond(des, buf, n, min, time, timeout);
         }
-    else if(min  == 0)      //if the call wants a timeout right away
+    //if the call wants a timeout right away or there are too many bytes to read
+    else if(min == 0)
         {
         //Read the output
         rv = wcsReadcond(des, buf, n, min, time, timeout);
 
-        std::lock_guard<std::mutex> lk(mut);
-        socket_map[socket_map[des].socketPair].numBytes -= rv;
+        //Modify the number of bytes in the buffer
+        if(rv >= 0)
+            {
+            std::lock_guard<std::mutex> lk(mut);
+            socket_map[socket_map[des].socketPair].numBytes -= rv;
+            }
         }
-    else if((std::lock_guard<std::mutex> (mut), socket_map[socket_map[des].socketPair].numBytes <= n))
+    else
         {
         do {
             std::unique_lock<std::mutex> lk(mut);
 
-            // wait until we have a block written or our socket pair is closed
-            cond_var.wait(lk, [des]{return socket_map[socket_map[des].socketPair].blk_written || !socket_map[des].socketPairOpen;});
+            //If there is something in the buffer to be read or our socket pair gets closed
+            cond_var.wait(lk, [des]{return socket_map[socket_map[des].socketPair].numBytes > 0 || !socket_map[des].socketPairOpen;});
 
-            //if the socket pair got closed while we were waiting we need to return from the read function
-            if(socket_map[des].socketPairOpen)
-                {
-                int nBytes = socket_map[socket_map[des].socketPair].numBytes;
+            //Read the output
+            numBytesRead = wcsReadcond(des, ((char*) buf) + rv, n, 1, time, timeout);
 
-                //Read the output
-                numBytesRead += wcsReadcond(des, ((char*) buf) + numBytesRead, n, 1, time, timeout);
+            rv += numBytesRead;             //Increment return value by the number of bytes read
 
-                rv = numBytesRead;             //Increment return value by the number of bytes read
-
-                socket_map[socket_map[des].socketPair].blk_read = true;
-                socket_map[socket_map[des].socketPair].blk_written = false;
+            //Modify the number of bytes in the socket to match the current state
+            if(numBytesRead >= 0)
                 socket_map[socket_map[des].socketPair].numBytes -= numBytesRead;
-                cond_var.notify_all();                                     //Notify our tcdrain() cond_varaible to check again
-                }
-            } while(numBytesRead < min && (std::lock_guard<std::mutex> (mut), socket_map[des].socketPairOpen));
-        }
-    else if((std::lock_guard<std::mutex> (mut), socket_map[socket_map[des].socketPair].numBytes > n))
-        {
-        //Read the output
-        rv = wcsReadcond(des, buf, n, min, time, timeout);
 
-        std::lock_guard<std::mutex> lk(mut);
-        socket_map[socket_map[des].socketPair].numBytes -= n;
+            //Notify our tcdrain() cond_varaible to check again
+            cond_var.notify_all();
+
+            } while(rv < min && (std::lock_guard<std::mutex> (mut), socket_map[des].socketPairOpen));
         }
 
     return rv;

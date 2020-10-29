@@ -110,7 +110,7 @@ int mySocketpair(int domain, int type, int protocol, int des_array[2])
     std::lock_guard<std::mutex> lk(mut);          //Lock the mutex to allow us to edit global varaibles
 
     //                       {socketpair, socketPairOpen, numBytes, }
-    struct socketInfo des0 = {des_array[1], true, 0, };
+    struct socketInfo des0 = {des_array[1], true, 0};
     struct socketInfo des1 = {des_array[0], true, 0};
 
     socket_map[des_array[0]] = des0;
@@ -250,7 +250,7 @@ int myReadcond(int des, void * buf, int n, int min, int time, int timeout)
             cond_var.wait(lk, [des]{return socket_map[socket_map[des].socketPair].numBytes > 0 || !socket_map[des].socketPairOpen;});
 
             //Read the output
-            numBytesRead = wcsReadcond(des, ((char*) buf) + numBytesRead, n, 1, time, timeout);
+            numBytesRead = wcsReadcond(des, ((char*) buf) + rv, n, 1, time, timeout);
 
             rv += numBytesRead;             //Increment return value by the number of bytes read
 
