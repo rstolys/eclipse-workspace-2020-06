@@ -41,7 +41,7 @@ endif
 all: Ensc351Part2HandCoded
 
 dependents:
-	-cd /mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part2-soln/Ensc351Part2SolnLib/Debug && $(MAKE) clean all
+	-cd /mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part2-soln/Ensc351Part2SolnLib/Debug && $(MAKE) all
 
 # Tool invocations
 Ensc351Part2HandCoded: $(OBJS) $(USER_OBJS) /mnt/hgfs/VMsf2020/eclipse-workspace-2020-06/Ensc351Part2-soln/Ensc351Part2SolnLib/Debug/libEnsc351Part2SolnLib.a
