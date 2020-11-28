@@ -68,7 +68,7 @@ bool KbReady(int inD, int outD, int term, int mediumD)
 			//default filename
 			if( numItemsMatched < 2 ) {// strlen(fname) == 0 ) {
 #ifdef FAST_SIM
-				strcpy(fname, "/etc/protocols");
+				strcpy(fname, "/etc/passwd");
 #else
 				strcpy(fname, "/etc/anacrontab");
 #endif

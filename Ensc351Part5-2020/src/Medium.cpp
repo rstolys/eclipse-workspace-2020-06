@@ -39,7 +39,7 @@
 #ifndef USE_PART2A_R1_TO_S2
 #define T1toT2_CORRUPT_BYTE		6 //4 //6
 #define T1toT2_DROP_BYTE		7 //6 //7
-#define T1toT2_GLITCH_BYTE		3 //2 //3
+#define T1toT2_GLITCH_BYTE		2 //2 //3
 #define	T1toT2_SEND_GLITCH_ACK	50
 #endif
 
@@ -239,7 +239,8 @@ bool Medium::MsgFromTerm1()
 			COUT << "{" << sentCount << "+" << (int)glitchCount << "}" << flush;
 #endif
 			PE_NOT(write(logFileD,&glitchCount, sizeof(glitchCount)), sizeof(byteReceived));
-			PE_NOT(myWrite(Term2D, &glitchCount, sizeof(glitchCount)), sizeof(byteReceived));
+			//if(glitchCount != ACK)
+			    PE_NOT(myWrite(Term2D, &glitchCount, sizeof(glitchCount)), sizeof(byteReceived));
 			glitchCount++;
 		}
 		if( fromT1ByteCount % T1toT2_CORRUPT_BYTE == 0 ) {

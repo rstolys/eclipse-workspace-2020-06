@@ -104,26 +104,50 @@ transferCommon(std::shared_ptr<StateMgr> mySM, bool reportInfoParam)
 	/* ******** You may need to add code here ******** */
 
 	struct timeval tv;
+	tv.tv_sec = 0;
+
+	fd_set set;
+
+	FD_SET(consoleInId, &set);
+	FD_SET(mediumD, &set);
+	int  max_fd = max(mediumD, consoleInId) + 1;
+
 
 	while(mySM->isRunning()) {
-		// ************* this loop is going to need more work ************
-		tv.tv_sec=0;
+
+	    u_int32_t relTM_abs = absoluteTimeout - elapsed_usecs();
+	    u_int32_t relTM_default = TM_CHAR * uSECS_PER_UNIT;
+
+	    tv.tv_usec = min(relTM_default, relTM_abs);
+
+	    FD_ZERO(&set);
+	    FD_SET(consoleInId, &set);
+	    FD_SET(mediumD, &set);
+	    int readyDes = PE(select(max_fd, &set, NULL, NULL, &tv));
+
+
 		uint32_t now = elapsed_usecs();
-        if (now >= absoluteTimeout) {
-            //...
+        if (now >= absoluteTimeout && !readyDes) {
             mySM->postEvent(TM);
         }
         else {
-            // ...
-            /****/ {
+            if(FD_ISSET(consoleInId, &set)) {
+                char bytesToReceive[4];
+                PE(myReadcond(consoleInId, &bytesToReceive[0], 4, 1, 0, 0));         // data should be available right away
+
+                if(bytesToReceive[0] == CANC_C[0] && bytesToReceive[1] == CANC_C[1])
+                    mySM->postEvent(KB_C);
+            }
+            else if (FD_ISSET(mediumD, &set)) {
                 //read character from medium
 				char byteToReceive;
-				PE_NOT(myReadcond(mediumD, &byteToReceive, 1, 1, 0, 0), 1); // data should be available right away
-				//PE_NOT(myRead(mediumD, &byteToReceive, 1), 1);
+				PE_NOT(myReadcond(mediumD, &byteToReceive, 1, 1, 0, 0), 1);             // data should be available right away
+
 
 				//We  should vary the result based on the type of byte recieved
 				if (reportInfo)
 					COUT << logLeft << 1.0*(absoluteTimeout - now)/MILLION << ":" << (int)(unsigned char) byteToReceive << ":" << byteToReceive << logRight << flush;
+
 				mySM->postEvent(SER, byteToReceive);
 			}
 		}

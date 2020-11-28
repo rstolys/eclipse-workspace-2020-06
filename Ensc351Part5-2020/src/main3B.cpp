@@ -54,7 +54,8 @@ void termFunc(int termNum)
 
 void mediumFunc(void)
 {
-	Medium medium(fdaSktPrTermMed[TERM1][OTHER_SIDE],fdaSktPrTermMed[TERM2][OTHER_SIDE], "/tmp/xmodemData.dat");
+    ///tmp/xmodemData.dat
+	Medium medium(fdaSktPrTermMed[TERM1][OTHER_SIDE],fdaSktPrTermMed[TERM2][OTHER_SIDE], "xmodemData.dat");
 	medium.start();
 }
 
