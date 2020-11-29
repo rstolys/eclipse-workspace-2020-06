@@ -43,7 +43,7 @@
 #include "AtomicCOUT.h"
 
 // comment out the line below to get rid of Receiver logging information.
-#define REPORT_INFO
+//#define REPORT_INFO
 
 using namespace std;
 using namespace Receiver_SS;
@@ -91,7 +91,6 @@ characters until nothing is received over a character timeout period.
 */
 void ReceiverX::getRestBlk()
 { 
-
 	const int restBlkSz = Crcflg ? REST_BLK_SZ_CRC : REST_BLK_SZ_CS;
     // here, we can read about 30 more characters than we hope to get,
     //         but keep min at restBlkSz, so any extra
@@ -104,10 +103,6 @@ void ReceiverX::getRestBlk()
     	// return;
     }
     else { // not needed if we put return in above.
-
-        if(rcvBlk[1] == 9)
-            COUT << " STOP  HERE " << flush;
-
 
     	const char* badReason;
    	 	if( bytesRead > restBlkSz) { // got an extra byte or two -- maybe there are more

@@ -108,8 +108,6 @@ transferCommon(std::shared_ptr<StateMgr> mySM, bool reportInfoParam)
 
 	fd_set set;
 
-	FD_SET(consoleInId, &set);
-	FD_SET(mediumD, &set);
 	int  max_fd = max(mediumD, consoleInId) + 1;
 
 
@@ -132,11 +130,15 @@ transferCommon(std::shared_ptr<StateMgr> mySM, bool reportInfoParam)
         }
         else {
             if(FD_ISSET(consoleInId, &set)) {
-                char bytesToReceive[4];
-                PE(myReadcond(consoleInId, &bytesToReceive[0], 4, 1, 0, 0));         // data should be available right away
+                char bytesToReceive[128] = {0};       //Max buffer size from keyboard
+                int numBytesReceived = PE(myReadcond(consoleInId, &bytesToReceive[0], 128, 1, 0, 0));         // data should be available right away
 
                 if(bytesToReceive[0] == CANC_C[0] && bytesToReceive[1] == CANC_C[1])
                     mySM->postEvent(KB_C);
+                //else {
+                    //Pass along message to the medium
+                    //PE(myWrite(mediumD, &bytesToReceive[0], numBytesReceived));
+                //}
             }
             else if (FD_ISSET(mediumD, &set)) {
                 //read character from medium

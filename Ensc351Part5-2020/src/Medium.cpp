@@ -19,7 +19,7 @@
 #include "PeerX.h"
 
 // Uncomment the line below to turn on debugging output from the medium
-#define REPORT_INFO
+//#define REPORT_INFO
 
 //This medium contains both kind and non-kind versions.
 //	See Medium.h
@@ -39,7 +39,7 @@
 #ifndef USE_PART2A_R1_TO_S2
 #define T1toT2_CORRUPT_BYTE		6 //4 //6
 #define T1toT2_DROP_BYTE		7 //6 //7
-#define T1toT2_GLITCH_BYTE		2 //2 //3
+#define T1toT2_GLITCH_BYTE		3 //2 //3
 #define	T1toT2_SEND_GLITCH_ACK	50
 #endif
 

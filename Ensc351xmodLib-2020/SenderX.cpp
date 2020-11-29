@@ -43,7 +43,7 @@
 #include "VNPE.h"
 
 // comment out the line below to get rid of Sender logging information.
-#define REPORT_INFO
+//#define REPORT_INFO
 
 using namespace std;
 using namespace Sender_SS;

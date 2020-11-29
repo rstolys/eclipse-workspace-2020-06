@@ -82,7 +82,7 @@ bool KbReady(int inD, int outD, int term, int mediumD)
 			bool useCrc = true;
 			//default filename
 			if( numItemsMatched < 2 ) {// strlen(fname) == 0 ) {
-				strcpy(fname, "/tmp/transferred-file");
+				strcpy(fname, "/tmp/protocols");
 			}
 			else
 				if( numItemsMatched == 3 ) {
